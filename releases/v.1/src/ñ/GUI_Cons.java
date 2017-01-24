@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package n;
+package ñ;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
@@ -87,7 +87,7 @@ public class GUI_Cons extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel1.setText("<html>Presione la tecla <i>Ctrl</i> para seleccionar y deseleccionar las conjunciones. Escoja aquellas de las cuales desciende la ramificación.</html>");
+        jLabel1.setText("<html>Presione la tecla <i>Ctrl</i> para seleccionar y deseleccionar las conjunciones. Escoja aquellas de las cuales desciende la ramificacióñ.</html>");
         jLabel1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
         ñb_ConsReset.setText("Reestablecer");
@@ -155,7 +155,7 @@ public class GUI_Cons extends javax.swing.JFrame {
 
         // Ahora establecer los padres de la disyunción.
 
-        N.table.setParents(N.table.getDisjunctions().
+        Ñ.table.setParents(Ñ.table.getDisjunctions().
                 get(GUI.ñl_Ram.getSelectedIndex()),
                 ñl_Cons.getSelectedIndices());
 
@@ -163,15 +163,15 @@ public class GUI_Cons extends javax.swing.JFrame {
 
         // recargar la lista de padres en ñl_RamFrom
         GUI.listModelRamParents.clear();
-                for(String s : N.table.getAllParentsNames(N.table.getDisjunctions().get(GUI.ñl_Ram.getSelectedIndex()))){
+                for(String s : Ñ.table.getAllParentsNames(Ñ.table.getDisjunctions().get(GUI.ñl_Ram.getSelectedIndex()))){
                     GUI.listModelRamParents.addElement(s);
                 }
         
     }//GEN-LAST:event_ñb_ConsOkActionPerformed
 
     private void ñb_ConsResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ñb_ConsResetActionPerformed
-    ñl_Cons.setSelectedIndices(N.table.getParentsIndices
-        (N.table.getDisjunctions().get(GUI.ñl_Ram.getSelectedIndex())));
+    ñl_Cons.setSelectedIndices(Ñ.table.getParentsIndices
+        (Ñ.table.getDisjunctions().get(GUI.ñl_Ram.getSelectedIndex())));
     }//GEN-LAST:event_ñb_ConsResetActionPerformed
 
     private void ñb_ConsCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ñb_ConsCancelActionPerformed

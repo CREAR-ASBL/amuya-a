@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package n;
-import amuyana.Operations;
-import amuyana.Amuyana;
-import amuyana.Disjunction;
+package ñ;
+import amuyaña.Operations;
+import amuyaña.Amuyaña;
+import amuyaña.Disjunction;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.io.FileNotFoundException;
@@ -25,7 +25,7 @@ import java.util.ArrayList;
  * Genera complejas tablas de deducciones utilizando únicamente texto...
  * @author Ayar Portugal
  */
-public abstract class N {
+public abstract class Ñ {
     private static boolean open;
     private static boolean modified;
     private static String file;
@@ -40,7 +40,7 @@ public abstract class N {
      * Instanciates an Amuyaña instance.
      */
     static public void newAmuyaña(){
-        table = new Amuyana();
+        table = new Amuyaña();
         isOpen();
     }
 
@@ -60,13 +60,13 @@ public abstract class N {
         Reader reader = new FileReader(file);
             
         if (table == null) {
-            table = new Amuyana(true);
+            table = new Amuyaña(true);
         } else if (table != null) {
             table = null;
-            table = new Amuyana(true);
+            table = new Amuyaña(true);
         }
         
-        table = gson.fromJson(reader, Amuyana.class);
+        table = gson.fromJson(reader, Amuyaña.class);
         setOpen(true);
         
     }
@@ -76,7 +76,7 @@ public abstract class N {
     }
 
     static void setOpen(boolean open) {
-        N.open = open;
+        Ñ.open = open;
     }
 
     static boolean isModified() {
@@ -84,7 +84,7 @@ public abstract class N {
     }
 
     static void setModified(boolean modified) {
-        N.modified = modified;
+        Ñ.modified = modified;
     }
 
     public static String getFile() {
@@ -92,7 +92,7 @@ public abstract class N {
     }
 
     public static void setFile(String file) {
-        N.file = file;
+        Ñ.file = file;
     }
 
     static ArrayList<String> getAllParents(){

@@ -1,5 +1,5 @@
 
-package amuyana;
+package amuyaña;
 
 class Phenomenon {
     private String name;

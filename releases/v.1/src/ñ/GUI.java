@@ -3,8 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package n;
-import amuyana.Disjunction;
+package ñ;
+import amuyaña.Disjunction;
 import com.google.gson.JsonSyntaxException;
 import java.awt.Toolkit;
 import java.io.File;
@@ -1028,9 +1028,9 @@ public class GUI extends javax.swing.JFrame {
 
     private void ñm_SaveAsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ñm_SaveAsActionPerformed
         // if isOpen -> saveAs, if !isOpen -> do nothing
-        if (N.isOpen()){
+        if (Ñ.isOpen()){
             jDialog1.setVisible(true);
-        } else if (!(N.isOpen())) {
+        } else if (!(Ñ.isOpen())) {
             // do nothing
         }
     }//GEN-LAST:event_ñm_SaveAsActionPerformed
@@ -1038,8 +1038,8 @@ public class GUI extends javax.swing.JFrame {
     private void ñm_NewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ñm_NewActionPerformed
         // Si ya hay un documento abierto
         
-        if (N.isOpen()) {
-            if (N.isModified()){
+        if (Ñ.isOpen()) {
+            if (Ñ.isModified()){
                 int answer = JOptionPane.showConfirmDialog(rootPane,
                         "¿Quiere guardar los cambios antes de abrir "
                                 + "otro documento?",
@@ -1062,11 +1062,11 @@ public class GUI extends javax.swing.JFrame {
                         if ("Guardar".equals(ñb_EditImp.getText())) 
                             ñb_EditImp.doClick();
                         
-                        if (N.getFile()!=null) {
+                        if (Ñ.getFile()!=null) {
                             ñm_Save.doClick();
                             break;
                         }
-                        else if (N.getFile() == null ){
+                        else if (Ñ.getFile() == null ){
                             ñm_SaveAs.doClick();
                             return;
                         }
@@ -1075,16 +1075,16 @@ public class GUI extends javax.swing.JFrame {
             }
             
             // As it's a new file, set its path to null
-            N.setFile(null);
+            Ñ.setFile(null);
             
             // Counter of Disjunctions, Conjunctions and Phenomena
-            N.table.resetCounter();
+            Ñ.table.resetCounter();
             
             // Erase reference to object table = reset amuyaña
-            N.table = null;
+            Ñ.table = null;
             
             // very brief setOpen(false) since in a few lines we setOpen(true)
-            N.setOpen(false);
+            Ñ.setOpen(false);
             
             ñt_AbbCon1.setText("");
             ñt_AbbCon2.setText("");
@@ -1114,27 +1114,27 @@ public class GUI extends javax.swing.JFrame {
             listModelRamParents.clear();
         }
         
-        N.newAmuyaña();
-        N.setOpen(true);
-        N.setModified(true);
+        Ñ.newAmuyaña();
+        Ñ.setOpen(true);
+        Ñ.setModified(true);
         ñm_Save.setEnabled(true);
         ñm_SaveAs.setEnabled(true);
 
         // SISTEMA
-        ñt_NameSys.setText(N.table.getTableName());
-        ñt_AbbSys.setText(N.table.getTableAbb());
-        ñt_DesSys.setText(N.table.getTableDes());
-        ñt_Author.setText(N.table.getTableAuthor());
-        ñt_Date.setText(N.table.getTableDate());
+        ñt_NameSys.setText(Ñ.table.getTableName());
+        ñt_AbbSys.setText(Ñ.table.getTableAbb());
+        ñt_DesSys.setText(Ñ.table.getTableDes());
+        ñt_Author.setText(Ñ.table.getTableAuthor());
+        ñt_Date.setText(Ñ.table.getTableDate());
 
         //RAMIFICATIONS
-        for (Disjunction d : N.table.getDisjunctions()){
-            listModelRam.addElement(N.table.getDisjName(d));
+        for (Disjunction d : Ñ.table.getDisjunctions()){
+            listModelRam.addElement(Ñ.table.getDisjName(d));
         }
 
         //CONJUNCTIONS
-        for (Disjunction d : N.table.getDisjunctions()){
-            listModelImp.addElement(N.table.getDisjName(d));
+        for (Disjunction d : Ñ.table.getDisjunctions()){
+            listModelImp.addElement(Ñ.table.getDisjName(d));
         }
         
         if ("Guardar".equals(ñb_EditSys.getText())) ñb_EditSys.doClick();
@@ -1152,7 +1152,7 @@ public class GUI extends javax.swing.JFrame {
         // si hubieron cambios (si se apretó algún botón "editar") o si hay un 
         // nuevo documento sin guardar, preguntar si se quiere guardar antes de
         // abrir
-        if (N.isModified() || (N.getFile()==null && N.isOpen())){
+        if (Ñ.isModified() || (Ñ.getFile()==null && Ñ.isOpen())){
             int answer = JOptionPane.showConfirmDialog(rootPane, "¿Quiere guardar los"
                     + " cambios antes de abrir otro documento?",
                     "¿Guardar los cambios?", JOptionPane.YES_NO_CANCEL_OPTION);
@@ -1165,17 +1165,17 @@ public class GUI extends javax.swing.JFrame {
                     break;
                 // save, then open dialog.
                 case 0: {
-                    if (N.getFile()!=null) {
+                    if (Ñ.getFile()!=null) {
                         ñm_Save.doClick();
                         jDialog2.setVisible(true);
                     }
-                    else if (N.getFile() == null ){
+                    else if (Ñ.getFile() == null ){
                         ñm_SaveAs.doClick();
                     }
                     break;
                 }
             }
-        } else if (!(N.isModified()) || !(N.isOpen())){
+        } else if (!(Ñ.isModified()) || !(Ñ.isOpen())){
             jDialog2.setVisible(true);
             return;
         }
@@ -1196,7 +1196,7 @@ public class GUI extends javax.swing.JFrame {
 
     private void ñm_SaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ñm_SaveActionPerformed
         // Si ya hay documento abierto guardar
-        if ((N.isOpen())){
+        if ((Ñ.isOpen())){
             
             // Hacer que todos los botones estén en editar, es decir guardar
             // los datos en la memoria
@@ -1205,27 +1205,27 @@ public class GUI extends javax.swing.JFrame {
             if ("Guardar".equals(ñb_EditImp.getText())) ñb_EditImp.doClick();
             
             // Si ya hay una dirección y nombre de archivo, guardar
-            if ((N.getFile()!=null)) {
+            if ((Ñ.getFile()!=null)) {
                 try {
-                    N.saveAmuyaña();
-                    N.setModified(false);
+                    Ñ.saveAmuyaña();
+                    Ñ.setModified(false);
                 } catch (IOException ex) {
                     Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
             // Si no hay una dirección, es decir es un documento sin haberse 
             // guardado ni haberse abierto, hacer saveAS
-            else if ((N.getFile()==null)) {
+            else if ((Ñ.getFile()==null)) {
                 ñm_SaveAs.doClick();
             }
-        } else if (!(N.isOpen())){
+        } else if (!(Ñ.isOpen())){
             // do nothing
         }
     }//GEN-LAST:event_ñm_SaveActionPerformed
 
     private void ñm_ExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ñm_ExitActionPerformed
         // antes de salir verificar si hubieron cambios y preguntar si guardar
-        if (N.isModified()){
+        if (Ñ.isModified()){
             int answer = JOptionPane.showConfirmDialog(rootPane,
                     "¿Quiere guardar los cambios antes de abrir "
                             + "otro documento?",
@@ -1244,17 +1244,17 @@ public class GUI extends javax.swing.JFrame {
                     if ("Guardar".equals(ñb_EditImp.getText())) 
                         ñb_EditImp.doClick();
 
-                    if (N.getFile()!=null) {
+                    if (Ñ.getFile()!=null) {
                         ñm_Save.doClick();
                         break;
                     }
-                    else if (N.getFile() == null ){
+                    else if (Ñ.getFile() == null ){
                         ñm_SaveAs.doClick();
                         return;
                     }
                 }
             }
-        } else if (!N.isModified()){
+        } else if (!Ñ.isModified()){
         System.exit(0);
         }
         
@@ -1276,16 +1276,16 @@ public class GUI extends javax.swing.JFrame {
             try {
                 // Si lo que escribe termina en .ña o .json, guardar con ese nombre. Sino, añadir .ña y guardaar
                 if (archivoSeleccionado.getName().endsWith(".ña") || archivoSeleccionado.getName().endsWith(".json")){
-                    N.setFile(archivoSeleccionado.getAbsolutePath());
-                    N.saveAmuyaña();
+                    Ñ.setFile(archivoSeleccionado.getAbsolutePath());
+                    Ñ.saveAmuyaña();
                     jDialog1.dispose();
-                    N.setModified(false);
+                    Ñ.setModified(false);
                 } else if (!(archivoSeleccionado.getName().endsWith(".ña")) ||
                         !(archivoSeleccionado.getName().endsWith(".json"))){
-                    N.setFile(archivoSeleccionado.getAbsolutePath()+".ña");
-                    N.saveAmuyaña();
+                    Ñ.setFile(archivoSeleccionado.getAbsolutePath()+".ña");
+                    Ñ.saveAmuyaña();
                     jDialog1.dispose();
-                    N.setModified(false);
+                    Ñ.setModified(false);
                 }
                 
                 // If there was no an exception, set the window title to the
@@ -1309,13 +1309,13 @@ public class GUI extends javax.swing.JFrame {
         // Si click en "abrir", memorizar el nombre indicado en Ñ.file
         if (command.equals(JFileChooser.APPROVE_SELECTION)){
             File archivoSeleccionado = selectorArchivo.getSelectedFile();
-            N.setFile(archivoSeleccionado.getAbsolutePath());
+            Ñ.setFile(archivoSeleccionado.getAbsolutePath());
             // intentar abrir el archivo .ña o .json, cerrar la ventana 
             try {
-                N.openAmuyaña();
+                Ñ.openAmuyaña();
                 ñm_Save.setEnabled(true);
                 ñm_SaveAs.setEnabled(true);
-                N.setModified(false);
+                Ñ.setModified(false);
                 jDialog2.dispose();
             } catch (FileNotFoundException ex) { 
                 JOptionPane.showMessageDialog(rootPane, "El archivo no existe.",
@@ -1357,26 +1357,26 @@ public class GUI extends javax.swing.JFrame {
             listModelRam.clear();
             listModelRamParents.clear();
 
-            N.table.resetCounter();
+            Ñ.table.resetCounter();
 
-            ñt_NameSys.setText(N.table.getTableName());
-            ñt_AbbSys.setText(N.table.getTableAbb());
-            ñt_DesSys.setText(N.table.getTableDes());
-            ñt_Author.setText(N.table.getTableAuthor());
-            ñt_Date.setText(N.table.getTableDate());
+            ñt_NameSys.setText(Ñ.table.getTableName());
+            ñt_AbbSys.setText(Ñ.table.getTableAbb());
+            ñt_DesSys.setText(Ñ.table.getTableDes());
+            ñt_Author.setText(Ñ.table.getTableAuthor());
+            ñt_Date.setText(Ñ.table.getTableDate());
 
             //RAMIFICATIONS
-            for (Disjunction d : N.table.getDisjunctions()){
-                listModelRam.addElement(N.table.getDisjName(d));
+            for (Disjunction d : Ñ.table.getDisjunctions()){
+                listModelRam.addElement(Ñ.table.getDisjName(d));
             }
 
             //CONJUNCTIONS
-            for (Disjunction d : N.table.getDisjunctions()){
-                listModelImp.addElement(N.table.getDisjName(d));
+            for (Disjunction d : Ñ.table.getDisjunctions()){
+                listModelImp.addElement(Ñ.table.getDisjName(d));
             }
             
             // Establece el título de la ventana con el nombre del archivo
-            super.setTitle(N.nameInTitle()+"Amuyaña, generador de Tablas de Deducciones");
+            super.setTitle(Ñ.nameInTitle()+"Amuyaña, generador de Tablas de Deducciones");
             
         } else if (command.equals(JFileChooser.CANCEL_SELECTION)) {
             jDialog2.dispose();
@@ -1389,8 +1389,8 @@ public class GUI extends javax.swing.JFrame {
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // si se ha editado enviar a ñm_Exit
-        if (N.isModified()) ñm_Exit.doClick();
-        else if (!N.isModified()) System.exit(0);
+        if (Ñ.isModified()) ñm_Exit.doClick();
+        else if (!Ñ.isModified()) System.exit(0);
     }//GEN-LAST:event_formWindowClosing
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
@@ -1399,7 +1399,7 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void ñb_EditImpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ñb_EditImpActionPerformed
-        if (N.isOpen()) {
+        if (Ñ.isOpen()) {
             if ("Editar".equals(ñb_EditImp.getText())){
 
                 //Si la selección está vacía, pedir seleccionar una conjunción
@@ -1417,7 +1417,7 @@ public class GUI extends javax.swing.JFrame {
 
                     ñt_DesF1.setEditable(true);
                     ñt_DesF2.setEditable(true);
-                    N.setModified(true);
+                    Ñ.setModified(true);
                 }
 
             } else if ("Guardar".equals(ñb_EditImp.getText())) {
@@ -1434,25 +1434,25 @@ public class GUI extends javax.swing.JFrame {
                 ñt_DesF2.setEditable(false);
 
                 //Guardar los datos escritos en las casillas jTextArea
-                Disjunction d = N.table.getDisjunctions().get(ñl_Imp.getSelectedIndex());
+                Disjunction d = Ñ.table.getDisjunctions().get(ñl_Imp.getSelectedIndex());
 
-                N.table.setF1Name(d, ñt_NameF1.getText());
-                N.table.setF2Name(d, ñt_NameF2.getText());
+                Ñ.table.setF1Name(d, ñt_NameF1.getText());
+                Ñ.table.setF2Name(d, ñt_NameF2.getText());
 
-                N.table.setF1Abb(d, ñt_AbbF1.getText());
-                N.table.setF2Abb(d, ñt_AbbF2.getText());
+                Ñ.table.setF1Abb(d, ñt_AbbF1.getText());
+                Ñ.table.setF2Abb(d, ñt_AbbF2.getText());
 
-                N.table.setF1Des(d, ñt_DesF1.getText());
-                N.table.setF2Des(d, ñt_DesF2.getText());
+                Ñ.table.setF1Des(d, ñt_DesF1.getText());
+                Ñ.table.setF2Des(d, ñt_DesF2.getText());
 
                 // Reactualiza la lista
                 listModelImp.clear();
-                for (Disjunction dis : N.table.getDisjunctions()){
-                    listModelImp.addElement(N.table.getDisjName(dis));
+                for (Disjunction dis : Ñ.table.getDisjunctions()){
+                    listModelImp.addElement(Ñ.table.getDisjName(dis));
                 }
 
             }
-        } else if (!(N.isOpen())) {
+        } else if (!(Ñ.isOpen())) {
             JOptionPane.showMessageDialog(rootPane, "No se ha cargado "
                 + "ninguna Tabla de Deducciones y no hay nada que editar.\n"
                 + "Porfavor crear o abrir un nuevo archivo desde el menú "
@@ -1473,27 +1473,27 @@ public class GUI extends javax.swing.JFrame {
                 //
             } else if (ñl_Imp.getSelectedIndex() >= 0) {
 
-                Disjunction d = N.table.getDisjunctions().
+                Disjunction d = Ñ.table.getDisjunctions().
                 get(ñl_Imp.getSelectedIndex());
 
                 // DATOS DE LA CONJUNCIÓN
 
                 //DATOS DE LOS FENÓMENOS
-                ñt_NameF1.setText(N.table.getF1Name(d));
-                ñt_NameF2.setText(N.table.getF2Name(d));
+                ñt_NameF1.setText(Ñ.table.getF1Name(d));
+                ñt_NameF2.setText(Ñ.table.getF2Name(d));
 
-                ñt_AbbF1.setText(N.table.getF1Abb(d));
-                ñt_AbbF2.setText(N.table.getF2Abb(d));
+                ñt_AbbF1.setText(Ñ.table.getF1Abb(d));
+                ñt_AbbF2.setText(Ñ.table.getF2Abb(d));
 
-                ñt_DesF1.setText(N.table.getF1Des(d));
-                ñt_DesF2.setText(N.table.getF2Des(d));
+                ñt_DesF1.setText(Ñ.table.getF1Des(d));
+                ñt_DesF2.setText(Ñ.table.getF2Des(d));
             }
         }
     }//GEN-LAST:event_ñl_ImpValueChanged
 
     private void ñb_EditRamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ñb_EditRamActionPerformed
         // Si ya hay un documento "abierto"
-        if (N.isOpen()) {
+        if (Ñ.isOpen()) {
             // Si el botón está en Editar
             if ("Editar".equals(ñb_EditRam.getText())){
                 //Si la selección está vacía, por favor seleccionar un elemento
@@ -1527,7 +1527,7 @@ public class GUI extends javax.swing.JFrame {
                     ñb_FromRam.setEnabled(true);
                     ñb_NewRam.setEnabled(true);
 
-                    N.setModified(true);
+                    Ñ.setModified(true);
                 }
             } else if ("Guardar".equals(ñb_EditRam.getText())) {
                 ñb_EditRam.setText("Editar");
@@ -1563,67 +1563,67 @@ public class GUI extends javax.swing.JFrame {
                     //
                 }
                 else if (!(ñl_Ram.isSelectionEmpty())) {
-                    N.table.setDisjName(N.table.getDisjunctions().
+                    Ñ.table.setDisjName(Ñ.table.getDisjunctions().
                         get(ñl_Ram.getSelectedIndex()),
                         ñt_NameRam.getText());
 
-                    N.table.setDisjAbb(N.table.getDisjunctions().
+                    Ñ.table.setDisjAbb(Ñ.table.getDisjunctions().
                         get(ñl_Ram.getSelectedIndex()),
                         ñt_AbbRam.getText());
 
                     //
-                    N.table.setCon1Name(N.table.getDisjunctions().
+                    Ñ.table.setCon1Name(Ñ.table.getDisjunctions().
                         get(ñl_Ram.getSelectedIndex()),
                         ñt_NameCon1.getText());
 
-                    N.table.setCon2Name(N.table.getDisjunctions().
+                    Ñ.table.setCon2Name(Ñ.table.getDisjunctions().
                         get(ñl_Ram.getSelectedIndex()),
                         ñt_NameCon2.getText());
 
-                    N.table.setCon3Name(N.table.getDisjunctions().
+                    Ñ.table.setCon3Name(Ñ.table.getDisjunctions().
                         get(ñl_Ram.getSelectedIndex()),
                         ñt_NameCon3.getText());
 
                     //
-                    N.table.setCon1Abb(N.table.getDisjunctions().
+                    Ñ.table.setCon1Abb(Ñ.table.getDisjunctions().
                         get(ñl_Ram.getSelectedIndex()),
                         ñt_AbbCon1.getText());
 
-                    N.table.setCon2Abb(N.table.getDisjunctions().
+                    Ñ.table.setCon2Abb(Ñ.table.getDisjunctions().
                         get(ñl_Ram.getSelectedIndex()),
                         ñt_AbbCon2.getText());
 
-                    N.table.setCon3Abb(N.table.getDisjunctions().
+                    Ñ.table.setCon3Abb(Ñ.table.getDisjunctions().
                         get(ñl_Ram.getSelectedIndex()),
                         ñt_AbbCon3.getText());
 
                     //
-                    N.table.setCon1Des(N.table.getDisjunctions().
+                    Ñ.table.setCon1Des(Ñ.table.getDisjunctions().
                         get(ñl_Ram.getSelectedIndex()),
                         ñt_DesCon1.getText());
 
-                    N.table.setCon2Des(N.table.getDisjunctions().
+                    Ñ.table.setCon2Des(Ñ.table.getDisjunctions().
                         get(ñl_Ram.getSelectedIndex()),
                         ñt_DesCon2.getText());
 
-                    N.table.setCon3Des(N.table.getDisjunctions().
+                    Ñ.table.setCon3Des(Ñ.table.getDisjunctions().
                         get(ñl_Ram.getSelectedIndex()),
                         ñt_DesCon3.getText());
 
                     listModelRam.clear();
-                    for (Disjunction d : N.table.getDisjunctions()){
-                        listModelRam.addElement(N.table.getDisjName(d));
+                    for (Disjunction d : Ñ.table.getDisjunctions()){
+                        listModelRam.addElement(Ñ.table.getDisjName(d));
                     }
 
                     listModelImp.clear();
-                    for (Disjunction d : N.table.getDisjunctions()){
-                        listModelImp.addElement(N.table.getDisjName(d));
+                    for (Disjunction d : Ñ.table.getDisjunctions()){
+                        listModelImp.addElement(Ñ.table.getDisjName(d));
                     }
                 }
                 info.setText("Guardado...");
 
             }
-        } else if (!(N.isOpen())) {
+        } else if (!(Ñ.isOpen())) {
             JOptionPane.showMessageDialog(rootPane, "No se ha cargado "
                 + "ninguna Tabla de Deducciones y no hay nada que editar.\n"
                 + "Porfavor crear o abrir un nuevo archivo desde el menú "
@@ -1641,15 +1641,15 @@ public class GUI extends javax.swing.JFrame {
             ñw_RamParents.setVisible(true);
 
             GUI_Cons.listModelCons.clear();
-            for(String s : N.getAllParents()){
+            for(String s : Ñ.getAllParents()){
                 GUI_Cons.listModelCons.addElement(s);
             }
 
             // Preselecciona en la lista ñl_FromRam las conjunciones que son
             // padres de la disyunción seleccionada en ñl_Ram. Ahora se espera
             // alguna acción de la ventana generada por GUI_Cons.java
-            GUI_Cons.ñl_Cons.setSelectedIndices(N.table.
-                getParentsIndices(N.table.getDisjunctions().
+            GUI_Cons.ñl_Cons.setSelectedIndices(Ñ.table.
+                getParentsIndices(Ñ.table.getDisjunctions().
                     get(ñl_Ram.getSelectedIndex())));
         }
 
@@ -1684,7 +1684,7 @@ public class GUI extends javax.swing.JFrame {
                 // de aquella disyunción, porque si es permitido que hayan
                 // ramificaciones flotando, pero no que se borre una que sirve
                 // de soporte para otra.
-                N.table.deleteRamification(N.table.getDisjunctions().
+                Ñ.table.deleteRamification(Ñ.table.getDisjunctions().
                     get(ñl_Ram.getSelectedIndex()));
 
                 listModelRam.remove(ñl_Ram.getSelectedIndex());
@@ -1710,8 +1710,8 @@ public class GUI extends javax.swing.JFrame {
 
                 // Actualizar la lista de Conjunciones
                 listModelImp.clear();
-                for (Disjunction d : N.table.getDisjunctions()){
-                    listModelImp.addElement(N.table.getDisjName(d));
+                for (Disjunction d : Ñ.table.getDisjunctions()){
+                    listModelImp.addElement(Ñ.table.getDisjName(d));
                 }
             }
         }
@@ -1721,8 +1721,8 @@ public class GUI extends javax.swing.JFrame {
         if(ñl_Ram.isSelectionEmpty()){
             // Do nothing or there will be an exception
         } else if (!(ñl_Ram.isSelectionEmpty())){
-            listModelRam.addElement(N.table.getDisjName(
-                N.table.cloneRamification(N.table.getDisjunctions().get(ñl_Ram.getSelectedIndex()))
+            listModelRam.addElement(Ñ.table.getDisjName(
+                Ñ.table.cloneRamification(Ñ.table.getDisjunctions().get(ñl_Ram.getSelectedIndex()))
             ));
             //            Ñ.table.cloneRamification(Ñ.table.getDisjunctions().get(ñl_Ram.getSelectedIndex()));
 
@@ -1730,13 +1730,13 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_ñb_CloneRamActionPerformed
 
     private void ñb_NewRamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ñb_NewRamActionPerformed
-        if (!(N.isOpen())){
+        if (!(Ñ.isOpen())){
             info.setText("No se puede crear una nueva ramificación porque no "
                 + "hay ningún documento abierto.");
-        } else if (N.isOpen()){
-            Disjunction d = N.table.createRamification();
-            listModelRam.addElement(N.table.getDisjName(d));
-            listModelImp.addElement(N.table.getDisjName(d));
+        } else if (Ñ.isOpen()){
+            Disjunction d = Ñ.table.createRamification();
+            listModelRam.addElement(Ñ.table.getDisjName(d));
+            listModelImp.addElement(Ñ.table.getDisjName(d));
         }
     }//GEN-LAST:event_ñb_NewRamActionPerformed
 
@@ -1758,30 +1758,30 @@ public class GUI extends javax.swing.JFrame {
                 //
             } else if (ñl_Ram.getSelectedIndex() >= 0) {
 
-                Disjunction d = N.table.getDisjunctions().
+                Disjunction d = Ñ.table.getDisjunctions().
                 get(ñl_Ram.getSelectedIndex());
 
-                ñt_NameRam.setText(N.table.getDisjName(d));
-                ñt_AbbRam.setText(N.table.getDisjAbb(d));
+                ñt_NameRam.setText(Ñ.table.getDisjName(d));
+                ñt_AbbRam.setText(Ñ.table.getDisjAbb(d));
 
                 // Names of three conjunctions of the disjunction d
-                ñt_NameCon1.setText(N.table.getCon1Name(d));
-                ñt_NameCon2.setText(N.table.getCon2Name(d));
-                ñt_NameCon3.setText(N.table.getCon3Name(d));
+                ñt_NameCon1.setText(Ñ.table.getCon1Name(d));
+                ñt_NameCon2.setText(Ñ.table.getCon2Name(d));
+                ñt_NameCon3.setText(Ñ.table.getCon3Name(d));
 
                 // Abbreviations of three conjunctions of the disjunction d
-                ñt_AbbCon1.setText(N.table.getCon1Abb(d));
-                ñt_AbbCon2.setText(N.table.getCon2Abb(d));
-                ñt_AbbCon3.setText(N.table.getCon3Abb(d));
+                ñt_AbbCon1.setText(Ñ.table.getCon1Abb(d));
+                ñt_AbbCon2.setText(Ñ.table.getCon2Abb(d));
+                ñt_AbbCon3.setText(Ñ.table.getCon3Abb(d));
 
                 // Descriptions of three conjunctions of the disjunction d
-                ñt_DesCon1.setText(N.table.getCon1Des(d));
-                ñt_DesCon2.setText(N.table.getCon2Des(d));
-                ñt_DesCon3.setText(N.table.getCon3Des(d));
+                ñt_DesCon1.setText(Ñ.table.getCon1Des(d));
+                ñt_DesCon2.setText(Ñ.table.getCon2Des(d));
+                ñt_DesCon3.setText(Ñ.table.getCon3Des(d));
 
                 //Actualizar la lista de las conjunciones padres
                 listModelRamParents.clear();
-                for (String s : N.table.getAllParentsNames(d)){
+                for (String s : Ñ.table.getAllParentsNames(d)){
                     listModelRamParents.addElement(s);
                 }
             }
@@ -1789,7 +1789,7 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_ñl_RamValueChanged
 
     private void ñb_EditSysActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ñb_EditSysActionPerformed
-        if (N.isOpen()) {
+        if (Ñ.isOpen()) {
             if ("Editar".equals(ñb_EditSys.getText())){
                 ñb_EditSys.setText("Guardar");
 
@@ -1798,7 +1798,7 @@ public class GUI extends javax.swing.JFrame {
                 ñt_AbbSys.setEditable(true);
                 ñt_DesSys.setEditable(true);
                 ñt_Author.setEditable(true);
-                N.setModified(true);
+                Ñ.setModified(true);
 
             } else if ("Guardar".equals(ñb_EditSys.getText())) {
                 ñb_EditSys.setText("Editar");
@@ -1807,16 +1807,16 @@ public class GUI extends javax.swing.JFrame {
                 ñt_DesSys.setEditable(false);
                 ñt_Author.setEditable(false);
 
-                N.table.setTableDate(LocalDate.now());
-                ñt_Date.setText(N.table.getTableDate());
+                Ñ.table.setTableDate(LocalDate.now());
+                ñt_Date.setText(Ñ.table.getTableDate());
 
-                N.table.setTableName(ñt_NameSys.getText());
-                N.table.setTableAbb(ñt_AbbSys.getText());
-                N.table.setTableDes(ñt_DesSys.getText());
-                N.table.setTableAuthor(ñt_Author.getText());
+                Ñ.table.setTableName(ñt_NameSys.getText());
+                Ñ.table.setTableAbb(ñt_AbbSys.getText());
+                Ñ.table.setTableDes(ñt_DesSys.getText());
+                Ñ.table.setTableAuthor(ñt_Author.getText());
 
             }
-        } else if (!(N.isOpen())) {
+        } else if (!(Ñ.isOpen())) {
             JOptionPane.showMessageDialog(rootPane, "No se ha cargado "
                 + "ninguna Tabla de Deducciones y no hay nada que editar.\n"
                 + "Porfavor crear o abrir un nuevo archivo desde el menú "
@@ -1994,6 +1994,6 @@ public class GUI extends javax.swing.JFrame {
     private void setIcon() {
         // from https://www.youtube.com/watch?v=40ikcEonWng
         setIconImage(Toolkit.getDefaultToolkit().
-                getImage(getClass().getResource("/n/resources/icon_64.png")));
+                getImage(getClass().getResource("/ñ/resources/icon_64.png")));
     }
 }

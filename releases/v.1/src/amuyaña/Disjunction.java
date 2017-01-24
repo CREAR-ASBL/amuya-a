@@ -1,5 +1,5 @@
 
-package amuyana;
+package amuyaña;
 
 import java.util.ArrayList;
 

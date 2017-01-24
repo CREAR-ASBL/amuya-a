@@ -5,17 +5,17 @@
  * 
  * 
  */
-package amuyana;
+package amuyaña;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 
-public class Amuyana implements Operations{
+public class Amuyaña implements Operations{
     
     public static void main(String[] args) {
-        n.N.newÑ(args);
+        ñ.Ñ.newÑ(args);
     }
     
     private String name;
@@ -26,7 +26,7 @@ public class Amuyana implements Operations{
     
     private ArrayList<Disjunction> disjunctions;
     
-    public Amuyana() {
+    public Amuyaña() {
         name = "Nueva Tabla de Deducciones";
         abb = "_NTD";
         des = "Este es un sistema lógico";
@@ -38,7 +38,7 @@ public class Amuyana implements Operations{
         disjunctions.add(root);
     }
     
-    public Amuyana(boolean b){ }
+    public Amuyaña(boolean b){ }
 
     public void setName(String n) { name = n; }
     public String getName() { return name; }
