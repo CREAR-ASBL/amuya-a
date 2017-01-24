@@ -7,9 +7,6 @@ package n;
 import amuyana.Disjunction;
 import com.google.gson.JsonSyntaxException;
 import java.awt.Toolkit;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -19,7 +16,6 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
@@ -1998,6 +1994,6 @@ public class GUI extends javax.swing.JFrame {
     private void setIcon() {
         // from https://www.youtube.com/watch?v=40ikcEonWng
         setIconImage(Toolkit.getDefaultToolkit().
-                getImage(getClass().getResource("resources/icon_64.png")));
+                getImage(getClass().getResource("/n/resources/icon_64.png")));
     }
 }

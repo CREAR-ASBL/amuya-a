@@ -5,6 +5,8 @@
  */
 package n;
 
+import java.awt.Toolkit;
+
 /**
  *
  * @author ayar
@@ -16,6 +18,7 @@ public class GUI_Acerca extends javax.swing.JFrame {
      */
     public GUI_Acerca() {
         initComponents();
+        setIcon();
     }
 
     /**
@@ -32,9 +35,10 @@ public class GUI_Acerca extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Acerca de Amuyaña v.1");
         setResizable(false);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ñ/resources/logo.v.2_icono.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/n/resources/logo.v.2_icono.png"))); // NOI18N
 
         jLabel2.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel2.setText("<html><div>\n<p>Version actual: v.1 (23/01/2017)</p>\n</div>\n<div><hr /></div>\n<div>\n<p><strong>Amuya&ntilde;a</strong> es un programa para generar y dise&ntilde;ar Tablas de Deducciones creado por Ayar Portugal.</p>\n</div>\n<div>\n<p>&nbsp;</p>\n</div>\n<div>\n<p>El programa es distribuido gratuitamente y posee una licencia GNU GPL V.3. Su c&oacute;digo fuente se encuentra en GitHub (https://github.com/CREAR-ASBL/amuya-a).</p>\n</div>\n<div>\n<p>&nbsp;</p>\n</div>\n<div>\n<p>Los documentos con la extensi&oacute;n \".&ntilde;a\" que genera el programa son en realidad documentos Json.</p>\n</div>\n<div>\n<p>&nbsp;</p>\n</div>\n<div>\n<p>Visite el sitio web del proyecto:</p>\n<p>https://sites.google.com/site/ayarportugal/proyectos/amuyana</p>\n</div></html>");
@@ -117,4 +121,11 @@ public class GUI_Acerca extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
+
+    private void setIcon() {
+
+        // from https://www.youtube.com/watch?v=40ikcEonWng
+        setIconImage(Toolkit.getDefaultToolkit().
+                getImage(getClass().getResource("/n/resources/icon_64.png")));
+    }
 }
