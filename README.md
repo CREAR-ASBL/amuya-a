@@ -39,7 +39,7 @@ You can read about the internal structure of the -java- application in our githu
 
 ### Dependencies
 
-There is only one dependency: Gson, which is a library to convert Java Objects into their JSON representation and vice-versa. You need to download ([here](https://github.com/google/gson/)) that library first and import it. In netbeans I right-clicked in "Libraries" in the Projects tab (Menu &rarr; Window &rarr; Projects), clicked on "Add JAR/Folder" and then selected *gson-2.8.0.jar*.
+There is only one dependency: Gson, which is a library to convert Java Objects into their JSON representation and vice-versa. You need to download ([here](https://github.com/google/gson/)) that library first and import it. In netbeans I right-clicked in "Libraries" in the Projects tab (Menu &rarr; Window &rarr; Projects), clicked on "Add JAR/Folder" and then selected *gson-2.8.0.jar*. Gson is released under the Apache 2.0 license.
 
 ## Roadmap
 
