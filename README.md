@@ -3,7 +3,7 @@
 (Last update: 05/02/2017)
 
 ## Introduction
-Amuyaña is an Application that generates ** *Tables of deductions* ** (*ToD*).
+Amuyaña is an Application that generates * **Tables of deductions** * (*ToD*).
 
 A *ToD* is an abstract representation of a dynamism's evolution in the terms of the logic of the contradictory which is a formal logical system developped by french-romanian philosopher Stéphane Lupasco in the 1950's. His logic remains until today unknown to the vast majority of sciences, so this application aims at spreading acknowledgement and recognition of Lupasco's work.
 
