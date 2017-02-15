@@ -1,6 +1,6 @@
 ![Chuyma](https://github.com/CREAR-ASBL/amuya-a/blob/master/logo.v.2.png)
 
-(Last update: 05/02/2017)
+(Last update: 15/02/2017)
 
 ## Introduction
 Amuyaña is an Application that generates **Tables of deductions** (*ToD*).
@@ -16,12 +16,12 @@ There is no installer for Amuyaña, instead you jut download an executable file 
 
 This file should normally execute in any platform (Linux, Windows or Mac) that has the latest Java Runtime Environement installed. If you have any problem please contact us.
 
-You can download the latest version (v.1.1) [here](https://github.com/CREAR-ASBL/amuyana/blob/master/releases/v.1.1/store/Amuya%C3%B1a.jar).
+You can download the latest version (v.1.2) [here](https://github.com/CREAR-ASBL/amuyana/blob/master/releases/v.1.2/store/Amuya%C3%B1a.jar).
 
 ## How to use
 Simply put, once you start the application you start creating the *branches* of the *ToD* in two steps: first defining *contradictional disjunctions*, their corresponding *contradictional conjunctions* and *contradictory phenomena*, and then you visualize or export (as an image) the *ToD*.
 
-To know more about the logic of the contradictory, the *ToD* and the other notions of this logic, visit my personal [site](https://sites.google.com/site/ayarportugal/).
+To know more about the logic of the contradictory, the *ToD* and the other notions of this logic, visit the projects website [site](https://sites.google.com/site/ayarportugal/amuyana).
 
 ## Instructions for developpers
 Amuyaña has been written in Java. We maintain only two branches: master and dev.
@@ -53,6 +53,10 @@ There is only one dependency: Gson, which is a library to convert Java Objects i
 - Handle time series data, in particular for the fields of the A.class, P.class and T.class classes which are the main focus of attention for a scientific analysis.
 - Implement distint versions of Amuyaña: amuyaña-agenda, amuyaña-economy, amuyaña-production, amuyaña-research, ...
 - Implement a javaFX-based GUI so that it can be "embeded" in a website.
+- Make the disjunctions visually manipulable, i.e. real-time creation of the graphical representation of the Table of deductions instead of first defining the data and then generating the graphics.
+
+## Changelog
+- v.1.2: Improvements to the UI.
 
 ## Licence
 
