@@ -10,6 +10,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.Reader;
 import java.io.Writer;
 import java.util.ArrayList;
@@ -36,8 +37,12 @@ public abstract class Ñ{
 //        newAmuyaña();
 
 //        try {
-//            openAmuyañaDebug("/home/ayar/Amuyaña/debug1.ña");
+//            openAmuyañaDebug("/home/ayar/Proyectos/Amuyaña/Tablas/for_debug/debug3.ña");
 //        } catch (FileNotFoundException ex) {        }
+//        
+//        exportAmuyaña(Tabulator.Style.LUPASCO, Tabulator.LupascoFormat.TEX, 
+//            0, true, true, 0, 1, "/home/ayar/test.tex");
+        
     }
     
 
@@ -55,8 +60,7 @@ public abstract class Ñ{
         switch("GSON"){
             case "GSON":{
                 Gson gson = new GsonBuilder().setPrettyPrinting().create();
-                try (Writer writer = new FileWriter(file)
-                ) {
+                try (Writer writer = new FileWriter(file)) {
                     gson.toJson(amuyaña, writer);
                 } break;
             }
@@ -224,52 +228,6 @@ public abstract class Ñ{
                 cSpan + "</html>";
     }
     
-//    static public String getRamFormulation(Disjunction d){
-//        String dis = amuyaña.getDisjAbb(d);
-//        String f1 = "<sup style=\"font-size:90%\">" + amuyaña.getF1Abb(d) + "</sup>";
-//        String f2 = "<sup style=\"font-size:90%\">" + amuyaña.getF2Abb(d) + "</sup>";
-//        String PC = "<sup style=\"font-size:90%\">" + amuyaña.getCon1Abb(d) + "</sup>";
-//        String NC = "<sup style=\"font-size:90%\">" + amuyaña.getCon2Abb(d) + "</sup>";
-//        String SC = "<sup style=\"font-size:90%\">" + amuyaña.getCon3Abb(d) + "</sup>";
-//        
-//        String A = "<sub>A</sub>";
-//        String P = "<sub>P</sub>";
-//        String T = "<sub>T</sub>";
-//        
-//        String oBP = "<span style=\"font-size:160%\">(</span>";
-//        String oMP = "<span style=\"font-size:140%\">(</span>";
-//        String oSP = "<span style=\"font-size:120%\">(</span>";
-//        String cBP = "<span style=\"font-size:160%\">)</span>";
-//        String cMP = "<span style=\"font-size:140%\">)</span>";
-//        String cSP = "<span style=\"font-size:120%\">)</span>";
-//        
-//        String or = "&#8744;";
-//        String equiv= "&nbsp;&#8801;&nbsp;";
-//        String I = "<span style=\"font-size:150%\">&sup;</span>";
-//        String E = "<span style=\"font-size:150%\">&sup;&#773</span>";
-//
-//        String oSpan = "<span style=\"font-size:medium;\">";
-//        String cSpan = "</span>";
-//        
-//        String s = "<html>" + oSpan + dis+ equiv + oBP + 
-//            oMP + oSP + I + f1 + A + cSP + I + PC + oSP + E + f2 + P + cSP + cMP + or +
-//            oMP + oSP + E + f2 + A + cSP + I + NC + oSP + I + f1 + P + cSP + cMP + or +
-//            oMP + oSP + I + f1 + T + cSP + I + SC + oSP + E + f2 + T + cSP + cMP + cBP +
-//                cSpan + "</html>";
-//        return s;
-//    }
-//    
-//    static public String getConFormulation(Disjunction d){
-//        String f1 = "<span>" + amuyaña.getF1Abb(d) + "</span>";
-//        String f2 = "<span>" + amuyaña.getF2Abb(d) + "</span>";
-//        String oBP = "<span style=\"font-size:16px\">(</span>";
-//        String cBP = "<span style=\"font-size:16px\">)</span>";
-//        String oSpan = "<span style=\"font-size:14px; text-align:center;\">";
-//        String cSpan = "</span>";
-//        String dot = "&#183;";
-//        
-//        return "<html>" + oSpan + oBP + f1 + dot + f2 + cBP + cSpan + "</html>";
-//    }
 
     /*
     METODOS PARA LA PESTAÑA REPRESENTACIONES TABULARES
@@ -292,24 +250,66 @@ public abstract class Ñ{
                 GUI_Visualize visualizer = new GUI_Visualize(lupascoPanel);
                 visualizer.setVisible(true);
                 visualizer.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
+                break;
             } case SIERPINSKI :{
-                
+                break;
             } case CHAKANA :{
-                
+                break;
             } case AMUYAÑA :{
-                
+                break;
             }
         }
                 
     }
-    
-    public static void exportLupasco(int d, boolean signs, boolean full,
+    public static void exportAmuyaña(Tabulator.Style style, Tabulator.LupascoFormat format, 
+            int d, boolean signs, boolean full,
             int color, int size, String file) throws IOException{
+        
         Disjunction disjunction = amuyaña.getDisjunctions().get(d);
         Tabulator tabulator = new Tabulator();
-        ScreenImage.writeImage(ScreenImage.createImage(
-                tabulator.getLupascoForExport(disjunction, signs,
-                        full, color, size)), file);
+        
+        switch (style){
+            case LUPASCO:{
+                switch (format){
+                    case IMAGE:{
+                        
+                        JPanel panelForExport = (JPanel) tabulator.
+                                getLupascoForExport(Tabulator.LupascoFormat.IMAGE, 
+                                        disjunction, signs, full, color, size);
+                        ScreenImage.writeImage(ScreenImage.createImage(panelForExport), file);
+                        break;
+                    }
+                    case TEX:{
+                        String plainLatex = (String) tabulator.
+                                getLupascoForExport(Tabulator.LupascoFormat.TEX, 
+                                        disjunction, signs, full, color, size);
+                    try (PrintWriter out = new PrintWriter(file)) {
+                        out.print(plainLatex);
+                        out.close();
+                    }
+                        break;
+                    }
+                    case HTML:{
+                        break;
+                    }
+                    case OPENDOCUMENT:{
+                        break;
+                    }
+                }
+                
+                break;
+            } case SIERPINSKI :{
+                break;
+            } case CHAKANA :{
+                break;
+            } case AMUYAÑA :{
+                break;
+            }
+
+        }
+
+        
+        
     }
 
     static boolean isParent(int selectedIndex) {

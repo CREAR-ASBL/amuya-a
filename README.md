@@ -1,6 +1,6 @@
 ![Amuyaña](https://github.com/CREAR-ASBL/amuyana/blob/master/logo.v.2.png)
 
-(Last update: 19/02/2017)
+(Last update: 21/02/2017)
 
 ## Introduction
 Amuyaña is an Application that generates and designs **Tables of deductions** (*ToD*). The word *amuyaña* is a term in Aymara.
@@ -18,7 +18,7 @@ The [github wiki](https://github.com/CREAR-ASBL/amuyana/wiki) has information ab
 These pages will be updated continually so visit them from time to time.
 
 ## Current version
-1.2
+1.3
 
 ## How to install
 There is no installer for Amuyaña, instead you jut download an executable file, open it and start using the application.

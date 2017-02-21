@@ -1,4 +1,4 @@
-
+    
 package tabulator;
 
 import amuyaña.Disjunction;
@@ -20,7 +20,7 @@ public class Tabulator {
     }
     
     public enum LupascoFormat {
-        PANEL, HTML, LATEX, OPENDOCUMENT
+        IMAGE, TEX, HTML, OPENDOCUMENT
     }
     
     /*
@@ -35,8 +35,22 @@ public class Tabulator {
         return new JPanel();
     }
     
-    public JPanel getLupascoForExport(Disjunction d, boolean signs, boolean full, int color, int size) {
-        return LupascoPanel.getTreeForExport(d, signs, full, color, size);
+    public Object getLupascoForExport(Tabulator.LupascoFormat format, Disjunction d, boolean signs, boolean full, int color, int size) {
+        switch (format){
+            case IMAGE:{
+                return  LupascoPanel.getTreeForExport(d, signs, full, color, size);
+            }
+            case TEX:{
+                return LupascoTex.getTreeForExport(d, signs, full, color, size);
+            }
+            case HTML:{
+                break;
+            }
+            case OPENDOCUMENT:{
+                break;
+            }
+        }
+        return null;
     }
 
     public String getLupascoHTML() {
@@ -45,7 +59,7 @@ public class Tabulator {
     }
     
     public String getLupascoLATEX() {
-        // return Lupasco.getLatexFile();
+        //return Lupasco.getLatexFile();
         return new String();
     }
     
