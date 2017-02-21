@@ -224,6 +224,9 @@ public class GUI extends javax.swing.JFrame {
         ñfc_Export.setAcceptAllFileFilterUsed(false);
         ñfc_Export.setAccessory(jPanel24);
         ñfc_Export.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);
+        ñfc_Export.setApproveButtonText("Aceptar");
+        ñfc_Export.setApproveButtonToolTipText("");
+        ñfc_Export.setFileFilter(new FileNameExtensionFilter("Image or Plain latex (*.jpg, *.gif, *.png, *.tex)", "jpg", "gif", "png", "tex"));
         ñfc_Export.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ñfc_ExportActionPerformed(evt);
