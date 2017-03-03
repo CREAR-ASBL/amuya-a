@@ -1,4 +1,4 @@
-![Amuyaña](https://github.com/CREAR-ASBL/amuyana/blob/master/logo.v.2.png)
+![Amuyaña](http://i65.tinypic.com/e69ht4.jpg)
 
 (Last update: 21/02/2017)
 
