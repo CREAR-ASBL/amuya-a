@@ -5,7 +5,7 @@
 ## Introduction
 Amuyaña is an Application that generates and designs **Tables of deductions** (*ToD*). The word *amuyaña* is a term in Aymara.
 
-A *ToD* is an abstract representation of a dynamism's evolution in the terms of the logic of the contradictory which is a formal logical system developped by french-romanian philosopher Stéphane Lupasco in the 1950's. His logic remains until today unknown to the vast majority of sciences, so this application also aims at spreading acknowledgement and recognition of Lupasco's work.
+A *ToD* is an abstract representation of a dynamism's evolution in the terms of the logic of the contradictory which is a formal logical system developed by french-romanian philosopher Stéphane Lupasco in the 1950's. His logic remains until today unknown to the vast majority of sciences, so this application also aims at spreading acknowledgement and recognition of Lupasco's work.
 
 The main purpose of this Application is to serve as a tool for organizing information in a scientific investigation that applies the logic of the contradictory.
 
@@ -32,38 +32,22 @@ Simply put, once you start the application you start creating the *branches* of 
 
 ## Instructions for developpers
 Amuyaña has been written in Java. We maintain only a master branch.
-	
+
 The simplest way to get the source code is to pull the repository, for example:
 
 	git clone https://github.com/CREAR-ASBL/amuyana.git
 
 Once you have the repository you will notice that it can be oppened as a NetBeans project.
 
-- Don't remove the .gitignore file, however you can safely remove four files:_config.yml, logo.v.2.png, README and LICENCE.
+- Don't remove the .gitignore file, however you can safely remove three files: &#95;config.yml, README and LICENCE.
 
 - The file build.xml contains instructions to package the source code into the executable jar, including the gson library (otherwise the default executable jar obtained after the compilation requires the gson.jar library). In NetBeans execute build.xml by right clicking build.xml in the 'files' tab (Menu &rarr; Window &rarr; Files) and selecting 'Run Target &rarr; Other Targets &rarr; package_for_store'
 
-Then add Gson (used to save the ToD in the disk until we find another solution that does not require an external library) to the project's library. You can download ([here](https://github.com/google/gson/)) that library, to import it in netbeans, right click in "Libraries" in the Projects tab (Menu &rarr; Window &rarr; Projects), click on "Add JAR/Folder" and then select *gson-2.8.0.jar*. Gson is released under the Apache 2.0 license.
+Before compiling or building the project through build.xml you need to add Gson (used to save the ToD in the disk until we find another solution that does not require an external library) to the project's library. You can download ([here](https://github.com/google/gson/)) that library, to import it in netbeans, right click in "Libraries" in the Projects tab (Menu &rarr; Window &rarr; Projects), click on "Add JAR/Folder" and then select *gson-2.8.0.jar*. Gson is released under the Apache 2.0 license.
 
 ## To-do
 
-The items are not shown in chronological order nor in importance. The overline means that it has already been done.
-
-- ~~Save and open "Amuyaña files"~~: current format is json, but the application will set the extension .ña by default.
-- Implement distinct visualizations of the ToD:
-	- ~~Lupasco style~~: The way Stéphane Lupasco represented the ToD himself in his book about the logic of the contradictory (*"Le principe d'antagonisme et la logique de l'énergie"*)
-	- Sierpinski style: Our representation of the ToD using the *Sierpinski's fractal*
-	- Chakana style: Our representation of the ToD using the "Andean cross"
-	- Amuyaña style: Our representation of the ToD using circular representations
-- Add options to export in different formats:
-	- ~~Image~~: export in gif, jpg and png formats
-	- ~~Tex~~: export a plain latex file to embed in you latex document
-	- Html: export plain html to insert in a website
-	- OpenDocument: export in OpenDocument format
-- Handle time series data, in particular for the fields of the A.class, P.class and T.class classes which are the main focus of attention for a scientific analysis
-- Implement distint versions of Amuyaña: amuyaña-agenda, amuyaña-economy, amuyaña-production, amuyaña-research, ...
-- Replace Swing by JavaFX
-- Make the disjunctions visually manipulable, i.e. real-time creation of the graphical representation of the Table of deductions instead of first defining the data and then generating the graphics
+The development plan is in the [wiki section](https://github.com/CREAR-ASBL/amuyana/wiki/Planification).
 
 ## Licence
 
