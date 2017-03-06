@@ -218,7 +218,7 @@ public abstract class Ñ{
         String I = "<span style=\"font-size:150%\">&sup;</span>";
         String E = "<span style=\"font-size:150%\">&sup;&#773</span>";
 
-        String oSpan = "<span style=\"font-size:medium;font-weight: 200;\">";
+        String oSpan = "<span style=\"font-size:small;font-weight: 200;\">";
         String cSpan = "</span>";
         
         return "<html>" + oSpan + dis + equiv + oBP + f1 + dot + f2 + cBP + equiv + oBP + 
