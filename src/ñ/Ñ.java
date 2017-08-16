@@ -66,8 +66,7 @@ public abstract class Ñ{
             }
             case "GSON_TREE":{
                 Gson gson = new GsonBuilder().setPrettyPrinting().create();
-                try (Writer writer = new FileWriter(file)
-                ) {
+                try (Writer writer = new FileWriter(file)) {
                     gson.toJson(amuyaña.getDisjunctions().get(0), writer);
                 } break;
             }
