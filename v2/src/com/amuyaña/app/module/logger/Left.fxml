@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<ScrollPane fitToHeight="true" fitToWidth="true" maxWidth="300.0" minWidth="0.0" prefHeight="500.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.amuyaña.app.module.logger.LoggerController">
+   <content>
+      <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity">
+         <children>
+            <Label text="Label" />
+            <Button mnemonicParsing="false" text="Button" />
+            <HBox maxWidth="1.7976931348623157E308">
+               <children>
+                  <Button mnemonicParsing="false" text="Button" />
+                  <TextField maxWidth="1.7976931348623157E308" minWidth="50.0" prefWidth="100.0" HBox.hgrow="ALWAYS" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </content>
+</ScrollPane>

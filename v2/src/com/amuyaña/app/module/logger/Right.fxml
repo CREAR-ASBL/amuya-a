@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<ScrollPane fitToHeight="true" fitToWidth="true" maxWidth="300.0" minWidth="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.amuyaña.app.module.logger.LoggerController">
+   <content>
+      <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" stylesheets="@../style.css">
+         <children>
+            <Label text="Event Information" />
+            <HBox>
+               <children>
+                  <Label text="Date: " />
+                  <Label text="-DATE-" />
+               </children>
+            </HBox>
+            <HBox layoutX="10.0" layoutY="37.0">
+               <children>
+                  <Label text="Class: " />
+                  <Label text="-CLASS-" />
+               </children>
+            </HBox>
+            <HBox layoutX="10.0" layoutY="64.0">
+               <children>
+                  <Label text="User: " />
+                  <Label text="-USER-" />
+               </children>
+            </HBox>
+            <HBox layoutX="10.0" layoutY="91.0">
+               <children>
+                  <Label text="Type: " />
+                  <Label text="-UI / LOGIC SYSTEM -" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </content>
+</ScrollPane>
