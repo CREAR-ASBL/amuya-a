@@ -24,13 +24,13 @@ After testing that first release and trying to create logic systems, I realized 
 - Tridialectic Apparatus:
 - Space-Time Configuration:
 
-And the statistical data is directly linked to each one of these three concepts.
+These three concepts are direct implications of the Fundamental Postulate. At the moment of compiling data, as we associate any phenomenon to one of the three Contradictional conjunctions, we *can* (the proof will be submited to a journal for peer-to-peer review) infer the exact definition of the ToD, the TA and the STC.
 
-It is worth mentioning that these three concepts, which I claim are sufficient to create a detailed representation of a CLS, are deduced, summarized, from one and only one concept, which plays the role of hypothesis, axiom or postulate, called by Lupasco the Fundamental Postulate of the Dynamic Logic of the Contradictory. This fundamental Postulate invites the thinker, the one who wants to apply this formal logic, to consider not two (True or False) but three possible eventualities (Positive, Negative or Symmetric) at the moment of "sorting out" the categories in its mind (and later in Amuyaña or eventually a piece of paper). Explaining what does this exactly mean is beyond the scope of this document (visit the [website](http://amuyaña.com/) for more information), but the point is that the *Fundamental Postulate*, which describes how and why these three eventualities can happen and actually do happen, is sufficient to deduce the ToD, TA and the STC. In other words, we are not interpreting the Logic of the Contradictory, we are fully recreating its main core concepts by departing from only the Fundamental Postulate.
+It is worth emphazising the fact that these three concepts, which I claim are sufficient to create a detailed representation of a CLS, are deduced, implied, from one axiom only, called by Stéphane Lupasco (1951) the Fundamental Postulate of the Dynamic Logic of the Contradictory. This fundamental Postulate describes how and why the energy orientates to the three polarities, or *devenir*, the eventualities (the thee Contradictional conjunctions) can happen and actually do happen.
 
-Starting from the release v2 the structure of the source code changes completely. I privilege the emulation of a formation of a fundamental duality (two elements becoming associated as in the Fundamental Postulate) and then the graphical engine inmediately creates a visual representation, in contrast to the previous version where statistical data introduced (the first step of the "emulation") was a separate task from the creation of the visual representations. This was the case because I wanted to save the raw data (the files with the extension .ña which contained the elements of the system), and separating data from graphical representation seemed logical to me. Unfortunately this is not the best option when there are more than one representation needed, like when we introduce the Tridialectic Apparatus and the Space-Time Configuration (at first I thought the ToD was first, then the other two, but actually the three are equally important), and at the end I decided to start from scratch.
+Starting from the release v2 the structure of the source code changes completely. I privilege the emulation of a formation of a fundamental duality (two elements becoming associated as in the Fundamental Postulate) and then the graphical engine inmediately creates a visual representation, in contrast to the previous version where statistical data introduced (the first step of the "emulation") was a separate task from the creation of the visual representations. This was the case because I wanted to save the raw data (the files with the extension .ña which contained the elements of the system), and separating data from graphical representation seemed logical to me. Unfortunately this is not the best option when there are more than one representation needed, like when we introduce the Tridialectic Apparatus and the Space-Time Configuration (for a more detailed explanation [visit](at first I thought the ToD was first, then the other two, but actually the three are simultaneous)). That obliged me to rethink the internal logic of the source code, and at the end I decided to start from scratch (for the forth time since 2016).
 
-Amuyaña has the final objective of serving as a tool for organizing information in scientific investigations, specially when the Logic of the Contradictory is required.
+Amuyaña has the final objective of serving as a tool for organizing and analysing information in scientific investigations, specifically when the Logic of the Contradictory is [required](when is this logic required?).
 
 ## Current version
 1.3
@@ -45,8 +45,6 @@ The simplest way to get the source code is to pull the repository, for example:
 
 	git clone https://github.com/CREAR-ASBL/amuyana.git
 
-Open the repository with NetBeans or enter to the source folder to access the code.
-
 Visit the [wiki section](https://github.com/CREAR-ASBL/amuyana/wiki) for more information about the source code and how it runs step by step to create the main graphs. A more detailed overview of the classes, methods, variables, etc. is available in the docs.
 
 ## Links
@@ -57,6 +55,7 @@ The [github wiki](https://github.com/CREAR-ASBL/amuyana/wiki) has information ab
 
 ## Abbreviations
 Contradictional Logic System or logic system of the Dynamic Logic of the Contradictory = CLS
+
 Table of Deductions = ToD
 
 ## Licence
