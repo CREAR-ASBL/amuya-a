@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<SplitPane dividerPositions="0.3, 0.7" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.amuyaña.app.gui.module.dualities.DualitiesController">
+   <items>
+      <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" SplitPane.resizableWithParent="false">
+         <content>
+            <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Label text="Dualities" />
+                  <Button mnemonicParsing="false" text="New duality" />
+                  <Button layoutX="10.0" layoutY="37.0" mnemonicParsing="false" text="Delete duality" />
+                  <Button layoutX="10.0" layoutY="76.0" mnemonicParsing="false" text="Duplicate duality" />
+               </children>
+            </VBox>
+         </content>
+      </ScrollPane>
+      <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="700.0" SplitPane.resizableWithParent="false">
+         <content>
+            <TableView editable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="200.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" tableMenuButtonVisible="true">
+               <columns>
+                  <TableColumn fx:id="colDynamism" maxWidth="1.7976931348623157E308" minWidth="-Infinity" text="ID" />
+                  <TableColumn fx:id="colDynamism1" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="180.0" text="Generic name" />
+                  <TableColumn fx:id="colType" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="50.0" text="e" />
+                  <TableColumn fx:id="colType1" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="50.0" text="e" />
+                  <TableColumn fx:id="colPositive" prefWidth="130.0" text="Positive" />
+                  <TableColumn fx:id="colNegative" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="130.0" text="Negative" />
+                  <TableColumn fx:id="colSymmetric" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="130.0" text="Symmetric" />
+               </columns>
+            </TableView>
+         </content>
+      </ScrollPane>
+      <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" SplitPane.resizableWithParent="false" />
+   </items>
+</SplitPane>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<MenuBar xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.amuyaña.app.gui.module.MenuController">
+  <menus>
+    <Menu mnemonicParsing="false" text="Account">
+         <items>
+            <MenuItem mnemonicParsing="false" text="Login" />
+            <MenuItem mnemonicParsing="false" text="Profile" />
+            <MenuItem mnemonicParsing="false" text="Usage statistics" />
+         </items>
+    </Menu>
+    <Menu mnemonicParsing="false" text="Contradictional System">
+      <items>
+        <MenuItem mnemonicParsing="false" onAction="#loadDualities" text="Overview of Dualities" />
+            <MenuItem mnemonicParsing="false" text="Table of Deductions" />
+            <MenuItem mnemonicParsing="false" text="Tridialectic Apparatus" />
+            <MenuItem mnemonicParsing="false" text="Space-Time Configuration" />
+      </items>
+    </Menu>
+    <Menu mnemonicParsing="false" text="Tools">
+      <items>
+        <MenuItem mnemonicParsing="false" text="Settings" />
+            <MenuItem mnemonicParsing="false" onAction="#loadLogger" text="Logger" />
+      </items>
+    </Menu>
+      <Menu mnemonicParsing="false" text="Help">
+         <items>
+            <MenuItem mnemonicParsing="false" onAction="#debugAction" text="Debug button" />
+            <MenuItem mnemonicParsing="false" text="About" />
+         </items>
+      </Menu>
+  </menus>
+</MenuBar>
