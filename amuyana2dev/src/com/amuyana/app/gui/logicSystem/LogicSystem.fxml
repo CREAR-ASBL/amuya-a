@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.layout.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+
+
+<ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="500.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.amuyana.app.gui.logicSystem.LogicSystemController">
+   <content>
+      <VBox alignment="TOP_CENTER" fillWidth="false" styleClass="base" stylesheets="@../style.css">
+         <children>
+            <VBox>
+               <children>
+                  <VBox maxWidth="1.7976931348623157E308" minWidth="600.0" prefWidth="800.0" spacing="20.0">
+                     <children>
+                        <TitledPane id="ttldPn_" text="Systems" VBox.vgrow="ALWAYS">
+                           <content>
+                              <HBox spacing="10.0">
+                                 <children>
+                                    <ToolBar orientation="VERTICAL" styleClass="tlbr_logicsystem">
+                                       <items>
+                                          <TextField prefWidth="90.0" promptText="Filter" />
+                                          <ToggleButton disable="true" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" styleClass="bttn_toolbar" text="Edit" />
+                                          <Button maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="90.0" styleClass="bttn_toolbar" text="New" />
+                                          <Button disable="true" layoutX="10.0" layoutY="43.0" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="90.0" styleClass="bttn_toolbar" text="Load" />
+                                          <Button disable="true" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" styleClass="bttn_toolbar" text="Delete" />
+                                          <Button disable="true" minWidth="-Infinity" mnemonicParsing="false" prefWidth="90.0" styleClass="bttn_toolbar" text="Duplicate" />
+                                          <Button disable="true" minWidth="-Infinity" mnemonicParsing="false" styleClass="bttn_toolbar" text="Join..." />
+                                       </items>
+                                    </ToolBar>
+                                    <VBox spacing="10.0" HBox.hgrow="ALWAYS">
+                                       <children>
+                                          <VBox />
+                                          <HBox alignment="CENTER_LEFT">
+                                             <children>
+                                                <Label minWidth="-Infinity" text="Select a Contradictional Logic System:" />
+                                                <ComboBox fx:id="cobxSystems" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
+                                             </children>
+                                          </HBox>
+                                          <HBox alignment="CENTER_LEFT">
+                                             <children>
+                                                <Label minWidth="-Infinity" text="Date of creation:" />
+                                                <Label text="lblCreationDate" />
+                                             </children>
+                                          </HBox>
+                                          <HBox>
+                                             <children>
+                                                <Label text="Description:" />
+                                                <TextArea prefHeight="100.0" wrapText="true" HBox.hgrow="ALWAYS" />
+                                             </children>
+                                          </HBox>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </HBox>
+                           </content>
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </TitledPane>
+                     </children>
+                  </VBox>
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+   </content>
+</ScrollPane>

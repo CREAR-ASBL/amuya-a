@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<ScrollPane fitToWidth="true" prefHeight="600.0" prefWidth="800.0" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.amuyana.app.gui.log.LogController">
+   <content>
+      <VBox alignment="TOP_CENTER" fillWidth="false" styleClass="base">
+         <children>
+            <VBox>
+               <children>
+                  <VBox maxWidth="1.7976931348623157E308" minWidth="600.0" prefWidth="800.0">
+                     <children>
+                        <TitledPane id="ttldPn_" maxWidth="900.0" minWidth="600.0" text="Logs">
+                           <content>
+                              <VBox spacing="10.0">
+                                 <children>
+                                    <HBox minHeight="-Infinity" spacing="10.0">
+                                       <children>
+                                          <ToolBar maxHeight="1.7976931348623157E308" minHeight="150.0" orientation="VERTICAL" styleClass="tlbr_logicsystem" HBox.hgrow="ALWAYS">
+                                             <items>
+                                                <TextField prefWidth="90.0" promptText="Filter" />
+                                                <Button minHeight="-Infinity" mnemonicParsing="false" prefWidth="90.0" styleClass="bttn_toolbar" text="Export" textAlignment="CENTER" wrapText="true" />
+                                             </items>
+                                          </ToolBar>
+                                          <VBox spacing="10.0" HBox.hgrow="ALWAYS">
+                                             <children>
+                                                <HBox alignment="CENTER_LEFT" fillHeight="false" prefWidth="200.0">
+                                                   <children>
+                                                      <Label text="Database:" />
+                                                      <Label text="_databasename" />
+                                                   </children>
+                                                </HBox>
+                                                <HBox alignment="CENTER_LEFT" fillHeight="false" layoutX="10.0" layoutY="10.0" prefWidth="200.0">
+                                                   <children>
+                                                      <Label text="Total log entries:" />
+                                                      <Label text="#entries" />
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </HBox>
+                                    <TableView prefHeight="300.0" prefWidth="200.0" styleClass="tblvw_logicsystem">
+                                      <columns>
+                                        <TableColumn prefWidth="75.0" text="Date" />
+                                        <TableColumn prefWidth="75.0" text="Type" />
+                                          <TableColumn prefWidth="116.0" text="User" />
+                                          <TableColumn prefWidth="443.0" text="Message" />
+                                      </columns>
+                                    </TableView>
+                                 </children>
+                              </VBox>
+                           </content>
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </TitledPane>
+                     </children>
+                  </VBox>
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+   </content>
+</ScrollPane>

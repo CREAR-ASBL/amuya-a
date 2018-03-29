@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<ScrollPane fitToWidth="true" prefHeight="900.0" prefWidth="850.0" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.amuyana.app.gui.settings.SettingsController">
+   <content>
+      <VBox alignment="TOP_CENTER" fillWidth="false" styleClass="base">
+         <children>
+            <VBox>
+               <children>
+                  <VBox maxWidth="1.7976931348623157E308" minWidth="600.0" prefWidth="800.0" spacing="20.0">
+                     <children>
+                        <TitledPane id="ttldPn_" layoutX="10.0" layoutY="10.0" maxWidth="900.0" minWidth="600.0" text="Database">
+                           <content>
+                              <HBox spacing="10.0">
+                                 <children>
+                                    <ToolBar orientation="VERTICAL" styleClass="tlbr_logicsystem">
+                                       <items>
+                                          <Button fx:id="btnConnect" minHeight="-Infinity" mnemonicParsing="false" onAction="#connectToDb" prefWidth="90.0" styleClass="bttn_toolbar" text="Connect" textAlignment="CENTER" wrapText="true" />
+                                          <Button layoutX="10.0" layoutY="10.0" minHeight="-Infinity" mnemonicParsing="false" prefWidth="90.0" styleClass="bttn_toolbar" text="New" textAlignment="CENTER" wrapText="true" />
+                                          <ToggleButton disable="true" maxWidth="-Infinity" minHeight="-Infinity" mnemonicParsing="false" styleClass="bttn_toolbar" text="Save" textAlignment="CENTER" wrapText="true" />
+                                          <ToggleButton disable="true" layoutX="10.0" layoutY="43.0" maxWidth="-Infinity" minHeight="-Infinity" mnemonicParsing="false" styleClass="bttn_toolbar" text="Delete" textAlignment="CENTER" wrapText="true" />
+                                       </items>
+                                    </ToolBar>
+                                    <VBox spacing="10.0" HBox.hgrow="ALWAYS">
+                                       <children>
+                                          <HBox alignment="CENTER_LEFT" fillHeight="false" prefWidth="200.0">
+                                             <children>
+                                                <Label text="Hostname:" />
+                                                <ChoiceBox prefWidth="200.0" />
+                                                <TextField HBox.hgrow="ALWAYS" />
+                                             </children>
+                                          </HBox>
+                                          <HBox alignment="CENTER_LEFT" fillHeight="false" layoutX="10.0" layoutY="170.0" prefWidth="200.0" spacing="5.0">
+                                             <children>
+                                                <Label text="Port" />
+                                                <TextField prefWidth="60.0" />
+                                             </children>
+                                          </HBox>
+                                          <HBox alignment="CENTER_LEFT" fillHeight="false" layoutX="10.0" layoutY="195.0" prefWidth="200.0" spacing="5.0">
+                                             <children>
+                                                <Label text="Username:" />
+                                                <TextField HBox.hgrow="ALWAYS" />
+                                             </children>
+                                          </HBox>
+                                          <HBox alignment="CENTER_LEFT" fillHeight="false" layoutX="10.0" layoutY="84.0" prefWidth="200.0" spacing="5.0">
+                                             <children>
+                                                <Label text="Password:" />
+                                                <TextField HBox.hgrow="ALWAYS" />
+                                             </children>
+                                          </HBox>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </HBox>
+                           </content>
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </TitledPane>
+                        <TitledPane id="ttldPn_" maxWidth="900.0" minWidth="600.0" text="User">
+                           <content>
+                              <HBox minHeight="-Infinity" spacing="10.0">
+                                 <children>
+                                    <ToolBar maxHeight="1.7976931348623157E308" minHeight="150.0" orientation="VERTICAL" styleClass="tlbr_logicsystem" HBox.hgrow="ALWAYS">
+                                       <items>
+                                          <Button minHeight="-Infinity" mnemonicParsing="false" prefWidth="90.0" styleClass="bttn_toolbar" text="Create account" textAlignment="CENTER" wrapText="true" />
+                                          <Button maxHeight="1.7976931348623157E308" minHeight="-Infinity" mnemonicParsing="false" prefWidth="90.0" styleClass="bttn_toolbar" text="Login" textAlignment="CENTER" wrapText="true" />
+                                          <ToggleButton disable="true" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minHeight="-Infinity" mnemonicParsing="false" prefWidth="90.0" styleClass="bttn_toolbar" text="Change password" textAlignment="CENTER" wrapText="true" />
+                                       </items>
+                                    </ToolBar>
+                                    <VBox spacing="10.0" HBox.hgrow="ALWAYS">
+                                       <children>
+                                          <HBox alignment="CENTER_LEFT" fillHeight="false" prefWidth="200.0">
+                                             <children>
+                                                <Label text="Name:" />
+                                                <TextField HBox.hgrow="ALWAYS" />
+                                             </children>
+                                          </HBox>
+                                          <HBox alignment="CENTER_LEFT" fillHeight="false" layoutX="10.0" layoutY="170.0" prefWidth="200.0" spacing="5.0">
+                                             <children>
+                                                <Label text="email:" />
+                                                <TextField HBox.hgrow="ALWAYS" />
+                                             </children>
+                                          </HBox>
+                                          <HBox alignment="CENTER_LEFT" fillHeight="false" layoutX="10.0" layoutY="195.0" prefWidth="200.0" spacing="5.0">
+                                             <children>
+                                                <Label text="Joined:" />
+                                                <Label layoutX="88.0" layoutY="10.0" text="_date_joined" />
+                                             </children>
+                                          </HBox>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </HBox>
+                           </content>
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </TitledPane>
+                        <TitledPane id="ttldPn_" layoutX="10.0" layoutY="10.0" maxWidth="900.0" minWidth="600.0" text="User interface">
+                           <content>
+                              <HBox spacing="10.0" />
+                           </content>
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </TitledPane>
+                     </children>
+                  </VBox>
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+   </content>
+</ScrollPane>

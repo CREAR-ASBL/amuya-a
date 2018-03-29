@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.amuyana.app.gui.AppController">
+   <children>
+      <MenuBar maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="NEVER">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Manage conexions" />
+                  <MenuItem mnemonicParsing="false" text="Editable" />
+                  <MenuItem mnemonicParsing="false" text="Close" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="How to use" />
+                  <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <TabPane tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
+        <tabs>
+          <Tab fx:id="tab_logicSystem" text="Logic System" />
+            <Tab fx:id="tab_dualities" text="Dualities" />
+          <Tab fx:id="tab_tod" text="Table of Deductions" />
+            <Tab fx:id="tab_dialectic" text="Dialectics" />
+            <Tab fx:id="tab_stc" text="Space-Time Configurations" />
+            <Tab fx:id="tab_syllogism" text="Syllogisms" />
+            <Tab fx:id="tab_stats" text="Statistics Register" />
+            <Tab fx:id="tab_settings" text="Settings" />
+            <Tab fx:id="tab_log" text="Log ⊃" />
+        </tabs>
+      </TabPane>
+   </children>
+</VBox>

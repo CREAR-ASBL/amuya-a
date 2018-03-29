@@ -1,4 +1,4 @@
-![Amuyaña](http://i65.tinypic.com/e69ht4.jpg)
+![Amuyaña](http://amuyaña.com/public/logo/Logo-01.png)
 
 (Last update: 13/02/2018)
 
@@ -39,12 +39,14 @@ Amuyaña has the final objective of serving as a tool for organizing and analysi
 2
 
 ## Instructions for developpers
-Amuyaña has been written in Java and JavaFX.
+Amuyaña has been written in Java 1.8.0_161 and JavaFX for the graphical user interface. 
 
 The simplest way to get the source code is to pull the repository, for example:
 
 	git clone https://github.com/CREAR-ASBL/amuyana.git
 
+You will find a NetBeans project (the version I used was v. 8.2 - build 201609300101).
+	
 Visit the [wiki section](https://github.com/CREAR-ASBL/amuyana/wiki) for more information about the source code and how it runs step by step to create the main graphs. A more detailed overview of the classes, methods, variables, etc. is available in the docs.
 
 ## Links
@@ -57,6 +59,8 @@ The [github wiki](https://github.com/CREAR-ASBL/amuyana/wiki) has information ab
 Contradictional Logic System or logic system of the Dynamic Logic of the Contradictory = CLS
 
 Table of Deductions = ToD
+
+FCC = Fundamental Conjunction of contradiction
 
 ## Licence
 

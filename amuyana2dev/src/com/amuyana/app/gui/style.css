@@ -1,0 +1,54 @@
+/*
+ * Empty Stylesheet file.
+ */
+
+.mainFxmlClass {
+
+}
+
+.elementImplication {
+    -fx-color:red;
+}
+
+.ttldPn_{
+    -fx-text-fill: red;
+    -fx-scale-x: 5;
+}
+
+/* from here */
+.base{
+    -fx-background-image: url("resources/background.jpg");
+    -fx-padding: 20px;
+}
+
+.canvas{
+    -fx-background-color: white;
+    
+}
+
+.pn_dialectic{
+    -fx-background-color: aliceblue;
+}
+
+.lbl_title1{
+    -fx-font: 20px black;
+}
+
+.bttn_toolbar{
+    -fx-pref-width:90px;
+    /*-fx-min-height: USE_PREF_HEIGHT; USING MANUALLY USE PREF SIZE*/
+    -fx-wrap-text: true;
+    -fx-text-alignment: center;
+}
+
+
+
+.tlbr_logicsystem{
+    -fx-border-color: black;
+    -fx-border-width: 1px;
+    -fx-border-style: solid;
+}
+
+.tblvw_logicsystem{
+    -fx-font-size: 13px;
+}

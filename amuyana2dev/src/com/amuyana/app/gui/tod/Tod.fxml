@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.shape.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="650.0" prefWidth="1000.0" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.amuyana.app.gui.tod.TodController">
+   <left>
+      <VBox>
+         <children>
+            <TitledPane collapsible="false" text="Navigation">
+               <content>
+                  <VBox alignment="TOP_CENTER" fillWidth="false" spacing="10.0">
+                     <children>
+                        <Label text="Zoom" />
+                        <Slider orientation="VERTICAL" />
+                        <TextField prefWidth="50.0" />
+                        <Button maxWidth="-Infinity" mnemonicParsing="false" prefWidth="100.0" styleClass="bttn_tod" text="Default view" textAlignment="CENTER" wrapText="true" />
+                        <Button layoutX="20.0" layoutY="175.0" maxWidth="-Infinity" mnemonicParsing="false" prefWidth="100.0" styleClass="bttn_tod" text="Center at selected dynamism" textAlignment="CENTER" wrapText="true" />
+                     </children>
+                  </VBox>
+               </content>
+            </TitledPane>
+            <TitledPane collapsible="false" text="Edition: ">
+               <content>
+                  <VBox>
+                     <children>
+                        <Button mnemonicParsing="false" prefWidth="90.0" styleClass="bttn_tod" text="Edit" />
+                        <Button maxWidth="-Infinity" mnemonicParsing="false" styleClass="bttn_tod" text="Cut" wrapText="true" />
+                        <Button layoutX="20.0" layoutY="20.0" mnemonicParsing="false" styleClass="bttn_tod" text="Copy" />
+                        <Button maxWidth="-Infinity" mnemonicParsing="false" styleClass="bttn_tod" text="Paste" wrapText="true" />
+                     </children>
+                  </VBox>
+               </content>
+            </TitledPane>
+         </children>
+      </VBox>
+   </left>
+   <center>
+      <ScrollPane fitToHeight="true" fitToWidth="true" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" BorderPane.alignment="CENTER">
+         <content>
+            <StackPane styleClass="base">
+               <children>
+                  <Pane prefHeight="200.0" prefWidth="200.0" styleClass="canvas">
+                     <StackPane.margin>
+                        <Insets />
+                     </StackPane.margin>
+                  </Pane>
+               </children>
+            </StackPane>
+         </content>
+      </ScrollPane>
+   </center>
+</BorderPane>
