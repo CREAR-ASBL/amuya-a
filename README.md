@@ -1,4 +1,4 @@
-![Amuyaña](http://amuyaña.com/public/logo/Logo-01.png)
+![Amuyaña](https://ibb.co/nFFon7)
 
 (Last update: 13/02/2018)
 
