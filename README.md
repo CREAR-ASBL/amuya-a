@@ -1,4 +1,4 @@
-![Amuyaña](https://ibb.co/nFFon7)
+![Amuyaña](http://i64.tinypic.com/24g3loz.png)
 
 (Last update: 13/02/2018)
 
