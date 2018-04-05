@@ -9,7 +9,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<ScrollPane fitToWidth="true" prefHeight="1000.0" prefWidth="850.0" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.amuyana.app.gui.stc.StcController">
+<ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="1000.0" prefWidth="850.0" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.amuyana.app.gui.stc.StcController">
    <content>
       <VBox alignment="TOP_CENTER" fillWidth="false" styleClass="base">
          <children>
@@ -17,7 +17,7 @@
                <children>
                   <VBox maxWidth="1.7976931348623157E308" minWidth="600.0" prefWidth="800.0" spacing="20.0">
                      <children>
-                        <TitledPane id="ttldPn_" text="Spaces">
+                        <TitledPane id="ttldPn_" minHeight="-Infinity" text="Spaces">
                            <content>
                               <HBox spacing="10.0">
                                  <children>
@@ -63,7 +63,7 @@
                               <Font size="18.0" />
                            </font>
                         </TitledPane>
-                        <TitledPane id="ttldPn_" layoutX="10.0" layoutY="10.0" text="Times">
+                        <TitledPane id="ttldPn_" layoutX="10.0" layoutY="10.0" minHeight="-Infinity" text="Times">
                            <content>
                               <HBox spacing="10.0">
                                  <children>
@@ -119,7 +119,7 @@
                               <Font size="18.0" />
                            </font>
                         </TitledPane>
-                        <TitledPane id="ttldPn_" maxWidth="900.0" minWidth="600.0" text="Associated contradictional conjunctions">
+                        <TitledPane id="ttldPn_" maxWidth="900.0" minHeight="-Infinity" minWidth="600.0" text="Associated contradictional conjunctions">
                            <content>
                               <HBox spacing="10.0">
                                  <children>
@@ -149,7 +149,7 @@
                         </TitledPane>
                         <TitledPane id="ttldPn_" layoutX="10.0" layoutY="694.0" maxWidth="900.0" minWidth="600.0" text="Graphical representation">
                            <content>
-                              <HBox spacing="10.0">
+                              <HBox minHeight="-Infinity" spacing="10.0">
                                  <children>
                                     <ToolBar orientation="VERTICAL" styleClass="tlbr_logicsystem">
                                        <items>

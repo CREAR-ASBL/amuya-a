@@ -1,23 +1,18 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.amuyana.app.gui.log;
 
 import com.amuyana.app.gui.AppController;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.TableColumn;
 
-/**
- * FXML Controller class
- *
- * @author ayar
- */
 public class LogController implements Initializable {
 
     private AppController appController;
+   
+    @FXML TableColumn tecn_date;
 
     /**
      * Initializes the controller class.
@@ -31,4 +26,7 @@ public class LogController implements Initializable {
         this.appController=aThis;
     }
     
+    public void log(String date, String type, String user, String message){
+        
+    }
 }

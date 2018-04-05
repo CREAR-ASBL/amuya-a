@@ -5,7 +5,6 @@
  */
 package com.amuyana.app.data;
 import java.sql.Connection;
-import java.sql.Timestamp;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -90,7 +89,9 @@ Boolean inUse, LogicSystem logicSystem) {
             
         }
         
-        public static void loadList(Connection connection, ObservableList<Fcc> listFcc){
+        public static void loadList(Connection connection, 
+                ObservableList<Fcc> listFcc,
+                ObservableList<LogicSystem> listLogicSystem){
             try {
                 Statement instruction = connection.createStatement();
                 ResultSet result = instruction.executeQuery(
@@ -117,12 +118,7 @@ Boolean inUse, LogicSystem logicSystem) {
                                     result.getString("A.label"),
                                     result.getString("A.description"), 
                                     result.getBoolean("A.in_use"), 
-                                    new LogicSystem(
-                                            result.getInt("B.id_logic_system"),
-                                            result.getString("B.label"), 
-                                            result.getString("B.description"), 
-                                            result.getTimestamp("B.creation_date")
-                                    )
+                                    listLogicSystem.get(result.getInt("A.id_logic_system"))
                             )
                     );
                     

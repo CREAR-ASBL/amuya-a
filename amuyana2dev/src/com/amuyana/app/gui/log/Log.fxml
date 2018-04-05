@@ -8,7 +8,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<ScrollPane fitToWidth="true" prefHeight="600.0" prefWidth="800.0" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.amuyana.app.gui.log.LogController">
+<ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="600.0" prefWidth="800.0" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.amuyana.app.gui.log.LogController">
    <content>
       <VBox alignment="TOP_CENTER" fillWidth="false" styleClass="base">
          <children>
@@ -16,7 +16,7 @@
                <children>
                   <VBox maxWidth="1.7976931348623157E308" minWidth="600.0" prefWidth="800.0">
                      <children>
-                        <TitledPane id="ttldPn_" maxWidth="900.0" minWidth="600.0" text="Logs">
+                        <TitledPane id="ttldPn_" maxWidth="900.0" minHeight="-Infinity" minWidth="600.0" text="Logs">
                            <content>
                               <VBox spacing="10.0">
                                  <children>
@@ -46,12 +46,12 @@
                                           </VBox>
                                        </children>
                                     </HBox>
-                                    <TableView prefHeight="300.0" prefWidth="200.0" styleClass="tblvw_logicsystem">
+                                    <TableView prefHeight="300.0" prefWidth="200.0" styleClass="tblvw">
                                       <columns>
-                                        <TableColumn prefWidth="75.0" text="Date" />
-                                        <TableColumn prefWidth="75.0" text="Type" />
-                                          <TableColumn prefWidth="116.0" text="User" />
-                                          <TableColumn prefWidth="443.0" text="Message" />
+                                        <TableColumn fx:id="tecn_date" prefWidth="75.0" text="Date" />
+                                        <TableColumn fx:id="tecl_type" prefWidth="75.0" text="Type" />
+                                          <TableColumn fx:id="tecn_user" prefWidth="116.0" text="User" />
+                                          <TableColumn fx:id="tecn_message" prefWidth="443.0" text="Message" />
                                       </columns>
                                     </TableView>
                                  </children>

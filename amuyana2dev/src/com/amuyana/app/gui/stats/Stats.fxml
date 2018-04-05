@@ -8,7 +8,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<ScrollPane fitToWidth="true" prefHeight="1040.0" prefWidth="850.0" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.amuyana.app.gui.stats.StatsController">
+<ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="1040.0" prefWidth="850.0" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.amuyana.app.gui.stats.StatsController">
    <content>
       <VBox alignment="TOP_CENTER" fillWidth="false" maxHeight="1.7976931348623157E308" styleClass="base">
          <children>
@@ -16,7 +16,7 @@
                <children>
                   <VBox maxWidth="1.7976931348623157E308" minWidth="600.0" prefWidth="800.0" spacing="20.0">
                      <children>
-                        <TitledPane id="ttldPn_" maxWidth="900.0" minWidth="600.0" text="Register">
+                        <TitledPane id="ttldPn_" maxWidth="900.0" minHeight="-Infinity" minWidth="600.0" text="Register">
                            <content>
                               <HBox spacing="10.0">
                                  <children>
@@ -75,7 +75,7 @@
                               <Font size="18.0" />
                            </font>
                         </TitledPane>
-                        <TitledPane id="ttldPn_" layoutX="10.0" layoutY="10.0" maxWidth="900.0" minWidth="600.0" text="Quanta in register #">
+                        <TitledPane id="ttldPn_" layoutX="10.0" layoutY="10.0" maxWidth="900.0" minHeight="-Infinity" minWidth="600.0" text="Quanta in register #">
                            <content>
                               <HBox spacing="10.0">
                                  <children>
@@ -124,7 +124,7 @@
                               <Font size="18.0" />
                            </font>
                         </TitledPane>
-                        <TitledPane id="ttldPn_" layoutX="10.0" layoutY="341.0" maxWidth="900.0" minWidth="600.0" text="Analysis of data">
+                        <TitledPane id="ttldPn_" layoutX="10.0" layoutY="341.0" maxWidth="900.0" minHeight="-Infinity" minWidth="600.0" text="Analysis of data">
                            <content>
                               <HBox spacing="10.0">
                                  <children>

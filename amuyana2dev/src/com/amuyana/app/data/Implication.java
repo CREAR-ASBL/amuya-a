@@ -5,7 +5,6 @@
  */
 package com.amuyana.app.data;
 
-import com.amuyana.app.cls.Value;
 import java.sql.Connection;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -23,12 +22,12 @@ public class Implication{
         
     }
 	private IntegerProperty idImplication;
-	private Value orientation;
+	private IntegerProperty orientation;
 	private IntegerProperty idFcc;
 
-	public Implication(int idImplication, Value orientation, int idFcc) { 
+	public Implication(int idImplication, int orientation, int idFcc) { 
 		this.idImplication = new SimpleIntegerProperty(idImplication);
-		this.orientation = orientation;
+		this.orientation = new SimpleIntegerProperty(orientation);
 		this.idFcc = new SimpleIntegerProperty(idFcc);
 	}
 
@@ -43,11 +42,14 @@ public class Implication{
 		return idImplication;
 	}
 	//Metodos atributo: orientation
-	public Value getOrientation() {
-		return orientation;
+	public int getOrientation() {
+		return orientation.get();
 	}
-	public void setOrientation(Value orientation) {
-		this.orientation = orientation;
+	public void setOrientation(int orientation) {
+		this.orientation = new SimpleIntegerProperty(orientation);
+	}
+        public IntegerProperty OrientationProperty() {
+		return this.orientation;
 	}
 	//Metodos atributo: idFcc
 	public int getIdFcc() {

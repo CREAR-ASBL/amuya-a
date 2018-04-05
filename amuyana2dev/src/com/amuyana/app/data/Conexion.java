@@ -20,9 +20,6 @@ public class Conexion {
 
     private static boolean dbIsLoaded = false;
     private Connection connection;
-    private String url = "jdbc:mysql://localhost/amuyana";
-    private String username = "phpmyadmin";
-    private String password = "prharcopos";
 
     public Connection getConnection() {
         return connection;
@@ -32,13 +29,13 @@ public class Conexion {
         this.connection = connection;
     }
     
-    public void establecerConexion(){
+    public void establecerConexion(String url, String username, String password){
         
         
         try {
             //Cargar driver
             Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager.getConnection(url, username, password);
+            connection = DriverManager.getConnection("jdbc:mysql://" + url, username, password);
             
             
         } catch (ClassNotFoundException ex) {

@@ -8,7 +8,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<ScrollPane fitToWidth="true" prefHeight="900.0" prefWidth="850.0" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.amuyana.app.gui.settings.SettingsController">
+<ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="900.0" prefWidth="850.0" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.amuyana.app.gui.settings.SettingsController">
    <content>
       <VBox alignment="TOP_CENTER" fillWidth="false" styleClass="base">
          <children>
@@ -16,7 +16,7 @@
                <children>
                   <VBox maxWidth="1.7976931348623157E308" minWidth="600.0" prefWidth="800.0" spacing="20.0">
                      <children>
-                        <TitledPane id="ttldPn_" layoutX="10.0" layoutY="10.0" maxWidth="900.0" minWidth="600.0" text="Database">
+                        <TitledPane id="ttldPn_" layoutX="10.0" layoutY="10.0" maxWidth="900.0" minHeight="-Infinity" text="Database">
                            <content>
                               <HBox spacing="10.0">
                                  <children>
@@ -33,26 +33,19 @@
                                           <HBox alignment="CENTER_LEFT" fillHeight="false" prefWidth="200.0">
                                              <children>
                                                 <Label text="Hostname:" />
-                                                <ChoiceBox prefWidth="200.0" />
-                                                <TextField HBox.hgrow="ALWAYS" />
-                                             </children>
-                                          </HBox>
-                                          <HBox alignment="CENTER_LEFT" fillHeight="false" layoutX="10.0" layoutY="170.0" prefWidth="200.0" spacing="5.0">
-                                             <children>
-                                                <Label text="Port" />
-                                                <TextField prefWidth="60.0" />
+                                                <TextField fx:id="ttfdHostname" text="localhost/amuyana" HBox.hgrow="ALWAYS" />
                                              </children>
                                           </HBox>
                                           <HBox alignment="CENTER_LEFT" fillHeight="false" layoutX="10.0" layoutY="195.0" prefWidth="200.0" spacing="5.0">
                                              <children>
                                                 <Label text="Username:" />
-                                                <TextField HBox.hgrow="ALWAYS" />
+                                                <TextField fx:id="ttfdDbUsername" text="phpmyadmin" HBox.hgrow="ALWAYS" />
                                              </children>
                                           </HBox>
                                           <HBox alignment="CENTER_LEFT" fillHeight="false" layoutX="10.0" layoutY="84.0" prefWidth="200.0" spacing="5.0">
                                              <children>
                                                 <Label text="Password:" />
-                                                <TextField HBox.hgrow="ALWAYS" />
+                                                <TextField fx:id="ttfdDbPassword" HBox.hgrow="ALWAYS" />
                                              </children>
                                           </HBox>
                                        </children>
@@ -64,15 +57,15 @@
                               <Font size="18.0" />
                            </font>
                         </TitledPane>
-                        <TitledPane id="ttldPn_" maxWidth="900.0" minWidth="600.0" text="User">
+                        <TitledPane id="ttldPn_" maxWidth="900.0" minHeight="-Infinity" text="User">
                            <content>
                               <HBox minHeight="-Infinity" spacing="10.0">
                                  <children>
                                     <ToolBar maxHeight="1.7976931348623157E308" minHeight="150.0" orientation="VERTICAL" styleClass="tlbr_logicsystem" HBox.hgrow="ALWAYS">
                                        <items>
                                           <Button minHeight="-Infinity" mnemonicParsing="false" prefWidth="90.0" styleClass="bttn_toolbar" text="Create account" textAlignment="CENTER" wrapText="true" />
-                                          <Button maxHeight="1.7976931348623157E308" minHeight="-Infinity" mnemonicParsing="false" prefWidth="90.0" styleClass="bttn_toolbar" text="Login" textAlignment="CENTER" wrapText="true" />
-                                          <ToggleButton disable="true" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minHeight="-Infinity" mnemonicParsing="false" prefWidth="90.0" styleClass="bttn_toolbar" text="Change password" textAlignment="CENTER" wrapText="true" />
+                                          <Button fx:id="btnLogInOut" maxHeight="1.7976931348623157E308" minHeight="-Infinity" mnemonicParsing="false" onAction="#logInOutUser" prefWidth="90.0" styleClass="bttn_toolbar" text="Login" textAlignment="CENTER" wrapText="true" />
+                                          <ToggleButton disable="true" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minHeight="-Infinity" mnemonicParsing="false" prefWidth="90.0" styleClass="bttn_toolbar" text="Edit" textAlignment="CENTER" wrapText="true" />
                                        </items>
                                     </ToolBar>
                                     <VBox spacing="10.0" HBox.hgrow="ALWAYS">
@@ -80,19 +73,19 @@
                                           <HBox alignment="CENTER_LEFT" fillHeight="false" prefWidth="200.0">
                                              <children>
                                                 <Label text="Name:" />
-                                                <TextField HBox.hgrow="ALWAYS" />
+                                                <TextField fx:id="ttfdUserName" text="public_user" HBox.hgrow="ALWAYS" />
                                              </children>
                                           </HBox>
                                           <HBox alignment="CENTER_LEFT" fillHeight="false" layoutX="10.0" layoutY="170.0" prefWidth="200.0" spacing="5.0">
                                              <children>
-                                                <Label text="email:" />
-                                                <TextField HBox.hgrow="ALWAYS" />
+                                                <Label text="password:" />
+                                                <TextField fx:id="ttfdUserPassword" HBox.hgrow="ALWAYS" />
                                              </children>
                                           </HBox>
                                           <HBox alignment="CENTER_LEFT" fillHeight="false" layoutX="10.0" layoutY="195.0" prefWidth="200.0" spacing="5.0">
                                              <children>
                                                 <Label text="Joined:" />
-                                                <Label layoutX="88.0" layoutY="10.0" text="_date_joined" />
+                                                <Label fx:id="lblDateJoined" layoutX="88.0" layoutY="10.0" />
                                              </children>
                                           </HBox>
                                        </children>
@@ -104,7 +97,7 @@
                               <Font size="18.0" />
                            </font>
                         </TitledPane>
-                        <TitledPane id="ttldPn_" layoutX="10.0" layoutY="10.0" maxWidth="900.0" minWidth="600.0" text="User interface">
+                        <TitledPane id="ttldPn_" layoutX="10.0" layoutY="10.0" maxWidth="900.0" minHeight="-Infinity" text="User interface">
                            <content>
                               <HBox spacing="10.0" />
                            </content>

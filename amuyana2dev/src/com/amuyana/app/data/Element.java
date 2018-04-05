@@ -29,10 +29,9 @@ public class Element{
 
     public Element(int idElement, String description, 
 Boolean polarity, Fcc fcc) { 
-            this.idElement = new SimpleIntegerProperty(idElement);
-
-            this.polarity = polarity;
-            this.fcc = fcc;
+        this.idElement = new SimpleIntegerProperty(idElement);
+        this.polarity = polarity;
+        this.fcc = fcc;
     }
 
     //Metodos atributo: idElement

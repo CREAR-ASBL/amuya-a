@@ -42,11 +42,11 @@
       </VBox>
    </left>
    <center>
-      <ScrollPane fitToHeight="true" fitToWidth="true" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" BorderPane.alignment="CENTER">
+      <ScrollPane fitToHeight="true" fitToWidth="true" minHeight="-Infinity" minWidth="-Infinity" BorderPane.alignment="CENTER">
          <content>
             <StackPane styleClass="base">
                <children>
-                  <Pane prefHeight="200.0" prefWidth="200.0" styleClass="canvas">
+                  <Pane styleClass="canvas">
                      <StackPane.margin>
                         <Insets />
                      </StackPane.margin>

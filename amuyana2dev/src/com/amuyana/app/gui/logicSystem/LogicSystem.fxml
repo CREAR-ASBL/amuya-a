@@ -6,16 +6,15 @@
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 
-
-<ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="500.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.amuyana.app.gui.logicSystem.LogicSystemController">
+<ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="500.0" prefWidth="850.0" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.amuyana.app.gui.logicSystem.LogicSystemController">
    <content>
-      <VBox alignment="TOP_CENTER" fillWidth="false" styleClass="base" stylesheets="@../style.css">
+      <VBox alignment="TOP_CENTER" fillWidth="false" styleClass="base">
          <children>
             <VBox>
                <children>
                   <VBox maxWidth="1.7976931348623157E308" minWidth="600.0" prefWidth="800.0" spacing="20.0">
                      <children>
-                        <TitledPane id="ttldPn_" text="Systems" VBox.vgrow="ALWAYS">
+                        <TitledPane id="ttldPn_" minHeight="-Infinity" text="Systems">
                            <content>
                               <HBox spacing="10.0">
                                  <children>

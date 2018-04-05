@@ -6,7 +6,9 @@ import com.amuyana.app.data.Deduction;
 import com.amuyana.app.data.Element;
 import com.amuyana.app.data.Fcc;
 import com.amuyana.app.data.Implication;
+import com.amuyana.app.data.Log;
 import com.amuyana.app.data.LogicSystem;
+import com.amuyana.app.data.User;
 import com.amuyana.app.gui.dialectic.DialecticController;
 import com.amuyana.app.gui.log.LogController;
 import com.amuyana.app.gui.dualities.DualitiesController;
@@ -23,9 +25,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Tab;
 import javafx.collections.ObservableList;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.VBox;
 
 
 public class AppController {
@@ -57,7 +56,7 @@ public class AppController {
     
     // COLECCIONES 
     private ObservableList<LogicSystem> listLogicSystem;
-    
+    private ObservableList<User> listUser;
     private ObservableList<Fcc> listFcc;
     private ObservableList<Element> listElement;
     private ObservableList<Deduction> listDeduction;
@@ -77,14 +76,84 @@ public class AppController {
     private ObservableList<Conjunction> listSyllogism;
     
     private ObservableList<Conjunction> listLog;
+
+    
+    // SYSTEM STUFF: USER
+    private User currentUser;
     
     public void initialize() throws IOException {
         
         loadModules();
         
+        // auto connect to db and user
         settingsController.clickConnect();
         
     }
+    
+    
+    public ObservableList<LogicSystem> getListLogicSystem() {
+        return listLogicSystem;
+    }
+
+    public ObservableList<User> getListUser() {
+        return listUser;
+    }
+
+    public ObservableList<Fcc> getListFcc() {
+        return listFcc;
+    }
+
+    public ObservableList<Element> getListElement() {
+        return listElement;
+    }
+
+    public ObservableList<Deduction> getListDeduction() {
+        return listDeduction;
+    }
+
+    public ObservableList<Implication> getListImplication() {
+        return listImplication;
+    }
+
+    public ObservableList<Conjunction> getListConjunction() {
+        return listConjunction;
+    }
+
+    public ObservableList<Conjunction> getListDialectic() {
+        return listDialectic;
+    }
+
+    public ObservableList<Conjunction> getListRegister() {
+        return listRegister;
+    }
+
+    public ObservableList<Conjunction> getListSpace() {
+        return listSpace;
+    }
+
+    public ObservableList<Conjunction> getListTime() {
+        return listTime;
+    }
+
+    public ObservableList<Conjunction> getListQuantum() {
+        return listQuantum;
+    }
+
+    public ObservableList<Conjunction> getListSyllogism() {
+        return listSyllogism;
+    }
+
+    public ObservableList<Conjunction> getListLog() {
+        return listLog;
+    }
+
+    public User getCurrentUser() {
+        return currentUser;
+    }
+
+    public void setCurrentUser(User currentUser) {
+        this.currentUser = currentUser;
+    }    
     
     private void loadModules() throws IOException {
         for(Module m:Module.values()){
@@ -187,13 +256,13 @@ public class AppController {
         
     }
 
-    public void connectToDb() {
+    public void connectToDb(String hostname, String dbUserName, String dbPassword) {
         // User has entered the db adress, we give default though
         
         // !! Are there unsaved changed in the current db? -> save first
         
         conexion = new Conexion();
-        conexion.establecerConexion();
+        conexion.establecerConexion(hostname, dbUserName, dbPassword);
         
         // load and fill data because we call this method from connect button
         loadData(conexion);
@@ -206,6 +275,7 @@ public class AppController {
 
     private void loadData(Conexion conexion) {
         this.listLogicSystem = FXCollections.observableArrayList();
+        this.listUser = FXCollections.observableArrayList();
         this.listFcc = FXCollections.observableArrayList();
         this.listElement = FXCollections.observableArrayList();
         this.listImplication = FXCollections.observableArrayList();
@@ -221,7 +291,8 @@ public class AppController {
         
         
         LogicSystem.loadList(conexion.getConnection(), listLogicSystem);
-        Fcc.loadList(conexion.getConnection(), listFcc);
+        User.loadList(conexion.getConnection(), listUser);
+        Fcc.loadList(conexion.getConnection(), listFcc, listLogicSystem);
         
         Element.loadList(conexion.getConnection(), listElement);
         
@@ -235,7 +306,7 @@ public class AppController {
 //        Time.loadList(conexion.getConnection(), listTime);
 //        Quantum.loadList(conexion.getConnection(), listQuantum);
 //        Syllogism.loadList(conexion.getConnection(), listSyllogism);
-//        Log.loadList(conexion.getConnection(), listLog);
+        Log.loadList(conexion.getConnection(), listLog);
         
         
         logicSystemController.fillData(this.listLogicSystem);
