@@ -31,7 +31,7 @@
                                     </ToolBar>
                                     <VBox alignment="CENTER" spacing="10.0" HBox.hgrow="ALWAYS">
                                        <children>
-                                          <TableView fx:id="tevwFcc" minHeight="-Infinity" prefHeight="150.0" styleClass="tblvw_logicsystem" tableMenuButtonVisible="true">
+                                          <TableView fx:id="tevwFcc" minHeight="-Infinity" prefHeight="150.0" styleClass="tevw" tableMenuButtonVisible="true">
                                              <columns>
                                                 <TableColumn fx:id="tecnFccId" prefWidth="38.0" text="id" />
                                                 <TableColumn fx:id="tecnFccLabel" prefWidth="115.0" text="label_fcc" />
