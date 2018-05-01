@@ -5,6 +5,7 @@
  */
 package com.amuyana.app.gui.dualities;
 
+import com.amuyana.app.data.Element;
 import com.amuyana.app.data.Fcc;
 
 import com.amuyana.app.data.LogicSystem;
@@ -64,7 +65,7 @@ public class DualitiesController implements Initializable {
         this.appController=aThis;
     }
     
-    public void fillData(ObservableList<Fcc> listFcc) {
+    public void fillData(ObservableList<Fcc> listFcc, ObservableList<Element> listElement) {
         
         tevwFcc.setItems(listFcc);
         

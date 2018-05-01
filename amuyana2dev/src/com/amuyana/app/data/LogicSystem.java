@@ -24,7 +24,7 @@ import javafx.collections.ObservableList;
 public class LogicSystem{
 
     
-	private IntegerProperty idLogicSystem;
+        private IntegerProperty idLogicSystem;
 	private StringProperty label;
 	private StringProperty description;
 	private Timestamp creationDate;
@@ -41,8 +41,8 @@ public class LogicSystem{
 	public int getIdSystem() {
 		return idLogicSystem.get();
 	}
-	public void setIdSystem(int idSystem) {
-		this.idLogicSystem = new SimpleIntegerProperty(idSystem);
+	public void setIdSystem(int idLogicSystem) {
+		this.idLogicSystem = new SimpleIntegerProperty(idLogicSystem);
 	}
 	public IntegerProperty IdSystemProperty() {
 		return idLogicSystem;
@@ -99,8 +99,6 @@ public class LogicSystem{
                             resultado.getString("description"),
                             resultado.getTimestamp("creation_date")));
                 }
-                
-                
             } catch (SQLException ex) {
                 Logger.getLogger(LogicSystem.class.getName()).log(Level.SEVERE, null, ex);
             }

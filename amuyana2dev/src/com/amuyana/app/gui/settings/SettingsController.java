@@ -26,6 +26,8 @@ public class SettingsController implements Initializable {
     @FXML private TextField ttfdUserPassword;
     @FXML private Label lblDateJoined;
     
+    private User currentUser;
+    
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -35,6 +37,14 @@ public class SettingsController implements Initializable {
     public void setAppController(AppController aThis) {
         this.appController=aThis;
     }
+
+    public User getCurrentUser() {
+        return currentUser;
+    }
+
+    public void setCurrentUser(User currentUser) {
+        this.currentUser = currentUser;
+    }
     
     @FXML
     private void connectToDb(){
@@ -43,11 +53,12 @@ public class SettingsController implements Initializable {
     
     @FXML
     private void logInOutUser(ActionEvent e){
+        // If it is not logged in, try to login
         if(btnLogInOut.getText().equals("Login")){
             for(User user:this.appController.getListUser()){
                 if(this.ttfdUserName.getText().equals(user.getUsername())){
                     if(this.ttfdUserPassword.getText().equals(user.getPassword())){
-                        appController.setCurrentUser(user);
+                        setCurrentUser(user);
                         
                         this.ttfdUserName.setDisable(true);
                         this.ttfdUserPassword.setDisable(true);
@@ -57,9 +68,9 @@ public class SettingsController implements Initializable {
                     }
                 }
             }
-            
+        // If it is logged in, log out
         } else if(btnLogInOut.getText().equals("Logout")){
-            appController.setCurrentUser(null);
+            setCurrentUser(null);
             this.ttfdUserName.setDisable(false);
             this.ttfdUserPassword.setDisable(false);
             ttfdUserName.setText("");
@@ -69,7 +80,8 @@ public class SettingsController implements Initializable {
         }
     }
 
-    public void clickConnect() {
+    public void autoClicks() {
         btnConnect.fire();
+        btnLogInOut.fire();
     }
 }

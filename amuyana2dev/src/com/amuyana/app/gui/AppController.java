@@ -3,11 +3,13 @@ package com.amuyana.app.gui;
 import com.amuyana.app.data.Conexion;
 import com.amuyana.app.data.Conjunction;
 import com.amuyana.app.data.Deduction;
+import com.amuyana.app.data.Dialectic;
 import com.amuyana.app.data.Element;
 import com.amuyana.app.data.Fcc;
 import com.amuyana.app.data.Implication;
 import com.amuyana.app.data.Log;
 import com.amuyana.app.data.LogicSystem;
+import com.amuyana.app.data.Register;
 import com.amuyana.app.data.User;
 import com.amuyana.app.gui.dialectic.DialecticController;
 import com.amuyana.app.gui.log.LogController;
@@ -30,7 +32,7 @@ import javafx.collections.ObservableList;
 public class AppController {
     
     private Conexion conexion;
-    
+        
     // CONTROLLERS
     @FXML private LogicSystemController logicSystemController;
     @FXML private DualitiesController dualitiesController;
@@ -63,9 +65,9 @@ public class AppController {
     private ObservableList<Implication> listImplication;
     private ObservableList<Conjunction> listConjunction;
     
-    private ObservableList<Conjunction> listDialectic;
+    private ObservableList<Dialectic> listDialectic;
     
-    private ObservableList<Conjunction> listRegister;
+    private ObservableList<Register> listRegister;
     
     private ObservableList<Conjunction> listSpace;
     
@@ -75,19 +77,16 @@ public class AppController {
     
     private ObservableList<Conjunction> listSyllogism;
     
-    private ObservableList<Conjunction> listLog;
-
-    
-    // SYSTEM STUFF: USER
-    private User currentUser;
+    // Why is it instantiated this one?
+    private ObservableList<Log> listLog = FXCollections.observableArrayList();
     
     public void initialize() throws IOException {
         
         loadModules();
         
         // auto connect to db and user
-        settingsController.clickConnect();
-        
+        settingsController.autoClicks();
+        addLog("System", "AppController initialize() method succesfully executed.");
     }
     
     
@@ -119,11 +118,11 @@ public class AppController {
         return listConjunction;
     }
 
-    public ObservableList<Conjunction> getListDialectic() {
+    public ObservableList<Dialectic> getListDialectic() {
         return listDialectic;
     }
 
-    public ObservableList<Conjunction> getListRegister() {
+    public ObservableList<Register> getListRegister() {
         return listRegister;
     }
 
@@ -143,18 +142,10 @@ public class AppController {
         return listSyllogism;
     }
 
-    public ObservableList<Conjunction> getListLog() {
+    public ObservableList<Log> getListLog() {
         return listLog;
     }
 
-    public User getCurrentUser() {
-        return currentUser;
-    }
-
-    public void setCurrentUser(User currentUser) {
-        this.currentUser = currentUser;
-    }    
-    
     private void loadModules() throws IOException {
         for(Module m:Module.values()){
             
@@ -167,74 +158,58 @@ public class AppController {
                     this.logicSystemController = loader.getController();
                     this.logicSystemController.setAppController(this);
                     this.tab_logicSystem.setContent(m.getNode());
-                    
                     break;
                 }
                 case DUALITIES:{
-                    
                     this.dualitiesController = loader.getController();
-                    
                     this.dualitiesController.setAppController(this);
                     this.tab_dualities.setContent(m.getNode());
                     break;
                 }
-                
                 case TOD:{
-                    
                     this.todController = loader.getController();
                     this.todController.setAppController(this);
                     this.tab_tod.setContent(m.getNode());
                     break;
                 }
-
                 case DIALECTIC:{
                     this.dialecticController = loader.getController();
                     this.dialecticController.setAppController(this);
                     this.tab_dialectic.setContent(m.getNode());
                     break;
                 }
-
                 case STC:{
                     this.stcController = loader.getController();
                     this.stcController.setAppController(this);
                     this.tab_stc.setContent(m.getNode());
                     break;
                 }
-
                 case SYLLOGISM:{
                     this.syllogismController = loader.getController();
                     this.syllogismController.setAppController(this);
                     this.tab_syllogism.setContent(m.getNode());
                     break;
                 }
-
                 case STATS:{
                     this.statsController = loader.getController();
                     this.statsController.setAppController(this);
                     this.tab_stats.setContent(m.getNode());
                     break;
                 }
-
                 case SETTINGS:{
                     this.settingsController = loader.getController();
                     this.settingsController.setAppController(this);
                     this.tab_settings.setContent(m.getNode());
                     break;
                 }
-
                 case LOG:{
                     this.logController = loader.getController();
                     this.logController.setAppController(this);
                     this.tab_log.setContent(m.getNode());
                     break;
                 }
-
             }
         }
-    }
-    
-    public void log(Boolean isSystemEvent, String event){
-        
     }
 
     @FXML
@@ -266,18 +241,14 @@ public class AppController {
         
         // load and fill data because we call this method from connect button
         loadData(conexion);
-        
-
         conexion.cerrarConexion();
-   
-
-}
+    }
 
     private void loadData(Conexion conexion) {
-        this.listLogicSystem = FXCollections.observableArrayList();
-        this.listUser = FXCollections.observableArrayList();
-        this.listFcc = FXCollections.observableArrayList();
-        this.listElement = FXCollections.observableArrayList();
+        addLog("System", "Loading data into controls...");
+        
+        
+        // other module data
         this.listImplication = FXCollections.observableArrayList();
         this.listDeduction = FXCollections.observableArrayList();
         this.listConjunction = FXCollections.observableArrayList();
@@ -287,44 +258,36 @@ public class AppController {
         this.listTime = FXCollections.observableArrayList();
         this.listQuantum = FXCollections.observableArrayList();
         this.listSyllogism = FXCollections.observableArrayList();
-        this.listLog = FXCollections.observableArrayList();
         
         
-        LogicSystem.loadList(conexion.getConnection(), listLogicSystem);
-        User.loadList(conexion.getConnection(), listUser);
-        Fcc.loadList(conexion.getConnection(), listFcc, listLogicSystem);
-        
-        Element.loadList(conexion.getConnection(), listElement);
-        
-        Implication.loadList(conexion.getConnection(), listImplication);
-        Deduction.loadList(conexion.getConnection(), listDeduction);
-        Conjunction.loadList(conexion.getConnection(), listConjunction);
-        
+//        Implication.loadList(conexion.getConnection(), listImplication);
+//        Deduction.loadList(conexion.getConnection(), listDeduction);
+//        Conjunction.loadList(conexion.getConnection(), listConjunction);
 //        Dialectic.loadList(conexion.getConnection(), listDialectic);
 //        Register.loadList(conexion.getConnection(), listRegister);
 //        Space.loadList(conexion.getConnection(), listSpace);
 //        Time.loadList(conexion.getConnection(), listTime);
 //        Quantum.loadList(conexion.getConnection(), listQuantum);
 //        Syllogism.loadList(conexion.getConnection(), listSyllogism);
-        Log.loadList(conexion.getConnection(), listLog);
         
         
-        logicSystemController.fillData(this.listLogicSystem);
-
-        //dualitiesController.fillData(this.listFcc, this.listElement);
-        dualitiesController.fillData(this.listFcc);
-        
-                    
-//        for(Module m:Module.values()){
-//            switch(m){
-//                case LOGIC_SYSTEM:{
-//                    logicSystemController.fillData(this.listLogicSystem);
-//                    break;
-//                }
-//                case DUALITIES:{
-//                    dualitiesController.fillData(this.listFcc);
-//                    break;
-//                }
+             
+        for(Module m:Module.values()){
+            switch(m){
+                case LOGIC_SYSTEM:{
+                    this.listLogicSystem = FXCollections.observableArrayList();
+                    LogicSystem.loadList(conexion.getConnection(), this.listLogicSystem);
+                    logicSystemController.fillData(this.listLogicSystem);
+                    break;
+                }
+                case DUALITIES:{
+                    this.listFcc = FXCollections.observableArrayList();
+                    this.listElement = FXCollections.observableArrayList();
+                    Fcc.loadList(conexion.getConnection(), listFcc, listLogicSystem);
+                    Element.loadList(conexion.getConnection(), listElement);
+                    dualitiesController.fillData(this.listFcc, this.listElement);
+                    break;
+                }
 //                case TOD:{
 //                    this.listLogicSystem = FXCollections.observableArrayList();
 //                    logicSystemController.fillData(conexion, this.listLogicSystem);
@@ -350,20 +313,18 @@ public class AppController {
 //                    logicSystemController.fillData(conexion, this.listLogicSystem);
 //                    break;
 //                }
-//                case SETTINGS:{
-//                    this.listLogicSystem = FXCollections.observableArrayList();
-//                    logicSystemController.fillData(conexion, this.listLogicSystem);
-//                    break;
-//                }
-//                case LOG:{
-//                    this.listLogicSystem = FXCollections.observableArrayList();
-//                    logicSystemController.fillData(conexion, this.listLogicSystem);
-//                    break;
-//                }
-//            }
-//
-//            }
-        
+                case SETTINGS:{
+                    this.listLogicSystem = FXCollections.observableArrayList();
+                    this.listUser = FXCollections.observableArrayList();
+                    User.loadList(conexion.getConnection(), listUser);
+                    break;
+                }
+            }
         }    
-
+        addLog("System", "... all data succesfully loaded.");
+    }    
+    
+    public void addLog(String type, String message){
+        logController.addLog(type,message);
+    }
 }

@@ -6,7 +6,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 
-<ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="500.0" prefWidth="850.0" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.amuyana.app.gui.logicSystem.LogicSystemController">
+<ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="500.0" prefWidth="950.0" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.amuyana.app.gui.logicSystem.LogicSystemController">
    <content>
       <VBox alignment="TOP_CENTER" fillWidth="false" styleClass="base">
          <children>
@@ -31,23 +31,30 @@
                                     </ToolBar>
                                     <VBox spacing="10.0" HBox.hgrow="ALWAYS">
                                        <children>
-                                          <VBox />
+                                          <TableView fx:id="tevwLogicSystem" prefHeight="200.0" prefWidth="200.0" styleClass="tblvw" tableMenuButtonVisible="true">
+                                            <columns>
+                                              <TableColumn fx:id="tecnId" prefWidth="59.0" text="id" />
+                                              <TableColumn fx:id="tecnLabel" prefWidth="183.0" text="Label" />
+                                                <TableColumn fx:id="tecnDescription" prefWidth="203.0" text="Description" />
+                                                <TableColumn fx:id="tecnCreationDate" prefWidth="156.0" text="Creation date" />
+                                            </columns>
+                                          </TableView>
                                           <HBox alignment="CENTER_LEFT">
                                              <children>
-                                                <Label minWidth="-Infinity" text="Select a Contradictional Logic System:" />
-                                                <ComboBox fx:id="cobxSystems" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
+                                                <Label minWidth="-Infinity" text="Label" />
+                                                <TextField fx:id="ttfdLabel" HBox.hgrow="ALWAYS" />
                                              </children>
                                           </HBox>
                                           <HBox alignment="CENTER_LEFT">
                                              <children>
                                                 <Label minWidth="-Infinity" text="Date of creation:" />
-                                                <Label text="lblCreationDate" />
+                                                <Label fx:id="llCreationDate" text="lblCreationDate" />
                                              </children>
                                           </HBox>
                                           <HBox>
                                              <children>
                                                 <Label text="Description:" />
-                                                <TextArea prefHeight="100.0" wrapText="true" HBox.hgrow="ALWAYS" />
+                                                <TextArea fx:id="ttaaDescription" prefHeight="100.0" wrapText="true" HBox.hgrow="ALWAYS" />
                                              </children>
                                           </HBox>
                                        </children>

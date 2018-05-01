@@ -20,38 +20,18 @@
                            <content>
                               <VBox spacing="10.0">
                                  <children>
-                                    <HBox minHeight="-Infinity" spacing="10.0">
-                                       <children>
-                                          <ToolBar maxHeight="1.7976931348623157E308" minHeight="150.0" orientation="VERTICAL" styleClass="tlbr_logicsystem" HBox.hgrow="ALWAYS">
-                                             <items>
-                                                <TextField prefWidth="90.0" promptText="Filter" />
-                                                <Button minHeight="-Infinity" mnemonicParsing="false" prefWidth="90.0" styleClass="bttn_toolbar" text="Export" textAlignment="CENTER" wrapText="true" />
-                                             </items>
-                                          </ToolBar>
-                                          <VBox spacing="10.0" HBox.hgrow="ALWAYS">
-                                             <children>
-                                                <HBox alignment="CENTER_LEFT" fillHeight="false" prefWidth="200.0">
-                                                   <children>
-                                                      <Label text="Database:" />
-                                                      <Label text="_databasename" />
-                                                   </children>
-                                                </HBox>
-                                                <HBox alignment="CENTER_LEFT" fillHeight="false" layoutX="10.0" layoutY="10.0" prefWidth="200.0">
-                                                   <children>
-                                                      <Label text="Total log entries:" />
-                                                      <Label text="#entries" />
-                                                   </children>
-                                                </HBox>
-                                             </children>
-                                          </VBox>
-                                       </children>
-                                    </HBox>
-                                    <TableView prefHeight="300.0" prefWidth="200.0" styleClass="tblvw">
+                                    <ToolBar maxHeight="1.7976931348623157E308" styleClass="tlbr_logicsystem">
+                                       <items>
+                                          <TextField prefWidth="150.0" promptText="Filter" />
+                                          <Separator orientation="VERTICAL" />
+                                          <Button minHeight="-Infinity" mnemonicParsing="false" text="Export logs" textAlignment="CENTER" wrapText="true" />
+                                       </items>
+                                    </ToolBar>
+                                    <TableView fx:id="tevwLog" prefHeight="500.0" prefWidth="200.0" styleClass="tblvw" tableMenuButtonVisible="true">
                                       <columns>
-                                        <TableColumn fx:id="tecn_date" prefWidth="75.0" text="Date" />
-                                        <TableColumn fx:id="tecl_type" prefWidth="75.0" text="Type" />
-                                          <TableColumn fx:id="tecn_user" prefWidth="116.0" text="User" />
-                                          <TableColumn fx:id="tecn_message" prefWidth="443.0" text="Message" />
+                                          <TableColumn fx:id="tecnDate" prefWidth="118.0" text="Date" />
+                                        <TableColumn fx:id="tecnType" prefWidth="106.0" text="Type" />
+                                          <TableColumn fx:id="tecnMessage" prefWidth="341.0" text="Message" />
                                       </columns>
                                     </TableView>
                                  </children>

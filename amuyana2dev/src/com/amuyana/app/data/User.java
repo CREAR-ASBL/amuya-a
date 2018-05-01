@@ -1,4 +1,3 @@
-
 package com.amuyana.app.data;
 
 import java.sql.Connection;
@@ -94,7 +93,7 @@ String password, Date joinedDate) {
                             + "password, "
                             + "joined_date "
                             + "FROM amuyana.tbl_user");
-
+            
             while(resultado.next()){
                 listUser.add(new User(
                     resultado.getInt("id_user"), 

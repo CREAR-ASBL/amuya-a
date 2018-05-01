@@ -1,5 +1,6 @@
 package com.amuyana.app.data;
 
+import com.amuyana.app.gui.AppController;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -7,6 +8,8 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
@@ -16,62 +19,48 @@ import javafx.collections.ObservableList;
 public class Log{
 
     private Timestamp date;
-	private StringProperty type;
-	private StringProperty message;
-	private User user;
+    private String type;
+    private String message;
+    
+    private static int id;
+    
+    public Log(Timestamp date, String type, String message) {
+        this.date = date;
+        this.type = type;
+        this.message = message;
 
-	public Log(Timestamp date, String type, String message, 
-User user) { 
-		this.date = date;
-		this.type = new SimpleStringProperty(type);
-		this.message = new SimpleStringProperty(message);
-		this.user = user;
-	}
-
-	//Metodos atributo: date
-	public Timestamp getDate() {
-		return date;
-	}
-	public void setDate(Timestamp date) {
-		this.date = date;
-	}
-	//Metodos atributo: type
-	public String getType() {
-		return type.get();
-	}
-	public void setType(String type) {
-		this.type = new SimpleStringProperty(type);
-	}
-	public StringProperty TypeProperty() {
-		return type;
-	}
-	//Metodos atributo: message
-	public String getMessage() {
-		return message.get();
-	}
-	public void setMessage(String message) {
-		this.message = new SimpleStringProperty(message);
-	}
-	public StringProperty MessageProperty() {
-		return message;
-	}
-	//Metodos atributo: user
-	public User getUser() {
-		return user;
-	}
-	public void setUser(User user) {
-		this.user = user;
-	}
-
-    public static void loadList(Connection connection, ObservableList<Conjunction> listLog) {
-//        Statement statement;
-//        try {
-//            statement = connection.createStatement();
-//            ResultSet result = statement.executeQuery(
-//                    "SELECT date, type, user, ");
-//            
-//        } catch (SQLException ex) {
-//            Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
-//        }
     }
+
+    public Timestamp getDate() {
+        return date;
+    }
+
+    public void setDate(Timestamp date) {
+        this.date = date;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public static int getId() {
+        return id;
+    }
+
+    public static void setId(int id) {
+        Log.id = id;
+    }
+    
 }

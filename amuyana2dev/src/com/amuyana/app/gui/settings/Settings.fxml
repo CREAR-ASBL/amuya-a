@@ -45,7 +45,7 @@
                                           <HBox alignment="CENTER_LEFT" fillHeight="false" layoutX="10.0" layoutY="84.0" prefWidth="200.0" spacing="5.0">
                                              <children>
                                                 <Label text="Password:" />
-                                                <TextField fx:id="ttfdDbPassword" HBox.hgrow="ALWAYS" />
+                                                <TextField fx:id="ttfdDbPassword" text="prharcopos" HBox.hgrow="ALWAYS" />
                                              </children>
                                           </HBox>
                                        </children>

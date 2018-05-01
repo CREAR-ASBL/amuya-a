@@ -14,7 +14,7 @@
                <children>
                   <VBox maxWidth="1.7976931348623157E308" minWidth="600.0" prefWidth="800.0" spacing="20.0">
                      <children>
-                        <TitledPane minHeight="-Infinity" text="Fundamental Conjunctions of Contradiction (FCC)">
+                        <TitledPane layoutX="10.0" layoutY="536.0" minHeight="-Infinity" text="Fundamental Conjunctions of Contradiction (FCC)">
                            <content>
                               <HBox spacing="10.0">
                                  <children>
@@ -29,16 +29,16 @@
                                           <Button disable="true" layoutX="10.0" layoutY="178.0" minWidth="-Infinity" mnemonicParsing="false" styleClass="bttn_toolbar" text="Invert element and anti- element" />
                                        </items>
                                     </ToolBar>
-                                    <VBox alignment="CENTER" spacing="10.0" HBox.hgrow="ALWAYS">
+                                    <VBox alignment="CENTER" prefHeight="448.0" prefWidth="400.0" spacing="10.0" HBox.hgrow="ALWAYS">
                                        <children>
-                                          <TableView fx:id="tevwFcc" minHeight="-Infinity" prefHeight="150.0" styleClass="tevw" tableMenuButtonVisible="true">
+                                          <TableView fx:id="tevwFcc" maxWidth="1.7976931348623157E308" prefHeight="150.0" styleClass="tblvw" tableMenuButtonVisible="true">
                                              <columns>
                                                 <TableColumn fx:id="tecnFccId" prefWidth="38.0" text="id" />
-                                                <TableColumn fx:id="tecnFccLabel" prefWidth="115.0" text="label_fcc" />
-                                                <TableColumn fx:id="tecnFccDescription" prefWidth="163.0" text="description" />
-                                                <TableColumn fx:id="tecnFccInUse" prefWidth="92.0" text="in use" />
-                                                <TableColumn fx:id="tecnLogicSystem" prefWidth="109.0" text="id logic system" />
-                                                <TableColumn prefWidth="109.0" text="status (deleted/with conflicts/ok/..." />
+                                                <TableColumn fx:id="tecnFccLabel" minWidth="5.0" prefWidth="100.0" text="label_fcc" />
+                                                <TableColumn fx:id="tecnFccDescription" prefWidth="150.0" text="description" />
+                                                <TableColumn fx:id="tecnFccInUse" prefWidth="78.0" text="in use" />
+                                                <TableColumn fx:id="tecnLogicSystem" prefWidth="95.0" text="id logic system" />
+                                                <TableColumn prefWidth="121.0" text="status (deleted/with conflicts/ok/..." />
                                              </columns>
                                           </TableView>
                                           <HBox alignment="CENTER_LEFT">
@@ -54,13 +54,13 @@
                                                 <ListView fx:id="ltvw_conjunctions" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="SOMETIMES" />
                                              </children>
                                           </HBox>
-                                          <HBox alignment="CENTER_LEFT" layoutX="20.0" layoutY="245.0">
+                                          <HBox alignment="CENTER_LEFT">
                                              <children>
                                                 <Label text="Label of FCC:" />
                                                 <TextField fx:id="ttfdFccLabel" HBox.hgrow="ALWAYS" />
                                              </children>
                                           </HBox>
-                                          <HBox alignment="CENTER_LEFT" layoutX="20.0" layoutY="245.0">
+                                          <HBox alignment="CENTER_LEFT">
                                              <children>
                                                 <HBox prefWidth="200.0" HBox.hgrow="ALWAYS">
                                                    <children>
@@ -76,7 +76,7 @@
                                                 </HBox>
                                              </children>
                                           </HBox>
-                                          <HBox layoutX="20.0" layoutY="310.0">
+                                          <HBox>
                                              <children>
                                                 <Label text="Description:" />
                                                 <TextArea fx:id="ttaaFccDescription" prefHeight="100.0" HBox.hgrow="ALWAYS" />
@@ -88,7 +88,7 @@
                               </HBox>
                            </content>
                            <font>
-                              <Font size="18.0" />
+                              <Font size="20.0" />
                            </font>
                         </TitledPane>
                         <TitledPane minHeight="-Infinity" text="Contradictional conjunctions">
@@ -103,6 +103,13 @@
                                     </ToolBar>
                                     <VBox spacing="10.0" HBox.hgrow="ALWAYS">
                                        <children>
+                                          <TableView prefHeight="150.0" styleClass="tblvw" tableMenuButtonVisible="true">
+                                            <columns>
+                                              <TableColumn prefWidth="163.0" text="C. Conjunction" />
+                                              <TableColumn prefWidth="251.0" text="Element" />
+                                                <TableColumn prefWidth="205.0" text="Anti-element" />
+                                            </columns>
+                                          </TableView>
                                           <VBox>
                                              <children>
                                                 <Label text="Positive contradictional conjunction" />
