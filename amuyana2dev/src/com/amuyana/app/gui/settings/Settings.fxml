@@ -22,10 +22,11 @@
                                  <children>
                                     <ToolBar orientation="VERTICAL" styleClass="tlbr_logicsystem">
                                        <items>
-                                          <Button fx:id="btnConnect" minHeight="-Infinity" mnemonicParsing="false" onAction="#connectToDb" prefWidth="90.0" styleClass="bttn_toolbar" text="Connect" textAlignment="CENTER" wrapText="true" />
-                                          <Button layoutX="10.0" layoutY="10.0" minHeight="-Infinity" mnemonicParsing="false" prefWidth="90.0" styleClass="bttn_toolbar" text="New" textAlignment="CENTER" wrapText="true" />
-                                          <ToggleButton disable="true" maxWidth="-Infinity" minHeight="-Infinity" mnemonicParsing="false" styleClass="bttn_toolbar" text="Save" textAlignment="CENTER" wrapText="true" />
-                                          <ToggleButton disable="true" layoutX="10.0" layoutY="43.0" maxWidth="-Infinity" minHeight="-Infinity" mnemonicParsing="false" styleClass="bttn_toolbar" text="Delete" textAlignment="CENTER" wrapText="true" />
+                                          <ToggleButton fx:id="btnConnectDisconnect" mnemonicParsing="false" onAction="#connectDisconnect" prefHeight="100.0" styleClass="bttn_toolbar" text="Connect">
+                                             <font>
+                                                <Font size="12.0" />
+                                             </font>
+                                          </ToggleButton>
                                        </items>
                                     </ToolBar>
                                     <VBox spacing="10.0" HBox.hgrow="ALWAYS">
@@ -33,21 +34,22 @@
                                           <HBox alignment="CENTER_LEFT" fillHeight="false" prefWidth="200.0">
                                              <children>
                                                 <Label text="Hostname:" />
-                                                <TextField fx:id="ttfdHostname" text="localhost/amuyana" HBox.hgrow="ALWAYS" />
+                                                <TextField fx:id="ttfdHostname" HBox.hgrow="ALWAYS" />
                                              </children>
                                           </HBox>
                                           <HBox alignment="CENTER_LEFT" fillHeight="false" layoutX="10.0" layoutY="195.0" prefWidth="200.0" spacing="5.0">
                                              <children>
                                                 <Label text="Username:" />
-                                                <TextField fx:id="ttfdDbUsername" text="phpmyadmin" HBox.hgrow="ALWAYS" />
+                                                <TextField fx:id="ttfdDbUsername" HBox.hgrow="ALWAYS" />
                                              </children>
                                           </HBox>
                                           <HBox alignment="CENTER_LEFT" fillHeight="false" layoutX="10.0" layoutY="84.0" prefWidth="200.0" spacing="5.0">
                                              <children>
                                                 <Label text="Password:" />
-                                                <TextField fx:id="ttfdDbPassword" text="prharcopos" HBox.hgrow="ALWAYS" />
+                                                <TextField fx:id="ttfdDbPassword" HBox.hgrow="ALWAYS" />
                                              </children>
                                           </HBox>
+                                          <CheckBox fx:id="ckbxUseDefaultServer" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" mnemonicParsing="false" onAction="#useDefaultServer" text="Use default server" wrapText="true" />
                                        </children>
                                     </VBox>
                                  </children>

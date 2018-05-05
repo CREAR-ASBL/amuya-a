@@ -6,6 +6,7 @@ import com.amuyana.app.data.Deduction;
 import com.amuyana.app.data.Dialectic;
 import com.amuyana.app.data.Element;
 import com.amuyana.app.data.Fcc;
+import com.amuyana.app.data.FccHasLogicSystem;
 import com.amuyana.app.data.Implication;
 import com.amuyana.app.data.Log;
 import com.amuyana.app.data.LogicSystem;
@@ -21,17 +22,40 @@ import com.amuyana.app.gui.stc.StcController;
 import com.amuyana.app.gui.syllogism.SyllogismController;
 import com.amuyana.app.gui.tod.TodController;
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Tab;
 import javafx.collections.ObservableList;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.SplitPane;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.Border;
 
 
 public class AppController {
     
     private Conexion conexion;
+    
+    // FOR LOG
+    @FXML private SplitPane stpeContents;
+    @FXML private ScrollPane slpeLog;
+    @FXML private TableView tevwLog;
+    @FXML private MenuItem muimShowHideLog;
+    
+    @FXML TableColumn<Log, Timestamp> tecnDate;
+    @FXML TableColumn<Log, String> tecnType;
+    @FXML TableColumn<Log, String> tecnMessage;
+
+    ObservableList<Log> logList;
         
     // CONTROLLERS
     @FXML private LogicSystemController logicSystemController;
@@ -55,92 +79,75 @@ public class AppController {
     @FXML Tab tab_settings;
     @FXML Tab tab_log;
     
-    
-    // COLECCIONES 
-    private ObservableList<LogicSystem> listLogicSystem;
-    private ObservableList<User> listUser;
-    private ObservableList<Fcc> listFcc;
-    private ObservableList<Element> listElement;
-    private ObservableList<Deduction> listDeduction;
-    private ObservableList<Implication> listImplication;
-    private ObservableList<Conjunction> listConjunction;
-    
-    private ObservableList<Dialectic> listDialectic;
-    
-    private ObservableList<Register> listRegister;
-    
-    private ObservableList<Conjunction> listSpace;
-    
-    private ObservableList<Conjunction> listTime;
-    
-    private ObservableList<Conjunction> listQuantum;
-    
-    private ObservableList<Conjunction> listSyllogism;
-    
     // Why is it instantiated this one?
-    private ObservableList<Log> listLog = FXCollections.observableArrayList();
+    private final ObservableList<Log> listLog = FXCollections.observableArrayList();
     
     public void initialize() throws IOException {
+        setupTevwLog();
+        this.conexion = new Conexion();
         
         loadModules();
         
-        // auto connect to db and user
+        addLog("System", "Welcome to Amuyaña!");
         settingsController.autoClicks();
-        addLog("System", "AppController initialize() method succesfully executed.");
     }
     
+    public ObservableList<LogicSystem> getListLogicSystem(){
+        return logicSystemController.getListLogicSystem();
+    }
     
-    public ObservableList<LogicSystem> getListLogicSystem() {
-        return listLogicSystem;
+    public ObservableList<Fcc> getListFcc(){
+        return dualitiesController.getListFcc();
     }
-
-    public ObservableList<User> getListUser() {
-        return listUser;
+    
+    public ObservableList<FccHasLogicSystem> getListFccHasLogicSystem(){
+        return dualitiesController.getListFccHasLogicSystem();
     }
-
-    public ObservableList<Fcc> getListFcc() {
-        return listFcc;
+    
+    public ObservableList<User> getListUser(){
+        return settingsController.getListUser();
     }
-
-    public ObservableList<Element> getListElement() {
-        return listElement;
+    
+    @FXML public void showHideLog(){
+        if("Show Log panel".equals(muimShowHideLog.getText())) {
+            
+            stpeContents.setDividerPosition(0, 0.5);
+            muimShowHideLog.setText("Hide Log panel");
+            addLog("debug", "i am going to show");
+        } else if ("Hide Log panel".equals(muimShowHideLog.getText())){
+            stpeContents.setDividerPosition(0, 1);
+            muimShowHideLog.setText("Show Log panel");
+        }
     }
-
-    public ObservableList<Deduction> getListDeduction() {
-        return listDeduction;
+    
+    public Conexion getConexion(){
+        return this.conexion;
     }
-
-    public ObservableList<Implication> getListImplication() {
-        return listImplication;
+    
+    public void clearLists(){
+        logicSystemController.getListLogicSystem().clear();
+        
+        
+//        private ObservableList<User> listUser;
+//        private ObservableList<Fcc> listFcc;
+//        private ObservableList<Element> listElement;
+//        private ObservableList<Deduction> listDeduction;
+//        private ObservableList<Implication> listImplication;
+//        private ObservableList<Conjunction> listConjunction;
+//
+//        private ObservableList<Dialectic> listDialectic;
+//
+//        private ObservableList<Register> listRegister;
+//
+//        private ObservableList<Conjunction> listSpace;
+//
+//        private ObservableList<Conjunction> listTime;
+//
+//        private ObservableList<Conjunction> listQuantum;
+//
+//        private ObservableList<Conjunction> listSyllogism;
     }
-
-    public ObservableList<Conjunction> getListConjunction() {
-        return listConjunction;
-    }
-
-    public ObservableList<Dialectic> getListDialectic() {
-        return listDialectic;
-    }
-
-    public ObservableList<Register> getListRegister() {
-        return listRegister;
-    }
-
-    public ObservableList<Conjunction> getListSpace() {
-        return listSpace;
-    }
-
-    public ObservableList<Conjunction> getListTime() {
-        return listTime;
-    }
-
-    public ObservableList<Conjunction> getListQuantum() {
-        return listQuantum;
-    }
-
-    public ObservableList<Conjunction> getListSyllogism() {
-        return listSyllogism;
-    }
+    
 
     public ObservableList<Log> getListLog() {
         return listLog;
@@ -150,6 +157,7 @@ public class AppController {
         for(Module m:Module.values()){
             
             FXMLLoader loader = new FXMLLoader(getClass().getResource(m.getUrl()));
+            
             Node node = loader.load();
             m.setNode(node);
             
@@ -212,53 +220,8 @@ public class AppController {
         }
     }
 
-    @FXML
-    public void testButton1(){
-        
-    }
-    
-    @FXML
-    public void testButton2(){
-        
-    }
-    
-    @FXML
-    public void testButton3(){
-        
-    }
-
-    private void loadSettings() {
-        
-    }
-
-    public void connectToDb(String hostname, String dbUserName, String dbPassword) {
-        // User has entered the db adress, we give default though
-        
-        // !! Are there unsaved changed in the current db? -> save first
-        
-        conexion = new Conexion();
-        conexion.establecerConexion(hostname, dbUserName, dbPassword);
-        
-        // load and fill data because we call this method from connect button
-        loadData(conexion);
-        conexion.cerrarConexion();
-    }
-
-    private void loadData(Conexion conexion) {
-        addLog("System", "Loading data into controls...");
-        
-        
-        // other module data
-        this.listImplication = FXCollections.observableArrayList();
-        this.listDeduction = FXCollections.observableArrayList();
-        this.listConjunction = FXCollections.observableArrayList();
-        this.listDialectic = FXCollections.observableArrayList();
-        this.listRegister = FXCollections.observableArrayList();
-        this.listSpace = FXCollections.observableArrayList();
-        this.listTime = FXCollections.observableArrayList();
-        this.listQuantum = FXCollections.observableArrayList();
-        this.listSyllogism = FXCollections.observableArrayList();
-        
+    public void loadData() {
+        this.conexion.establecerConexion();
         
 //        Implication.loadList(conexion.getConnection(), listImplication);
 //        Deduction.loadList(conexion.getConnection(), listDeduction);
@@ -275,17 +238,25 @@ public class AppController {
         for(Module m:Module.values()){
             switch(m){
                 case LOGIC_SYSTEM:{
-                    this.listLogicSystem = FXCollections.observableArrayList();
-                    LogicSystem.loadList(conexion.getConnection(), this.listLogicSystem);
-                    logicSystemController.fillData(this.listLogicSystem);
+                    LogicSystem.loadList(this.conexion.getConnection(), logicSystemController.getListLogicSystem());
+                    logicSystemController.fillData();
                     break;
                 }
                 case DUALITIES:{
-                    this.listFcc = FXCollections.observableArrayList();
-                    this.listElement = FXCollections.observableArrayList();
-                    Fcc.loadList(conexion.getConnection(), listFcc, listLogicSystem);
-                    Element.loadList(conexion.getConnection(), listElement);
-                    dualitiesController.fillData(this.listFcc, this.listElement);
+                    
+                    Fcc.loadList(this.conexion.getConnection(), dualitiesController.getListFcc());
+                    
+                    FccHasLogicSystem.loadList(this.conexion.getConnection(), 
+                            dualitiesController.getListFccHasLogicSystem(), 
+                            dualitiesController.getListFcc(), 
+                            logicSystemController.getListLogicSystem());
+                    
+                    dualitiesController.fillData();
+                    
+                    //this.listElement = FXCollections.observableArrayList();
+                    //Fcc.loadList(this.conexion.getConnection(), listFcc);
+                    //Element.loadList(this.conexion.getConnection(), listElement);
+                    //dualitiesController.fillData(this.listFcc, this.listElement, this.listConjunction);
                     break;
                 }
 //                case TOD:{
@@ -314,17 +285,41 @@ public class AppController {
 //                    break;
 //                }
                 case SETTINGS:{
-                    this.listLogicSystem = FXCollections.observableArrayList();
-                    this.listUser = FXCollections.observableArrayList();
-                    User.loadList(conexion.getConnection(), listUser);
+                    User.loadList(this.conexion.getConnection(), settingsController.getListUser());
                     break;
                 }
             }
         }    
-        addLog("System", "... all data succesfully loaded.");
+        
+        conexion.cerrarConexion();
     }    
     
-    public void addLog(String type, String message){
-        logController.addLog(type,message);
+    public void setupTevwLog(){
+        tecnDate.setCellValueFactory(new PropertyValueFactory<Log,Timestamp>("date"));
+        tecnType.setCellValueFactory(new PropertyValueFactory<Log,String>("type"));
+        tecnMessage.setCellValueFactory(new PropertyValueFactory<Log,String>("message"));
+        
+        logList = FXCollections.observableArrayList();
+        
+        tevwLog.setItems(logList);
+        
+//        tevwLog.getSelectionModel().selectedItemProperty().addListener(
+//				new ChangeListener<Log>() {
+//					@Override
+//					public void changed(ObservableValue<? extends Log> arg0,
+//							Log valorAnterior, Log valorSeleccionado) {
+//                                            // TODO
+//                                            System.out.println("selection was " + valorAnterior + " y ahora es: " + valorSeleccionado);
+//                                    }
+//                                }
+//		);
+        
+        
     }
+    
+    public void addLog(String type, String message){
+        logList.add(new Log(Timestamp.valueOf(LocalDateTime.now()), type, message));
+    }
+    
+    
 }

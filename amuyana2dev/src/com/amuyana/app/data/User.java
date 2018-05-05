@@ -83,7 +83,7 @@ String password, Date joinedDate) {
     }
     
     public static void loadList(Connection connection, ObservableList<User> listUser){
-
+        
         try {
             Statement statement = connection.createStatement();
             ResultSet resultado = statement.executeQuery(

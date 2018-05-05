@@ -19,26 +19,40 @@
                   <MenuItem mnemonicParsing="false" text="Close" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Help">
+          <Menu mnemonicParsing="false" text="View">
             <items>
-              <MenuItem mnemonicParsing="false" text="How to use" />
-                  <MenuItem mnemonicParsing="false" text="About" />
+              <MenuItem fx:id="muimShowHideLog" mnemonicParsing="false" onAction="#showHideLog" text="Show Log panel" />
             </items>
           </Menu>
         </menus>
       </MenuBar>
-      <TabPane tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
-        <tabs>
-          <Tab fx:id="tab_logicSystem" text="Logic System" />
-            <Tab fx:id="tab_dualities" text="Dualities" />
-          <Tab fx:id="tab_tod" text="Table of Deductions" />
-            <Tab fx:id="tab_dialectic" text="Dialectics" />
-            <Tab fx:id="tab_stc" text="Space-Time Configurations" />
-            <Tab fx:id="tab_syllogism" text="Syllogisms" />
-            <Tab fx:id="tab_stats" text="Statistics Register" />
-            <Tab fx:id="tab_settings" text="Settings" />
-            <Tab fx:id="tab_log" text="Log ⊃" />
-        </tabs>
-      </TabPane>
+      <SplitPane fx:id="stpeContents" dividerPositions="1.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" orientation="VERTICAL" VBox.vgrow="ALWAYS">
+         <items>
+            <TabPane tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
+              <tabs>
+                <Tab fx:id="tab_logicSystem" text="Logic System" />
+                  <Tab fx:id="tab_dualities" text="Dualities" />
+                <Tab fx:id="tab_tod" text="Table of Deductions" />
+                  <Tab fx:id="tab_dialectic" text="Dialectics" />
+                  <Tab fx:id="tab_stc" text="Space-Time Configurations" />
+                  <Tab fx:id="tab_syllogism" text="Syllogisms" />
+                  <Tab fx:id="tab_stats" text="Statistics Register" />
+                  <Tab fx:id="tab_settings" text="Settings" />
+                  <Tab fx:id="tab_log" text="Tutorial" />
+              </tabs>
+            </TabPane>
+            <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="200.0" minHeight="0.0" prefHeight="200.0" SplitPane.resizableWithParent="false">
+               <content>
+                  <TableView fx:id="tevwLog" minHeight="0.0" prefHeight="500.0" prefWidth="200.0" styleClass="tblvw" tableMenuButtonVisible="true">
+                     <columns>
+                        <TableColumn fx:id="tecnDate" prefWidth="118.0" text="Date" />
+                        <TableColumn fx:id="tecnType" prefWidth="106.0" text="Type" />
+                        <TableColumn fx:id="tecnMessage" prefWidth="794.0" text="Message" />
+                     </columns>
+                  </TableView>
+               </content>
+            </ScrollPane>
+         </items>
+      </SplitPane>
    </children>
 </VBox>

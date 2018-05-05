@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -17,117 +18,84 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
 
 public class Fcc{
-	private IntegerProperty idFcc;
-	private StringProperty label;
-	private StringProperty description;
-	private Boolean inUse;
-	private LogicSystem logicSystem;
+    private IntegerProperty idFcc;
+    private StringProperty label;
+    private StringProperty description;
 
-	public Fcc(int idFcc, String label, String description, 
-Boolean inUse, LogicSystem logicSystem) { 
-		this.idFcc = new SimpleIntegerProperty(idFcc);
-		this.label = new SimpleStringProperty(label);
-		this.description = new SimpleStringProperty(description);
-		this.inUse = inUse;
-		this.logicSystem = logicSystem;
-	}
+    public Fcc(int idFcc, String label, String description) { 
+            this.idFcc = new SimpleIntegerProperty(idFcc);
+            this.label = new SimpleStringProperty(label);
+            this.description = new SimpleStringProperty(description);
+    }
 
-	//Metodos atributo: idFcc
-	public int getIdFcc() {
-		return idFcc.get();
-	}
-	public void setIdFcc(int idFcc) {
-		this.idFcc = new SimpleIntegerProperty(idFcc);
-	}
-	public IntegerProperty IdFccProperty() {
-		return idFcc;
-	}
-	//Metodos atributo: label
-	public String getLabel() {
-		return label.get();
-	}
-	public void setLabel(String label) {
-		this.label = new SimpleStringProperty(label);
-	}
-	public StringProperty LabelProperty() {
-		return label;
-	}
-	//Metodos atributo: description
-	public String getDescription() {
-		return description.get();
-	}
-	public void setDescription(String description) {
-		this.description = new SimpleStringProperty(description);
-	}
-	public StringProperty DescriptionProperty() {
-		return description;
-	}
-	//Metodos atributo: inUse
-	public Boolean getInUse() {
-		return inUse;
-	}
-	public void setInUse(Boolean inUse) {
-		this.inUse = inUse;
-	}
-	//Metodos atributo: idSystem
-	public LogicSystem getLogicSystem() {
-		return logicSystem;
-	}
-	public void setLogicSystem(LogicSystem logicSystem) {
-		this.logicSystem = logicSystem;
-	}
-        
-        public void saveForm(){
-            
-        }
-        
-        public void updateForm(){
-            
-        }
-        
-        public void clearForm(){
-            
-        }
-        
-        public static void loadList(Connection connection, 
-                ObservableList<Fcc> listFcc,
-                ObservableList<LogicSystem> listLogicSystem){
-            try {
-                Statement instruction = connection.createStatement();
-                ResultSet result = instruction.executeQuery(
-                    "SELECT A.id_fcc, "
-                            + "A.label, "
-                            + "A.description, "
-                            + "A.in_use, "
-                            + "A.id_logic_system, "
-                            + "B.id_logic_system, "
-                            + "B.label, "
-                            + "B.description, "
-                            + "B.creation_date "
-                    + "FROM tbl_fcc A "
-                    + "INNER JOIN tbl_logic_system B "
-                    + "ON (A.id_logic_system = B.id_logic_system) "
+    //Metodos atributo: idFcc
+    public int getIdFcc() {
+            return idFcc.get();
+    }
+    public void setIdFcc(int idFcc) {
+            this.idFcc = new SimpleIntegerProperty(idFcc);
+    }
+    public IntegerProperty IdFccProperty() {
+            return idFcc;
+    }
+    //Metodos atributo: label
+    public String getLabel() {
+            return label.get();
+    }
+    public void setLabel(String label) {
+            this.label = new SimpleStringProperty(label);
+    }
+    public StringProperty LabelProperty() {
+            return label;
+    }
+    //Metodos atributo: description
+    public String getDescription() {
+            return description.get();
+    }
+    public void setDescription(String description) {
+            this.description = new SimpleStringProperty(description);
+    }
+    public StringProperty DescriptionProperty() {
+            return description;
+    }
+
+
+    public void saveData(){
+
+    }
+
+    public void updateData(){
+
+    }
+
+    public void deleteData(){
+
+    }
+
+    public static void loadList(Connection connection, 
+            ObservableList<Fcc> listFcc){
+        try {
+            Statement instruction = connection.createStatement();
+            ResultSet result = instruction.executeQuery(
+                "SELECT id_fcc, "
+                        + "label, "
+                        + "description "
+                + "FROM amuyana.tbl_fcc"
+            );
+
+            while(result.next()){
+
+                listFcc.add(
+                        new Fcc(
+                                result.getInt("id_fcc"), 
+                                result.getString("label"),
+                                result.getString("description")
+                        )
                 );
-                
-                while(result.next()){
-                    
-                    listFcc.add(
-                            new Fcc(
-                                    
-                                    result.getInt("A.id_fcc"), 
-                                    result.getString("A.label"),
-                                    result.getString("A.description"), 
-                                    result.getBoolean("A.in_use"), 
-                                    listLogicSystem.get(result.getInt("A.id_logic_system"))
-                            )
-                    );
-                    
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(Fcc.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        
 
-         
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Fcc.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }  
 }

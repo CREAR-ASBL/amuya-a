@@ -29,7 +29,7 @@
                                     </ToolBar>
                                     <VBox spacing="10.0" HBox.hgrow="ALWAYS">
                                        <children>
-                                          <TableView prefHeight="150.0" styleClass="tblvw_logicsystem">
+                                          <TableView prefHeight="150.0" styleClass="tblvw">
                                              <columns>
                                                 <TableColumn prefWidth="131.0" text="Date of creation" />
                                                 <TableColumn prefWidth="105.0" text="FCC label" />
@@ -84,7 +84,7 @@
                                                       </HBox>
                                                    </children>
                                                 </VBox>
-                                                <TableView prefHeight="150.0" styleClass="tblvw_logicsystem">
+                                                <TableView prefHeight="150.0" styleClass="tblvw">
                                                    <columns>
                                                       <TableColumn prefWidth="131.0" text="Level" />
                                                       <TableColumn prefWidth="221.0" text="Contradictional conjunction" />

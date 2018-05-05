@@ -1,0 +1,69 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.amuyana.app.data;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Timestamp;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.collections.ObservableList;
+
+
+public class FccHasLogicSystem{
+    private Fcc fcc;
+    private LogicSystem logicSystem;
+
+    public FccHasLogicSystem(Fcc fcc, LogicSystem logicSystem) { 
+            this.fcc = fcc;
+            this.logicSystem = logicSystem;
+    }
+
+    //Metodos atributo: logicSystem
+    public LogicSystem getLogicSystem() {
+            return logicSystem;
+    }
+    public void setLogicSystem(LogicSystem logicSystem) {
+            this.logicSystem = logicSystem;
+    }
+    //Metodos atributo: fcc
+    public Fcc getFcc() {
+            return fcc;
+    }
+    public void setFcc(Fcc fcc) {
+            this.fcc = fcc;
+    }
+    
+    public static void loadList(Connection connection, 
+            ObservableList<FccHasLogicSystem> listFccHasLogicSystem,
+            ObservableList<Fcc> listFcc,
+            ObservableList<LogicSystem> listLogicSystem){
+        String sql = "SELECT id_fcc, id_logic_system FROM amuyana.tbl_fcc_has_tbl_logic_system";
+        
+        try {
+            Statement instruction = connection.createStatement();
+            ResultSet result = instruction.executeQuery(sql);
+            
+            while(result.next()){
+                for(Fcc f:listFcc){
+                    if(f.getIdFcc()==result.getInt("id_fcc")){
+                        for(LogicSystem l : listLogicSystem){
+                            if(l.getIdLogicSystem()==result.getInt("id_logic_system")){
+                                listFccHasLogicSystem.add(new FccHasLogicSystem(f,l));
+                            }
+                        }
+                    }
+                }
+                
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(FccHasLogicSystem.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+}

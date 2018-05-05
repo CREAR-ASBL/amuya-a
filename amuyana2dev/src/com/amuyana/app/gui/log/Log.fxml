@@ -8,43 +8,17 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="600.0" prefWidth="800.0" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.amuyana.app.gui.log.LogController">
+<ScrollPane fitToHeight="true" fitToWidth="true" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.amuyana.app.gui.log.LogController">
    <content>
       <VBox alignment="TOP_CENTER" fillWidth="false" styleClass="base">
          <children>
-            <VBox>
-               <children>
-                  <VBox maxWidth="1.7976931348623157E308" minWidth="600.0" prefWidth="800.0">
-                     <children>
-                        <TitledPane id="ttldPn_" maxWidth="900.0" minHeight="-Infinity" minWidth="600.0" text="Logs">
-                           <content>
-                              <VBox spacing="10.0">
-                                 <children>
-                                    <ToolBar maxHeight="1.7976931348623157E308" styleClass="tlbr_logicsystem">
-                                       <items>
-                                          <TextField prefWidth="150.0" promptText="Filter" />
-                                          <Separator orientation="VERTICAL" />
-                                          <Button minHeight="-Infinity" mnemonicParsing="false" text="Export logs" textAlignment="CENTER" wrapText="true" />
-                                       </items>
-                                    </ToolBar>
-                                    <TableView fx:id="tevwLog" prefHeight="500.0" prefWidth="200.0" styleClass="tblvw" tableMenuButtonVisible="true">
-                                      <columns>
-                                          <TableColumn fx:id="tecnDate" prefWidth="118.0" text="Date" />
-                                        <TableColumn fx:id="tecnType" prefWidth="106.0" text="Type" />
-                                          <TableColumn fx:id="tecnMessage" prefWidth="341.0" text="Message" />
-                                      </columns>
-                                    </TableView>
-                                 </children>
-                              </VBox>
-                           </content>
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </TitledPane>
-                     </children>
-                  </VBox>
-               </children>
-            </VBox>
+            <TableView fx:id="tevwLog" prefHeight="500.0" prefWidth="200.0" styleClass="tblvw" tableMenuButtonVisible="true">
+              <columns>
+                  <TableColumn fx:id="tecnDate" prefWidth="118.0" text="Date" />
+                <TableColumn fx:id="tecnType" prefWidth="106.0" text="Type" />
+                  <TableColumn fx:id="tecnMessage" prefWidth="341.0" text="Message" />
+              </columns>
+            </TableView>
          </children>
       </VBox>
    </content>

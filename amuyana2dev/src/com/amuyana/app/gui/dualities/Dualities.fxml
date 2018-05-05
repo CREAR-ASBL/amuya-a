@@ -21,45 +21,80 @@
                                     <ToolBar orientation="VERTICAL" styleClass="tlbr_logicsystem">
                                        <items>
                                           <TextField prefWidth="90.0" promptText="Filter" />
-                                          <CheckBox mnemonicParsing="false" prefWidth="90.0" text="Show deleted" wrapText="true" />
-                                          <ToggleButton disable="true" mnemonicParsing="false" styleClass="bttn_toolbar" text="Edit" />
-                                          <Button minWidth="-Infinity" mnemonicParsing="false" styleClass="bttn_toolbar" text="New" />
+                                          <Button minWidth="-Infinity" mnemonicParsing="false" styleClass="bttn_toolbar" text="Save" />
+                                          <Button disable="true" minWidth="-Infinity" mnemonicParsing="false" styleClass="bttn_toolbar" text="Update" />
                                           <Button disable="true" minWidth="-Infinity" mnemonicParsing="false" styleClass="bttn_toolbar" text="Delete" />
-                                          <Button disable="true" minWidth="-Infinity" mnemonicParsing="false" styleClass="bttn_toolbar" text="Duplicate" />
-                                          <Button disable="true" layoutX="10.0" layoutY="178.0" minWidth="-Infinity" mnemonicParsing="false" styleClass="bttn_toolbar" text="Invert element and anti- element" />
+                                          <Button layoutX="10.0" layoutY="178.0" minWidth="-Infinity" mnemonicParsing="false" styleClass="bttn_toolbar" text="New" />
                                        </items>
                                     </ToolBar>
-                                    <VBox alignment="CENTER" prefHeight="448.0" prefWidth="400.0" spacing="10.0" HBox.hgrow="ALWAYS">
+                                    <VBox alignment="CENTER" prefWidth="400.0" spacing="10.0" HBox.hgrow="ALWAYS">
                                        <children>
                                           <TableView fx:id="tevwFcc" maxWidth="1.7976931348623157E308" prefHeight="150.0" styleClass="tblvw" tableMenuButtonVisible="true">
                                              <columns>
-                                                <TableColumn fx:id="tecnFccId" prefWidth="38.0" text="id" />
-                                                <TableColumn fx:id="tecnFccLabel" minWidth="5.0" prefWidth="100.0" text="label_fcc" />
-                                                <TableColumn fx:id="tecnFccDescription" prefWidth="150.0" text="description" />
-                                                <TableColumn fx:id="tecnFccInUse" prefWidth="78.0" text="in use" />
-                                                <TableColumn fx:id="tecnLogicSystem" prefWidth="95.0" text="id logic system" />
-                                                <TableColumn prefWidth="121.0" text="status (deleted/with conflicts/ok/..." />
+                                                <TableColumn fx:id="tecnFccLabel" minWidth="5.0" prefWidth="151.0" text="Label" />
+                                                <TableColumn fx:id="tecnFccDescription" prefWidth="468.0" text="Description" />
                                              </columns>
                                           </TableView>
-                                          <HBox alignment="CENTER_LEFT">
+                                          <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="173.0">
                                              <children>
-                                                <Label text="Deduction from:" />
-                                                <ComboBox fx:id="cobxConjunctions" prefWidth="150.0" />
-                                                <VBox alignment="CENTER">
-                                                   <children>
-                                                      <Button mnemonicParsing="false" text="Add" />
-                                                      <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" text="Remove" />
-                                                   </children>
-                                                </VBox>
-                                                <ListView fx:id="ltvw_conjunctions" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="SOMETIMES" />
+                                                <Label text="ID:" />
+                                                <TextField fx:id="ttfdFccId" editable="false" maxWidth="-Infinity" prefWidth="100.0" HBox.hgrow="ALWAYS" />
                                              </children>
                                           </HBox>
                                           <HBox alignment="CENTER_LEFT">
                                              <children>
-                                                <Label text="Label of FCC:" />
+                                                <Label text="Label:" />
                                                 <TextField fx:id="ttfdFccLabel" HBox.hgrow="ALWAYS" />
                                              </children>
                                           </HBox>
+                                          <HBox>
+                                             <children>
+                                                <Label text="Description:" />
+                                                <TextArea fx:id="ttaaFccDescription" prefHeight="100.0" HBox.hgrow="ALWAYS" />
+                                             </children>
+                                          </HBox>
+                                          <VBox>
+                                             <children>
+                                                <Label text="Belongs to Logic System: " wrapText="true" />
+                                                <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="170.0" spacing="5.0">
+                                                   <children>
+                                                      <ListView fx:id="ltvwLogicSystem" prefHeight="100.0" HBox.hgrow="ALWAYS" />
+                                                      <VBox alignment="CENTER">
+                                                         <children>
+                                                            <ComboBox fx:id="cobxLogicSystem" prefWidth="150.0" />
+                                                            <HBox>
+                                                               <children>
+                                                                  <Button fx:id="bnRemoveLogicSystem" mnemonicParsing="false" text="Remove" />
+                                                                  <Button fx:id="bnAddLogicSystem" mnemonicParsing="false" text="Add" />
+                                                               </children>
+                                                            </HBox>
+                                                         </children>
+                                                      </VBox>
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                          </VBox>
+                                          <VBox>
+                                             <children>
+                                                <Label text="Is deduced from Contradictional Implications:" wrapText="true" />
+                                                <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="170.0" spacing="5.0">
+                                                   <children>
+                                                      <ListView fx:id="ltvwImplication" prefHeight="100.0" HBox.hgrow="ALWAYS" />
+                                                      <VBox alignment="CENTER">
+                                                         <children>
+                                                            <ComboBox fx:id="cobxImplication" prefWidth="150.0" />
+                                                            <HBox>
+                                                               <children>
+                                                                  <Button fx:id="bnRemoveImplication" mnemonicParsing="false" text="Remove" />
+                                                                  <Button fx:id="bnAddImplication" mnemonicParsing="false" text="Add" />
+                                                               </children>
+                                                            </HBox>
+                                                         </children>
+                                                      </VBox>
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                          </VBox>
                                           <HBox alignment="CENTER_LEFT">
                                              <children>
                                                 <HBox prefWidth="200.0" HBox.hgrow="ALWAYS">
@@ -76,121 +111,83 @@
                                                 </HBox>
                                              </children>
                                           </HBox>
-                                          <HBox>
+                                          <VBox spacing="10.0">
                                              <children>
-                                                <Label text="Description:" />
-                                                <TextArea fx:id="ttaaFccDescription" prefHeight="100.0" HBox.hgrow="ALWAYS" />
-                                             </children>
-                                          </HBox>
-                                       </children>
-                                    </VBox>
-                                 </children>
-                              </HBox>
-                           </content>
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </TitledPane>
-                        <TitledPane minHeight="-Infinity" text="Contradictional conjunctions">
-                           <content>
-                              <HBox spacing="10.0">
-                                 <children>
-                                    <ToolBar orientation="VERTICAL" styleClass="tlbr_logicsystem">
-                                       <items>
-                                          <ToggleButton disable="true" mnemonicParsing="false" styleClass="bttn_toolbar" text="Edit" />
-                                          <Button disable="true" minWidth="-Infinity" mnemonicParsing="false" styleClass="bttn_toolbar" text="Clear" />
-                                       </items>
-                                    </ToolBar>
-                                    <VBox spacing="10.0" HBox.hgrow="ALWAYS">
-                                       <children>
-                                          <TableView prefHeight="150.0" styleClass="tblvw" tableMenuButtonVisible="true">
-                                            <columns>
-                                              <TableColumn prefWidth="163.0" text="C. Conjunction" />
-                                              <TableColumn prefWidth="251.0" text="Element" />
-                                                <TableColumn prefWidth="205.0" text="Anti-element" />
-                                            </columns>
-                                          </TableView>
-                                          <VBox>
-                                             <children>
-                                                <Label text="Positive contradictional conjunction" />
-                                                <HBox>
+                                                <VBox>
                                                    <children>
-                                                      <Label text="Algebraic formulation:" />
-                                                      <Label text="Label" />
+                                                      <Label styleClass="subtitle" text="Positive contradictional conjunction" />
+                                                      <HBox>
+                                                         <children>
+                                                            <Label text="Algebraic formulation:" />
+                                                            <Label text="Label" />
+                                                         </children>
+                                                      </HBox>
+                                                      <HBox layoutX="10.0" layoutY="25.0" prefWidth="200.0">
+                                                         <children>
+                                                            <Label text="Propositional formulation:" />
+                                                            <TextField fx:id="ttfdPositiveFormulation" HBox.hgrow="ALWAYS" />
+                                                         </children>
+                                                      </HBox>
+                                                      <HBox layoutX="10.0" layoutY="40.0" prefWidth="200.0">
+                                                         <children>
+                                                            <Label text="Description:" />
+                                                            <TextArea fx:id="ttfdPositiveDescription" prefHeight="100.0" HBox.hgrow="ALWAYS" />
+                                                         </children>
+                                                      </HBox>
                                                    </children>
-                                                </HBox>
-                                                <HBox layoutX="10.0" layoutY="25.0" prefWidth="200.0">
+                                                </VBox>
+                                                <VBox>
                                                    <children>
-                                                      <Label text="Propositional formulation:" />
-                                                      <TextField HBox.hgrow="ALWAYS" />
+                                                      <Label styleClass="subtitle" text="Negative contradictional conjunction" />
+                                                      <HBox>
+                                                         <children>
+                                                            <Label text="Algebraic formulation:" />
+                                                            <Label text="Label" />
+                                                         </children>
+                                                      </HBox>
+                                                      <HBox layoutX="10.0" layoutY="25.0" prefWidth="200.0">
+                                                         <children>
+                                                            <Label text="Propositional formulation:" />
+                                                            <TextField fx:id="ttfdNegativeFormulation" HBox.hgrow="ALWAYS" />
+                                                         </children>
+                                                      </HBox>
+                                                      <HBox layoutX="10.0" layoutY="40.0" prefWidth="200.0">
+                                                         <children>
+                                                            <Label text="Description:" />
+                                                            <TextArea fx:id="ttfdNevativeDescription" prefHeight="100.0" HBox.hgrow="ALWAYS" />
+                                                         </children>
+                                                      </HBox>
                                                    </children>
-                                                </HBox>
-                                                <HBox layoutX="10.0" layoutY="40.0" prefWidth="200.0">
+                                                </VBox>
+                                                <VBox layoutX="20.0" layoutY="175.0">
                                                    <children>
-                                                      <Label text="Description:" />
-                                                      <TextArea prefHeight="100.0" HBox.hgrow="ALWAYS" />
+                                                      <Label styleClass="subtitle" text="Symmetric contradictional conjunction" />
+                                                      <HBox>
+                                                         <children>
+                                                            <Label text="Algebraic formulation:" />
+                                                            <Label text="Label" />
+                                                         </children>
+                                                      </HBox>
+                                                      <HBox layoutX="10.0" layoutY="25.0" prefWidth="200.0">
+                                                         <children>
+                                                            <Label text="Propositional formulation:" />
+                                                            <TextField fx:id="ttfdSymmetricFormulation" HBox.hgrow="ALWAYS" />
+                                                         </children>
+                                                      </HBox>
+                                                      <HBox layoutX="10.0" layoutY="40.0" prefWidth="200.0">
+                                                         <children>
+                                                            <Label text="Description:" />
+                                                            <TextArea fx:id="ttfdSymmetricDescription" prefHeight="100.0" HBox.hgrow="ALWAYS" />
+                                                         </children>
+                                                      </HBox>
                                                    </children>
-                                                </HBox>
-                                             </children>
-                                          </VBox>
-                                          <VBox>
-                                             <children>
-                                                <Label text="Negative contradictional conjunction" />
-                                                <HBox>
-                                                   <children>
-                                                      <Label text="Algebraic formulation:" />
-                                                      <Label text="Label" />
-                                                   </children>
-                                                </HBox>
-                                                <HBox layoutX="10.0" layoutY="25.0" prefWidth="200.0">
-                                                   <children>
-                                                      <Label text="Propositional formulation:" />
-                                                      <TextField HBox.hgrow="ALWAYS" />
-                                                   </children>
-                                                </HBox>
-                                                <HBox layoutX="10.0" layoutY="40.0" prefWidth="200.0">
-                                                   <children>
-                                                      <Label text="Description:" />
-                                                      <TextArea prefHeight="100.0" HBox.hgrow="ALWAYS" />
-                                                   </children>
-                                                </HBox>
-                                             </children>
-                                          </VBox>
-                                          <VBox layoutX="20.0" layoutY="175.0">
-                                             <children>
-                                                <Label text="Symmetric contradictional conjunction" />
-                                                <HBox>
-                                                   <children>
-                                                      <Label text="Algebraic formulation:" />
-                                                      <Label text="Label" />
-                                                   </children>
-                                                </HBox>
-                                                <HBox layoutX="10.0" layoutY="25.0" prefWidth="200.0">
-                                                   <children>
-                                                      <Label text="Propositional formulation:" />
-                                                      <TextField HBox.hgrow="ALWAYS" />
-                                                   </children>
-                                                </HBox>
-                                                <HBox layoutX="10.0" layoutY="40.0" prefWidth="200.0">
-                                                   <children>
-                                                      <Label text="Description:" />
-                                                      <TextArea prefHeight="100.0" HBox.hgrow="ALWAYS" />
-                                                   </children>
-                                                </HBox>
+                                                </VBox>
                                              </children>
                                           </VBox>
                                        </children>
                                     </VBox>
                                  </children>
                               </HBox>
-                           </content>
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </TitledPane>
-                        <TitledPane minHeight="-Infinity" text="Fundamental Postulate formulations">
-                           <content>
-                              <VBox />
                            </content>
                            <font>
                               <Font size="20.0" />
