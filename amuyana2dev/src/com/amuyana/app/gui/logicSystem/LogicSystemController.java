@@ -75,7 +75,6 @@ public class LogicSystemController implements Initializable {
                 public void changed(ObservableValue<? extends LogicSystem> arg0,
                     LogicSystem oldValue, LogicSystem newValue) {
                     if (newValue!=null){
-                        
                         ttfdId.setText(String.valueOf(newValue.getIdLogicSystem()));
                         ttfdLabel.setText(newValue.getLabel());
                         lblCreationDate.setText(newValue.getCreationDate().toString());

@@ -113,7 +113,7 @@ public class AppController {
             
             stpeContents.setDividerPosition(0, 0.5);
             muimShowHideLog.setText("Hide Log panel");
-            addLog("debug", "i am going to show");
+            
         } else if ("Hide Log panel".equals(muimShowHideLog.getText())){
             stpeContents.setDividerPosition(0, 1);
             muimShowHideLog.setText("Show Log panel");

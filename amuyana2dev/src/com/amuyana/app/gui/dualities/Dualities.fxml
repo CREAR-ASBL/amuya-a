@@ -61,11 +61,11 @@
                                                       <ListView fx:id="ltvwLogicSystem" prefHeight="100.0" HBox.hgrow="ALWAYS" />
                                                       <VBox alignment="CENTER">
                                                          <children>
-                                                            <ComboBox fx:id="cobxLogicSystem" prefWidth="150.0" />
+                                                            <ComboBox fx:id="cobxLogicSystem" disable="true" prefWidth="150.0" />
                                                             <HBox>
                                                                <children>
-                                                                  <Button fx:id="bnRemoveLogicSystem" mnemonicParsing="false" text="Remove" />
-                                                                  <Button fx:id="bnAddLogicSystem" mnemonicParsing="false" text="Add" />
+                                                                  <Button fx:id="bnRemoveLogicSystem" disable="true" mnemonicParsing="false" text="Remove" />
+                                                                  <Button fx:id="bnAddLogicSystem" disable="true" mnemonicParsing="false" onAction="#addLogicSystem" text="Add" />
                                                                </children>
                                                             </HBox>
                                                          </children>
@@ -82,11 +82,11 @@
                                                       <ListView fx:id="ltvwImplication" prefHeight="100.0" HBox.hgrow="ALWAYS" />
                                                       <VBox alignment="CENTER">
                                                          <children>
-                                                            <ComboBox fx:id="cobxImplication" prefWidth="150.0" />
+                                                            <ComboBox fx:id="cobxImplication" disable="true" prefWidth="150.0" />
                                                             <HBox>
                                                                <children>
-                                                                  <Button fx:id="bnRemoveImplication" mnemonicParsing="false" text="Remove" />
-                                                                  <Button fx:id="bnAddImplication" mnemonicParsing="false" text="Add" />
+                                                                  <Button fx:id="bnRemoveImplication" disable="true" mnemonicParsing="false" text="Remove" />
+                                                                  <Button fx:id="bnAddImplication" disable="true" mnemonicParsing="false" text="Add" />
                                                                </children>
                                                             </HBox>
                                                          </children>
@@ -97,13 +97,13 @@
                                           </VBox>
                                           <HBox alignment="CENTER_LEFT">
                                              <children>
-                                                <HBox prefWidth="200.0" HBox.hgrow="ALWAYS">
+                                                <HBox alignment="CENTER_LEFT" prefWidth="200.0" HBox.hgrow="ALWAYS">
                                                    <children>
                                                       <Label text="Symbol of element:" />
                                                       <TextField fx:id="ttfdElementSymbol" maxWidth="80.0" />
                                                    </children>
                                                 </HBox>
-                                                <HBox layoutX="10.0" layoutY="10.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                                                <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="10.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
                                                    <children>
                                                       <Label text="Symbol of anti-element:" />
                                                       <TextField fx:id="ttfdAElementSymbol" maxWidth="80.0" />

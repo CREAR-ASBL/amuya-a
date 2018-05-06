@@ -104,16 +104,12 @@ public class DualitiesController implements Initializable {
     }
     
     public void fillData() {
-        
         tevwFcc.setItems(listFcc);
         
         tecnFccLabel.setCellValueFactory(
             new PropertyValueFactory<Fcc,String>("label"));
         tecnFccDescription.setCellValueFactory(
             new PropertyValueFactory<Fcc,String>("description"));
-        
-        
-        
         
     }
     
@@ -124,40 +120,63 @@ public class DualitiesController implements Initializable {
                 @Override
                 public void changed(ObservableValue<? extends Fcc> observable, 
                     Fcc oldValue, Fcc newValue) {
-                    // FCC 
-                    ttfdFccId.setText(String.valueOf(newValue.getIdFcc()));
-                    ttfdFccLabel.setText(newValue.getLabel());
-                    ttaaFccDescription.setText(newValue.getDescription());
-                        
-                    // the selected fcc - newValue -, has 
-                    ObservableList<LogicSystem> ls1 = FXCollections.observableArrayList();
-                    ObservableList<LogicSystem> ls2 = FXCollections.observableArrayList();
-                    
-                    
-                    
-                    for(FccHasLogicSystem fhls: appController.getListFccHasLogicSystem()){
-                        if(newValue.equals(fhls.getFcc())){
-                            ls1.add(fhls.getLogicSystem());
-                            //ls2.remove(fhls.getLogicSystem());
+                    if(newValue != null){
+                        // FCC section
+                        ttfdFccId.setText(String.valueOf(newValue.getIdFcc()));
+                        ttfdFccLabel.setText(newValue.getLabel());
+                        ttaaFccDescription.setText(newValue.getDescription());
+
+                        // FCC HAS LOGIC SYSTEM section
+                        ObservableList<LogicSystem> ls1 = FXCollections.observableArrayList();
+                        ObservableList<LogicSystem> ls2 = FXCollections.observableArrayList();
+
+                        ls2.addAll(appController.getListLogicSystem());
+
+                        appController.getListFccHasLogicSystem();
+
+                        for(FccHasLogicSystem fhls : appController.getListFccHasLogicSystem()){
+                            if(fhls.getFcc().equals(newValue)){
+                                ls2.remove(fhls.getLogicSystem());
+                                ls1.add(fhls.getLogicSystem());
+                            }
                         }
+                        ltvwLogicSystem.setItems(ls1);
+                        cobxLogicSystem.setItems(ls2);
+                        
+                        //buttons
+                        cobxLogicSystem.setDisable(false);
+                        bnRemoveLogicSystem.setDisable(false);
+                        bnAddLogicSystem.setDisable(false);
+
+                        // Make a list with Logic Systems that have id of Fcc, 
+                        // and that list show it in ListView, the rest put it in 
+                        // ComboBox: EASY
+
+                        //ltvwLogicSystem.setItems(appController.getListLogicSystem());
                     }
-                    
-                    ltvwLogicSystem.setItems(ls1);
-                    cobxLogicSystem.setItems(ls2);
-                    
-                    
-                    
-                    
-                    // Make a list with Logic Systems that have id of Fcc, 
-                    // and that list show it in ListView, the rest put it in 
-                    // ComboBox: EASY
-                    
-                    //ltvwLogicSystem.setItems(appController.getListLogicSystem());
+                        
                 }
             }
         );
     }
-
+    @FXML
+    public void addLogicSystem(){
+        log("debug","Trying to add logic system");
+        
+        // Add in database new FccHasLogicSystem()...
+        listFccHasLogicSystem.add(
+            new FccHasLogicSystem((Fcc)tevwFcc.getSelectionModel().getSelectedItem(),
+                    (LogicSystem)cobxLogicSystem.getSelectionModel().getSelectedItem())
+        );
+        // Reclick to load list and combobox
+        Fcc r = (Fcc)tevwFcc.getSelectionModel().getSelectedItem();
+        tevwFcc.getSelectionModel().clearSelection();
+        tevwFcc.getSelectionModel().select(r);
+        
+        // Add in ListView and remove in ComboBox
+         
+    }
+    
     public void log(String type, String message){
         appController.addLog(type, message);
     }
