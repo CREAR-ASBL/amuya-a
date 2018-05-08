@@ -114,7 +114,7 @@ public class DualitiesController implements Initializable {
     }
     
     public void manageEvents(){
-        
+        // TABLE VIEW WITH FCC
         tevwFcc.getSelectionModel().selectedItemProperty().addListener(
             new ChangeListener<Fcc>() {
                 @Override
@@ -143,10 +143,7 @@ public class DualitiesController implements Initializable {
                         ltvwLogicSystem.setItems(ls1);
                         cobxLogicSystem.setItems(ls2);
                         
-                        //buttons
                         cobxLogicSystem.setDisable(false);
-                        bnRemoveLogicSystem.setDisable(false);
-                        bnAddLogicSystem.setDisable(false);
 
                         // Make a list with Logic Systems that have id of Fcc, 
                         // and that list show it in ListView, the rest put it in 
@@ -158,10 +155,32 @@ public class DualitiesController implements Initializable {
                 }
             }
         );
+        
+        //LIST VIEW WITH LOGIC SYSTEMS
+        ltvwLogicSystem.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<LogicSystem>() {
+            @Override
+            public void changed(ObservableValue<? extends LogicSystem> observable, LogicSystem oldValue, LogicSystem newValue) {
+                
+                bnRemoveLogicSystem.setDisable(false);
+                //bnAddLogicSystem.setDisable(false);
+            }
+        });
+        
+        //COMBOBOX WITH LOGIC SYSTEMS
+        cobxLogicSystem.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<LogicSystem>(){
+            @Override
+            public void changed(ObservableValue<? extends LogicSystem> observable, LogicSystem oldValue, LogicSystem newValue) {
+                if(newValue!=null){
+                    bnAddLogicSystem.setDisable(false);
+                } else if(newValue==null){
+                    bnAddLogicSystem.setDisable(true);
+                }
+            }
+        });
     }
+    
     @FXML
     public void addLogicSystem(){
-        log("debug","Trying to add logic system");
         
         // Add in database new FccHasLogicSystem()...
         listFccHasLogicSystem.add(
@@ -177,10 +196,28 @@ public class DualitiesController implements Initializable {
          
     }
     
+    @FXML
+    public void removeLogicSystem(){
+        
+        //ltvwLogicSystem.getItems().remove(ltvwLogicSystem.getSelectionModel().getSelectedItem());
+        //cobxLogicSystem.getItems().add(ltvwLogicSystem.getSelectionModel().getSelectedItem());
+        
+        
+        FccHasLogicSystem temp=null;
+        for(FccHasLogicSystem fhls : listFccHasLogicSystem){
+            if(fhls.getFcc()==(Fcc)tevwFcc.getSelectionModel().getSelectedItem()){
+                if(fhls.getLogicSystem()==(LogicSystem)ltvwLogicSystem.getSelectionModel().getSelectedItem()){
+                    temp=fhls;
+                }
+            }
+        }
+        listFccHasLogicSystem.remove(temp);
+        Fcc r = (Fcc)tevwFcc.getSelectionModel().getSelectedItem();
+        tevwFcc.getSelectionModel().clearSelection();
+        tevwFcc.getSelectionModel().select(r);
+    }
+    
     public void log(String type, String message){
         appController.addLog(type, message);
     }
-    
-    
-    
 }

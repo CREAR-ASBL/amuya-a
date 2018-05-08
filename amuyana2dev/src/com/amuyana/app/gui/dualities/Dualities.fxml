@@ -50,7 +50,7 @@
                                           <HBox>
                                              <children>
                                                 <Label text="Description:" />
-                                                <TextArea fx:id="ttaaFccDescription" prefHeight="100.0" HBox.hgrow="ALWAYS" />
+                                                <TextArea fx:id="ttaaFccDescription" prefHeight="100.0" wrapText="true" HBox.hgrow="ALWAYS" />
                                              </children>
                                           </HBox>
                                           <VBox>
@@ -64,7 +64,7 @@
                                                             <ComboBox fx:id="cobxLogicSystem" disable="true" prefWidth="150.0" />
                                                             <HBox>
                                                                <children>
-                                                                  <Button fx:id="bnRemoveLogicSystem" disable="true" mnemonicParsing="false" text="Remove" />
+                                                                  <Button fx:id="bnRemoveLogicSystem" disable="true" mnemonicParsing="false" onAction="#removeLogicSystem" text="Remove" />
                                                                   <Button fx:id="bnAddLogicSystem" disable="true" mnemonicParsing="false" onAction="#addLogicSystem" text="Add" />
                                                                </children>
                                                             </HBox>
@@ -131,7 +131,7 @@
                                                       <HBox layoutX="10.0" layoutY="40.0" prefWidth="200.0">
                                                          <children>
                                                             <Label text="Description:" />
-                                                            <TextArea fx:id="ttfdPositiveDescription" prefHeight="100.0" HBox.hgrow="ALWAYS" />
+                                                            <TextArea fx:id="ttfdPositiveDescription" prefHeight="100.0" wrapText="true" HBox.hgrow="ALWAYS" />
                                                          </children>
                                                       </HBox>
                                                    </children>
@@ -154,7 +154,7 @@
                                                       <HBox layoutX="10.0" layoutY="40.0" prefWidth="200.0">
                                                          <children>
                                                             <Label text="Description:" />
-                                                            <TextArea fx:id="ttfdNevativeDescription" prefHeight="100.0" HBox.hgrow="ALWAYS" />
+                                                            <TextArea fx:id="ttfdNevativeDescription" prefHeight="100.0" wrapText="true" HBox.hgrow="ALWAYS" />
                                                          </children>
                                                       </HBox>
                                                    </children>
@@ -177,7 +177,7 @@
                                                       <HBox layoutX="10.0" layoutY="40.0" prefWidth="200.0">
                                                          <children>
                                                             <Label text="Description:" />
-                                                            <TextArea fx:id="ttfdSymmetricDescription" prefHeight="100.0" HBox.hgrow="ALWAYS" />
+                                                            <TextArea fx:id="ttfdSymmetricDescription" prefHeight="100.0" wrapText="true" HBox.hgrow="ALWAYS" />
                                                          </children>
                                                       </HBox>
                                                    </children>

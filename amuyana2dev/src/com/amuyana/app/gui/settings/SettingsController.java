@@ -32,6 +32,10 @@ public class SettingsController implements Initializable {
     @FXML private TextField ttfdUserPassword;
     @FXML private Label lblDateJoined;
     
+    @FXML final private String DBHOST="localhost";
+    @FXML final private String DBUSER="freeclient";
+    @FXML final private String DBPASSWORD="";
+    
     private User currentUser;
     
     ObservableList<User> listUser;
@@ -120,17 +124,17 @@ public class SettingsController implements Initializable {
     }
 
     public void autoClicks() {
-        ckbxUseDefaultServer.fire();
+        
         btnConnectDisconnect.fire();
-        //btnLogInOut.fire();
+        
     }
     
     @FXML
     public void useDefaultServer(){
         if(ckbxUseDefaultServer.isSelected()){
-            ttfdHostname.setText("localhost");
-            ttfdDbUsername.setText("root");
-            ttfdDbPassword.setText("prharcopos");
+            ttfdHostname.setText(this.DBHOST);
+            ttfdDbUsername.setText(this.DBUSER);
+            ttfdDbPassword.setText(this.DBPASSWORD);
             ttfdHostname.setDisable(true);
             ttfdDbUsername.setDisable(true);
             ttfdDbPassword.setDisable(true);
