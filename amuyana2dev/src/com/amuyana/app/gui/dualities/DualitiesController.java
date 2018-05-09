@@ -5,6 +5,7 @@
  */
 package com.amuyana.app.gui.dualities;
 
+import com.amuyana.app.data.Conexion;
 import com.amuyana.app.data.Conjunction;
 import com.amuyana.app.data.Element;
 import com.amuyana.app.data.Fcc;
@@ -145,11 +146,9 @@ public class DualitiesController implements Initializable {
                         
                         cobxLogicSystem.setDisable(false);
 
-                        // Make a list with Logic Systems that have id of Fcc, 
-                        // and that list show it in ListView, the rest put it in 
-                        // ComboBox: EASY
-
-                        //ltvwLogicSystem.setItems(appController.getListLogicSystem());
+                        // FCC HAS IMPLICATION section
+                        
+                        
                     }
                         
                 }
@@ -181,28 +180,25 @@ public class DualitiesController implements Initializable {
     
     @FXML
     public void addLogicSystem(){
+        Conexion conexion = appController.getConexion();
+        conexion.establecerConexion();
         
-        // Add in database new FccHasLogicSystem()...
-        listFccHasLogicSystem.add(
-            new FccHasLogicSystem((Fcc)tevwFcc.getSelectionModel().getSelectedItem(),
-                    (LogicSystem)cobxLogicSystem.getSelectionModel().getSelectedItem())
+        FccHasLogicSystem fhls = new FccHasLogicSystem(
+                (Fcc)tevwFcc.getSelectionModel().getSelectedItem(),
+                (LogicSystem)cobxLogicSystem.getSelectionModel().getSelectedItem()
         );
-        // Reclick to load list and combobox
-        Fcc r = (Fcc)tevwFcc.getSelectionModel().getSelectedItem();
-        tevwFcc.getSelectionModel().clearSelection();
-        tevwFcc.getSelectionModel().select(r);
         
-        // Add in ListView and remove in ComboBox
-         
+        int result = fhls.saveData(conexion.getConnection());
+        
+        if (result == 1){
+            listFccHasLogicSystem.add(fhls);
+            
+            reselectFcc();
+        }
     }
     
     @FXML
     public void removeLogicSystem(){
-        
-        //ltvwLogicSystem.getItems().remove(ltvwLogicSystem.getSelectionModel().getSelectedItem());
-        //cobxLogicSystem.getItems().add(ltvwLogicSystem.getSelectionModel().getSelectedItem());
-        
-        
         FccHasLogicSystem temp=null;
         for(FccHasLogicSystem fhls : listFccHasLogicSystem){
             if(fhls.getFcc()==(Fcc)tevwFcc.getSelectionModel().getSelectedItem()){
@@ -212,12 +208,16 @@ public class DualitiesController implements Initializable {
             }
         }
         listFccHasLogicSystem.remove(temp);
-        Fcc r = (Fcc)tevwFcc.getSelectionModel().getSelectedItem();
-        tevwFcc.getSelectionModel().clearSelection();
-        tevwFcc.getSelectionModel().select(r);
+        reselectFcc();
     }
     
     public void log(String type, String message){
         appController.addLog(type, message);
+    }
+
+    private void reselectFcc() {
+        Fcc r = (Fcc)tevwFcc.getSelectionModel().getSelectedItem();
+        tevwFcc.getSelectionModel().clearSelection();
+        tevwFcc.getSelectionModel().select(r);
     }
 }

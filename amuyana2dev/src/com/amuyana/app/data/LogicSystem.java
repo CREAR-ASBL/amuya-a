@@ -112,10 +112,12 @@ public class LogicSystem{
     }
     
     public int saveData(Connection connection){
+        String sql="INSERT INTO amuyana.tbl_logic_system (label, description, creation_date)"
+                    + "VALUES (?,?,?)";
         try {
             // Cual es la instruction sql para insertar datos?
-            PreparedStatement instruction = connection.prepareStatement("INSERT INTO amuyana.tbl_logic_system (label, description, creation_date)"
-                    + "VALUES (?,?,?)", Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement instruction = connection.prepareStatement(sql,
+                    Statement.RETURN_GENERATED_KEYS);
             
             instruction.setString(1,this.label.get());
             instruction.setString(2,this.description.get());

@@ -6,6 +6,7 @@
 package com.amuyana.app.data;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -65,5 +66,23 @@ public class FccHasLogicSystem{
             Logger.getLogger(FccHasLogicSystem.class.getName()).log(Level.SEVERE, null, ex);
         }
         
+    }
+    
+    public int saveData(Connection connection){
+        String sql="INSERT INTO amuyana.tbl_fcc_has_tbl_logic_system (id_fcc, id_logic_system) "
+                    + "VALUES (?,?)";
+        try {
+            PreparedStatement instruction = connection.prepareStatement(sql);
+            
+            instruction.setInt(1,this.fcc.getIdFcc());
+            instruction.setInt(2,this.logicSystem.getIdLogicSystem());
+            
+            int returnInt = instruction.executeUpdate();
+            return returnInt;
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(FccHasLogicSystem.class.getName()).log(Level.SEVERE, null, ex);
+            return 0;
+        }
     }
 }

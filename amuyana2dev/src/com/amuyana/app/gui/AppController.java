@@ -1,16 +1,10 @@
 package com.amuyana.app.gui;
 
 import com.amuyana.app.data.Conexion;
-import com.amuyana.app.data.Conjunction;
-import com.amuyana.app.data.Deduction;
-import com.amuyana.app.data.Dialectic;
-import com.amuyana.app.data.Element;
 import com.amuyana.app.data.Fcc;
 import com.amuyana.app.data.FccHasLogicSystem;
-import com.amuyana.app.data.Implication;
 import com.amuyana.app.data.Log;
 import com.amuyana.app.data.LogicSystem;
-import com.amuyana.app.data.Register;
 import com.amuyana.app.data.User;
 import com.amuyana.app.gui.dialectic.DialecticController;
 import com.amuyana.app.gui.log.LogController;
@@ -24,8 +18,6 @@ import com.amuyana.app.gui.tod.TodController;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -38,8 +30,6 @@ import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.Border;
-
 
 public class AppController {
     
