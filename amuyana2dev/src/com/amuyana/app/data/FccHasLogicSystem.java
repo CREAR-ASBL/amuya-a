@@ -85,4 +85,19 @@ public class FccHasLogicSystem{
             return 0;
         }
     }
+    
+    public int deleteData(Connection connection){
+        try {
+            PreparedStatement instruccion = connection.prepareStatement(
+                                            "DELETE FROM amuyana.tbl_fcc_has_tbl_logic_system "+
+                                            "WHERE id_fcc = ? and id_logic_system = ?"
+            );
+            instruccion.setInt(1, this.fcc.getIdFcc());
+            instruccion.setInt(2, this.logicSystem.getIdLogicSystem());
+            return instruccion.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
 }

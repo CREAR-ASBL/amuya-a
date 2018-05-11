@@ -124,14 +124,14 @@ public class LogicSystem{
             instruction.setTimestamp(3,this.creationDate);
             
             
-            int returnInt = instruction.executeUpdate();
+            int result = instruction.executeUpdate();
             
             ResultSet rs = instruction.getGeneratedKeys();
             if(rs.next()){
                 LogicSystem.currentAutoIncrement = rs.getInt(1);
             }
             
-            return returnInt;
+            return result;
             
         } catch (SQLException ex) {
             Logger.getLogger(LogicSystem.class.getName()).log(Level.SEVERE, null, ex);
@@ -163,44 +163,16 @@ public class LogicSystem{
     
     public int deleteData(Connection connection){
         try {
-			PreparedStatement instruccion = connection.prepareStatement(
-							"DELETE FROM amuyana.tbl_logic_system "+
-							"WHERE id_logic_system = ?"
-			);
-			instruccion.setInt(1, this.idLogicSystem.get());
-			return instruccion.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return 0;
-		}
+                PreparedStatement instruccion = connection.prepareStatement(
+                                                "DELETE FROM amuyana.tbl_logic_system "+
+                                                "WHERE id_logic_system = ?"
+                );
+                instruccion.setInt(1, this.idLogicSystem.get());
+                return instruccion.executeUpdate();
+        } catch (SQLException e) {
+                e.printStackTrace();
+                return 0;
+        }
     }
-//    
-//    public static int getCurrentIndex(Connection connection){
-//        try {
-//            ResultSet rs = instruction.getGeneratedKeys();
-//            rs.next();
-//            instruction.setInt(1, rs.getInt(1));
-//
-//            
-//            Statement statement = connection.createStatement();
-//
-//            ResultSet resultado = statement.executeQuery(
-//            "SELECT \'AUTO_INCREMENT\' " + 
-//            " FROM  INFORMATION_SCHEMA.TABLES " +
-//            " WHERE TABLE_SCHEMA = \'amuyana\' " +
-//            " AND TABLE_NAME   = \'tbl_logic_system\'");
-//
-//            // el método next hace que se seleccione un registro del 
-//            // 'resultado', 
-//            if(resultado.next()) {
-//                return resultado.getInt(1);
-//            }
-//            return 0;
-//            
-//        } catch (SQLException ex) {
-//            Logger.getLogger(LogicSystem.class.getName()).log(Level.SEVERE, null, ex);
-//            return 0;
-//        }
-//        
-//    }
+
 }

@@ -21,15 +21,15 @@
                                     <ToolBar orientation="VERTICAL" styleClass="tlbr_logicsystem">
                                        <items>
                                           <TextField prefWidth="90.0" promptText="Filter" />
-                                          <Button minWidth="-Infinity" mnemonicParsing="false" styleClass="bttn_toolbar" text="Save" />
-                                          <Button disable="true" minWidth="-Infinity" mnemonicParsing="false" styleClass="bttn_toolbar" text="Update" />
-                                          <Button disable="true" minWidth="-Infinity" mnemonicParsing="false" styleClass="bttn_toolbar" text="Delete" />
-                                          <Button layoutX="10.0" layoutY="178.0" minWidth="-Infinity" mnemonicParsing="false" styleClass="bttn_toolbar" text="New" />
+                                          <Button fx:id="bnSaveFcc" minWidth="-Infinity" mnemonicParsing="false" onAction="#saveFcc" styleClass="bttn_toolbar" text="Save" />
+                                          <Button fx:id="bnUpdateFcc" disable="true" minWidth="-Infinity" mnemonicParsing="false" onAction="#updateFcc" styleClass="bttn_toolbar" text="Update" />
+                                          <Button fx:id="bnDeleteFcc" disable="true" minWidth="-Infinity" mnemonicParsing="false" onAction="#deleteFcc" styleClass="bttn_toolbar" text="Delete" />
+                                          <Button fx:id="bnNewFcc" layoutX="10.0" layoutY="178.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#newFcc" styleClass="bttn_toolbar" text="New" />
                                        </items>
                                     </ToolBar>
                                     <VBox alignment="CENTER" prefWidth="400.0" spacing="10.0" HBox.hgrow="ALWAYS">
                                        <children>
-                                          <TableView fx:id="tevwFcc" maxWidth="1.7976931348623157E308" prefHeight="150.0" styleClass="tblvw" tableMenuButtonVisible="true">
+                                          <TableView fx:id="tevwFcc" maxWidth="1.7976931348623157E308" prefHeight="300.0" styleClass="tblvw" tableMenuButtonVisible="true">
                                              <columns>
                                                 <TableColumn fx:id="tecnFccLabel" minWidth="5.0" prefWidth="151.0" text="Label" />
                                                 <TableColumn fx:id="tecnFccDescription" prefWidth="468.0" text="Description" />
@@ -85,8 +85,8 @@
                                                             <ComboBox fx:id="cobxImplication" disable="true" prefWidth="150.0" />
                                                             <HBox>
                                                                <children>
-                                                                  <Button fx:id="bnRemoveImplication" disable="true" mnemonicParsing="false" text="Remove" />
-                                                                  <Button fx:id="bnAddImplication" disable="true" mnemonicParsing="false" text="Add" />
+                                                                  <Button fx:id="bnRemoveImplication" disable="true" mnemonicParsing="false" onAction="#removeDeduction" text="Remove" />
+                                                                  <Button fx:id="bnAddImplication" disable="true" mnemonicParsing="false" onAction="#addDeduction" text="Add" />
                                                                </children>
                                                             </HBox>
                                                          </children>
@@ -119,7 +119,7 @@
                                                       <HBox>
                                                          <children>
                                                             <Label text="Algebraic formulation:" />
-                                                            <Label text="Label" />
+                                                            <Label fx:id="lblPositiveFormulation" text="-formulation-" />
                                                          </children>
                                                       </HBox>
                                                       <HBox layoutX="10.0" layoutY="25.0" prefWidth="200.0">
@@ -131,7 +131,7 @@
                                                       <HBox layoutX="10.0" layoutY="40.0" prefWidth="200.0">
                                                          <children>
                                                             <Label text="Description:" />
-                                                            <TextArea fx:id="ttfdPositiveDescription" prefHeight="100.0" wrapText="true" HBox.hgrow="ALWAYS" />
+                                                            <TextArea fx:id="ttaaPositiveDescription" prefHeight="100.0" wrapText="true" HBox.hgrow="ALWAYS" />
                                                          </children>
                                                       </HBox>
                                                    </children>
@@ -142,7 +142,7 @@
                                                       <HBox>
                                                          <children>
                                                             <Label text="Algebraic formulation:" />
-                                                            <Label text="Label" />
+                                                            <Label fx:id="lblNegativeFormulation" text="-formulation-" />
                                                          </children>
                                                       </HBox>
                                                       <HBox layoutX="10.0" layoutY="25.0" prefWidth="200.0">
@@ -154,7 +154,7 @@
                                                       <HBox layoutX="10.0" layoutY="40.0" prefWidth="200.0">
                                                          <children>
                                                             <Label text="Description:" />
-                                                            <TextArea fx:id="ttfdNevativeDescription" prefHeight="100.0" wrapText="true" HBox.hgrow="ALWAYS" />
+                                                            <TextArea fx:id="ttaaNegativeDescription" prefHeight="100.0" wrapText="true" HBox.hgrow="ALWAYS" />
                                                          </children>
                                                       </HBox>
                                                    </children>
@@ -165,7 +165,7 @@
                                                       <HBox>
                                                          <children>
                                                             <Label text="Algebraic formulation:" />
-                                                            <Label text="Label" />
+                                                            <Label fx:id="lblSymmetricFormulation" text="-formulation-" />
                                                          </children>
                                                       </HBox>
                                                       <HBox layoutX="10.0" layoutY="25.0" prefWidth="200.0">
@@ -177,7 +177,7 @@
                                                       <HBox layoutX="10.0" layoutY="40.0" prefWidth="200.0">
                                                          <children>
                                                             <Label text="Description:" />
-                                                            <TextArea fx:id="ttfdSymmetricDescription" prefHeight="100.0" wrapText="true" HBox.hgrow="ALWAYS" />
+                                                            <TextArea fx:id="ttaaSymmetricDescription" prefHeight="100.0" wrapText="true" HBox.hgrow="ALWAYS" />
                                                          </children>
                                                       </HBox>
                                                    </children>

@@ -7,6 +7,7 @@ package com.amuyana.app.gui.dualities;
 
 import com.amuyana.app.data.Conexion;
 import com.amuyana.app.data.Conjunction;
+import com.amuyana.app.data.Deduction;
 import com.amuyana.app.data.Element;
 import com.amuyana.app.data.Fcc;
 import com.amuyana.app.data.FccHasLogicSystem;
@@ -16,6 +17,9 @@ import com.amuyana.app.data.LogicSystem;
 import com.amuyana.app.data.User;
 import com.amuyana.app.gui.AppController;
 import java.net.URL;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -26,6 +30,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -45,6 +50,11 @@ public class DualitiesController implements Initializable {
     @FXML private AppController appController;
     
     // COMPONENTES GUI
+    @FXML private Button bnSaveFcc;
+    @FXML private Button bnUpdateFcc;
+    @FXML private Button bnDeleteFcc;
+    @FXML private Button bnNewFcc;
+    
     @FXML private TableView tevwFcc;
     @FXML private TableColumn<Fcc,String> tecnFccLabel;
     @FXML private TableColumn<Fcc,String> tecnFccDescription;
@@ -62,20 +72,26 @@ public class DualitiesController implements Initializable {
     @FXML private Button bnAddImplication;
     @FXML private Button bnRemoveImplication;
     @FXML private ListView<Implication> ltvwImplication;
+    //@FXML private ListView<Deduction> ltvwDeduction;
 
     @FXML private TextField ttfdElementSymbol;
     @FXML private TextField ttfdAElementSymbol;
     
+    @FXML private Label lblPositiveFormulation;
     @FXML private TextField ttfdPositiveFormulation;
-    @FXML private TextArea ttfdPositiveDescription;
+    @FXML private TextArea ttaaPositiveDescription;
+    @FXML private Label lblNegativeFormulation;
     @FXML private TextField ttfdNegativeFormulation;
-    @FXML private TextArea ttfdNevativeDescription;
+    @FXML private TextArea ttaaNegativeDescription;
+    @FXML private Label lblSymmetricFormulation;
     @FXML private TextField ttfdSymmetricFormulation;
-    @FXML private TextArea ttfdSymmetricDescription;
+    @FXML private TextArea ttaaSymmetricDescription;
     
     private ObservableList<Fcc> listFcc;
-    //private ObservableList<LogicSystem> listLogicSystem;
     private ObservableList<FccHasLogicSystem> listFccHasLogicSystem;
+    private ObservableList<Implication> listImplication;
+    private ObservableList<Deduction> listDeduction;
+    
     private ObservableList<Element> listElement;
     private ObservableList<Conjunction> listConjunction;
     private ObservableList<User> listUser;
@@ -88,7 +104,10 @@ public class DualitiesController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         this.listFcc=FXCollections.observableArrayList();
         this.listFccHasLogicSystem=FXCollections.observableArrayList();
-        //this.listLogicSystem=appController.getListLogicSystem();
+        this.listImplication=FXCollections.observableArrayList();
+        this.listDeduction=FXCollections.observableArrayList();
+        this.listElement=FXCollections.observableArrayList();
+        this.listConjunction=FXCollections.observableArrayList();
         manageEvents();
     }
 
@@ -104,6 +123,23 @@ public class DualitiesController implements Initializable {
         return this.listFccHasLogicSystem;
     }
     
+    public ObservableList<Implication> getListImplication(){
+        return this.listImplication;
+    }
+    
+    public ObservableList<Deduction> getListDeduction(){
+        return this.listDeduction;
+    }
+    
+    public ObservableList<Element> getListElement(){
+        return this.listElement;
+    }
+    
+    public ObservableList<Conjunction> getListConjunction(){
+        return this.listConjunction;
+    }
+    
+    
     public void fillData() {
         tevwFcc.setItems(listFcc);
         
@@ -111,6 +147,7 @@ public class DualitiesController implements Initializable {
             new PropertyValueFactory<Fcc,String>("label"));
         tecnFccDescription.setCellValueFactory(
             new PropertyValueFactory<Fcc,String>("description"));
+        
         
     }
     
@@ -122,6 +159,9 @@ public class DualitiesController implements Initializable {
                 public void changed(ObservableValue<? extends Fcc> observable, 
                     Fcc oldValue, Fcc newValue) {
                     if(newValue != null){
+                        bnSaveFcc.setDisable(true);
+                        bnUpdateFcc.setDisable(false);
+                        bnDeleteFcc.setDisable(false);
                         // FCC section
                         ttfdFccId.setText(String.valueOf(newValue.getIdFcc()));
                         ttfdFccLabel.setText(newValue.getLabel());
@@ -130,27 +170,80 @@ public class DualitiesController implements Initializable {
                         // FCC HAS LOGIC SYSTEM section
                         ObservableList<LogicSystem> ls1 = FXCollections.observableArrayList();
                         ObservableList<LogicSystem> ls2 = FXCollections.observableArrayList();
-
+                        
                         ls2.addAll(appController.getListLogicSystem());
-
-                        appController.getListFccHasLogicSystem();
-
+                        
                         for(FccHasLogicSystem fhls : appController.getListFccHasLogicSystem()){
                             if(fhls.getFcc().equals(newValue)){
                                 ls2.remove(fhls.getLogicSystem());
                                 ls1.add(fhls.getLogicSystem());
                             }
                         }
+                        
                         ltvwLogicSystem.setItems(ls1);
                         cobxLogicSystem.setItems(ls2);
-                        
                         cobxLogicSystem.setDisable(false);
 
-                        // FCC HAS IMPLICATION section
+                        // DEDUCTION section
+                        ObservableList<Implication> d1 = FXCollections.observableArrayList();
+                        ObservableList<Implication> d2 = FXCollections.observableArrayList();
+
+                        d2.addAll(listImplication);
                         
+                        for(Deduction d:listDeduction){
+                            if(d.getFcc().equals(tevwFcc.getSelectionModel().getSelectedItem())){
+                                d2.remove(d.getImplication());
+                                d1.add(d.getImplication());
+                            }
+                        }
                         
+                        ltvwImplication.setItems(d1);
+                        cobxImplication.setItems(d2);
+                        //also disable the implications of the same Fcc in combobox
+                        cobxImplication.setDisable(false);
+
+                        // ELEMENTS section
+                        for(Element e:listElement){
+                            if(e.getFcc().equals(tevwFcc.getSelectionModel().getSelectedItem())){
+                                if(e.getPolarity()==0){
+                                    ttfdElementSymbol.setText(e.getSymbol());
+                                } else if(e.getPolarity()==1){
+                                    ttfdAElementSymbol.setText(e.getSymbol());
+                                }
+                                
+                            }
+                        }
+                        
+                        // CONJUNCTIONS section
+                        for(Conjunction c:listConjunction){
+                            if(c.getFcc().equals(tevwFcc.getSelectionModel().getSelectedItem())){
+                                switch (c.getOrientation()) {
+                                    case 0:{
+                                        lblPositiveFormulation.setText(c.toString());
+                                        ttfdPositiveFormulation.setText(c.getPropFormulation());
+                                        ttaaPositiveDescription.setText(c.getDescription());
+                                        break;
+                                    }
+                                    case 1:{
+                                        lblNegativeFormulation.setText(c.toString());
+                                        ttfdNegativeFormulation.setText(c.getPropFormulation());
+                                        ttaaNegativeDescription.setText(c.getDescription());
+                                        break;
+                                    }
+                                    case 2:{
+                                        lblSymmetricFormulation.setText(c.toString());
+                                        ttfdSymmetricFormulation.setText(c.getPropFormulation());
+                                        ttaaSymmetricDescription.setText(c.getDescription());
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                        
+                    } else if (newValue==null){
+                        newFcc();
                     }
-                        
+                    
                 }
             }
         );
@@ -159,9 +252,12 @@ public class DualitiesController implements Initializable {
         ltvwLogicSystem.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<LogicSystem>() {
             @Override
             public void changed(ObservableValue<? extends LogicSystem> observable, LogicSystem oldValue, LogicSystem newValue) {
+                if(newValue!=null){
+                    bnRemoveLogicSystem.setDisable(false);
+                } else if (newValue==null){
+                    bnRemoveLogicSystem.setDisable(true);
+                }
                 
-                bnRemoveLogicSystem.setDisable(false);
-                //bnAddLogicSystem.setDisable(false);
             }
         });
         
@@ -176,6 +272,237 @@ public class DualitiesController implements Initializable {
                 }
             }
         });
+        
+        //LISTVIEW WITH IMPLICATIONS
+        ltvwImplication.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Implication>() {
+            @Override
+            public void changed(ObservableValue<? extends Implication> observable, Implication oldValue, Implication newValue) {
+                if(newValue!=null){
+                    bnRemoveImplication.setDisable(false);
+                } else if (newValue==null){
+                    bnRemoveImplication.setDisable(true);
+                }
+            }
+        });
+        
+        //COMBOBOX WITH IMPLICATIONS
+        cobxImplication.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Implication>() {
+            @Override
+            public void changed(ObservableValue<? extends Implication> observable, Implication oldValue, Implication newValue) {
+                if(newValue!=null){
+                    bnAddImplication.setDisable(false);
+                } else if(newValue==null){
+                    bnAddImplication.setDisable(true);
+                }
+            }
+        });
+    }
+    
+    @FXML
+    public void saveFcc(){
+        Conexion conexion = appController.getConexion();
+        Timestamp timestamp = Timestamp.valueOf(LocalDateTime.now());
+        
+        conexion.establecerConexion();
+        
+        //FCC
+        Fcc fcc = new Fcc(0, ttfdFccLabel.getText(), ttaaFccDescription.getText());
+        
+        int resultFcc = fcc.saveData(conexion.getConnection());
+        fcc.setIdFcc(Fcc.currentAutoIncrement);
+        
+        if (resultFcc == 1){
+            listFcc.add(fcc);
+        }
+        
+        // Implication
+        Implication imp0 = new Implication(0, 0, fcc);
+        Implication imp1 = new Implication(0, 1, fcc);
+        Implication imp2 = new Implication(0, 2, fcc);
+        
+        int resultImp0 = imp0.saveData(conexion.getConnection());
+        imp0.setIdImplication(Implication.currentAutoIncrement);
+        int resultImp1 = imp1.saveData(conexion.getConnection());
+        imp1.setIdImplication(Implication.currentAutoIncrement);
+        int resultImp2 = imp2.saveData(conexion.getConnection());
+        imp2.setIdImplication(Implication.currentAutoIncrement);
+        
+        if (resultImp0 == 1 && resultImp1 == 1 && resultImp2 == 1){
+            listImplication.addAll(imp0,imp1,imp2);
+        }
+        
+        // Element
+        Element e0 = new Element(0, ttfdElementSymbol.getText(), 0, fcc);
+        Element e1 = new Element(0, ttfdAElementSymbol.getText(), 1, fcc);
+        
+        int resultE0 = e0.saveData(conexion.getConnection());
+        e0.setIdElement(Element.currentAutoIncrement);
+        int resultE1 = e1.saveData(conexion.getConnection());
+        e1.setIdElement(Element.currentAutoIncrement);
+        
+        if (resultE0 == 1 && resultE1 == 1){
+            listElement.addAll(e0,e1);
+        }
+        
+        // Conjunction
+        Conjunction c0 = new Conjunction(0, 0, ttfdPositiveFormulation.getText(), ttaaPositiveDescription.getText(), fcc);
+        c0.setIdConjunction(Conjunction.currentAutoIncrement);
+        Conjunction c1 = new Conjunction(0, 1, ttfdNegativeFormulation.getText(), ttaaNegativeDescription.getText(), fcc);
+        c1.setIdConjunction(Conjunction.currentAutoIncrement);
+        Conjunction c2 = new Conjunction(0, 2, ttfdSymmetricFormulation.getText(), ttaaSymmetricDescription.getText(), fcc);
+        c2.setIdConjunction(Conjunction.currentAutoIncrement);
+        
+        int resultC0 = c0.saveData(conexion.getConnection());
+        int resultC1 = c1.saveData(conexion.getConnection());
+        int resultC2 = c2.saveData(conexion.getConnection());
+        
+        if(resultC0==1 && resultC1 == 1 && resultC2 == 1){
+            listConjunction.addAll(c0,c1,c2);
+        }
+        conexion.cerrarConexion();
+    }
+    
+    @FXML
+    public void updateFcc(){
+        
+    }
+    
+    @FXML
+    public void deleteFcc(){
+        Conexion conexion = appController.getConexion();
+        conexion.establecerConexion();
+        
+        Fcc fcc = (Fcc)this.tevwFcc.getSelectionModel().getSelectedItem();
+        
+        ArrayList<Conjunction> conjunctions = new ArrayList<>();
+        ArrayList<Element> elements = new ArrayList<>();
+        ArrayList<Deduction> deductions = new ArrayList<>();
+        ArrayList<FccHasLogicSystem> fhlss = new ArrayList<>();
+        ArrayList<Implication> implications = new ArrayList<>();
+        
+        
+        // deduction: when fcc is cause
+        for(Implication i:listImplication){
+            if(i.getFcc().equals(fcc)){
+                for(Deduction d:listDeduction){
+                    if(i.equals(d.getImplication())){
+                        if(d.deleteData(conexion.getConnection())==1){
+                            deductions.add(d);
+                        }
+                    }
+                }
+            }
+        }
+        
+        // deduction: when fcc is consequence
+        for(Deduction d:listDeduction){
+            if(d.getFcc().equals(fcc)){
+                if(d.deleteData(conexion.getConnection())==1){
+                    deductions.add(d);
+                }
+            }
+        }
+        
+        for(Deduction d:deductions){
+            listDeduction.remove(d);
+        }
+        
+        // conjunction
+        for(Conjunction c:listConjunction){
+            log("debug","I inspect " + c);
+            if(c.getFcc().equals(fcc)){
+                log("debug","\"" + c.getFcc() + "\" is equal to \""+fcc+"\"");
+                int response = c.deleteData(conexion.getConnection());
+                log("response",String.valueOf(response));
+                if(response==1){
+                    conjunctions.add(c);
+                    log("debug", "adding conjunction " + c + " to conjunctions");
+                }
+            }
+        }
+        for(Conjunction c:conjunctions){
+            listConjunction.remove(c);
+            log("debug", "i remove " + c);
+        }
+        
+        // element
+        for(Element e:listElement){
+            if(e.getFcc().equals(fcc)){
+                if(e.deleteData(conexion.getConnection())==1){
+                    elements.add(e);
+                }
+            }
+        }
+        for(Element e:elements){
+            listElement.remove(e);
+        }
+        
+        
+        // implication
+        for(Implication i:listImplication){
+            if(i.getFcc().equals(fcc)){
+                if(i.deleteData(conexion.getConnection())==1){
+                    implications.add(i);
+                }
+            }
+        }
+        for(Implication i:implications){
+            listImplication.remove(i);
+        }
+        
+        // logicSystem
+        for(FccHasLogicSystem fhls : listFccHasLogicSystem){
+            if(fhls.getFcc().equals(fcc)){
+                if(fhls.deleteData(conexion.getConnection())==1){
+                    fhlss.add(fhls);
+                }
+            }
+        }
+        for(FccHasLogicSystem f:fhlss){
+            listFccHasLogicSystem.remove(f);
+        }
+        // fcc
+        int resultado = fcc.deleteData(conexion.getConnection());
+        if (resultado == 1){
+                listFcc.remove(fcc);
+        }
+        
+        conexion.cerrarConexion();
+    
+    }
+    
+    @FXML
+    public void newFcc(){
+        // take into account that this might be called when selection is already clear
+        if(!tevwFcc.getSelectionModel().isEmpty()){
+            tevwFcc.getSelectionModel().clearSelection();
+        }
+        
+        ltvwImplication.setItems(null);
+        ltvwLogicSystem.setItems(null);
+        cobxLogicSystem.getSelectionModel().clearSelection();
+        cobxLogicSystem.setDisable(true);
+        cobxImplication.getSelectionModel().clearSelection();
+        cobxImplication.setDisable(true);
+        lblPositiveFormulation.setText(null);
+        lblNegativeFormulation.setText(null);
+        lblSymmetricFormulation.setText(null);
+        ttaaFccDescription.setText(null);
+        ttaaNegativeDescription.setText(null);
+        ttaaPositiveDescription.setText(null);
+        ttaaSymmetricDescription.setText(null);
+        ttfdAElementSymbol.setText(null);
+        ttfdElementSymbol.setText(null);
+        ttfdFccId.setText(null);
+        ttfdFccLabel.setText(null);
+        ttfdNegativeFormulation.setText(null);
+        ttfdPositiveFormulation.setText(null);
+        ttfdSymmetricFormulation.setText(null);
+        
+        bnSaveFcc.setDisable(false);
+        bnUpdateFcc.setDisable(true);
+        bnDeleteFcc.setDisable(true);
+
     }
     
     @FXML
@@ -192,23 +519,58 @@ public class DualitiesController implements Initializable {
         
         if (result == 1){
             listFccHasLogicSystem.add(fhls);
-            
             reselectFcc();
         }
     }
     
     @FXML
     public void removeLogicSystem(){
-        FccHasLogicSystem temp=null;
-        for(FccHasLogicSystem fhls : listFccHasLogicSystem){
-            if(fhls.getFcc()==(Fcc)tevwFcc.getSelectionModel().getSelectedItem()){
-                if(fhls.getLogicSystem()==(LogicSystem)ltvwLogicSystem.getSelectionModel().getSelectedItem()){
-                    temp=fhls;
-                }
-            }
+        Conexion conexion = appController.getConexion();
+        conexion.establecerConexion();
+        
+        FccHasLogicSystem fhls = getFccHasLogicSystem();
+        int resultado = fhls.deleteData(conexion.getConnection());
+        conexion.cerrarConexion();
+        
+        if(resultado==1){
+            listFccHasLogicSystem.remove(fhls);
+            reselectFcc();
         }
-        listFccHasLogicSystem.remove(temp);
-        reselectFcc();
+        
+    }
+    
+    @FXML
+    public void addDeduction() {
+        Conexion conexion = appController.getConexion();
+        conexion.establecerConexion();
+        
+        Deduction d = new Deduction(
+                (Fcc)tevwFcc.getSelectionModel().getSelectedItem(),
+                (Implication)cobxImplication.getSelectionModel().getSelectedItem()
+        );
+        
+        
+        int result = d.saveData(conexion.getConnection());
+        
+        if (result == 1){
+            listDeduction.add(d);
+            reselectFcc();
+        }
+    }
+    
+    @FXML
+    public void removeDeduction(){
+        Conexion conexion = appController.getConexion();
+        conexion.establecerConexion();
+        
+        Deduction d = getDeduction();
+        int resultado = d.deleteData(conexion.getConnection());
+        conexion.cerrarConexion();
+        
+        if(resultado==1){
+            listDeduction.remove(d);
+            reselectFcc();
+        }
     }
     
     public void log(String type, String message){
@@ -219,5 +581,30 @@ public class DualitiesController implements Initializable {
         Fcc r = (Fcc)tevwFcc.getSelectionModel().getSelectedItem();
         tevwFcc.getSelectionModel().clearSelection();
         tevwFcc.getSelectionModel().select(r);
+    }
+
+    private FccHasLogicSystem getFccHasLogicSystem() {
+        for(FccHasLogicSystem fcls:listFccHasLogicSystem){
+            if(fcls.getFcc()==tevwFcc.getSelectionModel().getSelectedItem()){
+                if(fcls.getLogicSystem()==ltvwLogicSystem.getSelectionModel().getSelectedItem()){
+                    return fcls;
+                }
+            }
+        }
+        
+        return null;
+    }
+    
+    private Deduction getDeduction(){
+        Fcc fcc = (Fcc)tevwFcc.getSelectionModel().getSelectedItem();
+        Implication implication = ltvwImplication.getSelectionModel().getSelectedItem();
+        for(Deduction d:listDeduction){
+            if(fcc.equals(d.getFcc())){
+                if(implication.equals(d.getImplication())){
+                    return d;
+                }
+            }
+        }
+        return null;
     }
 }

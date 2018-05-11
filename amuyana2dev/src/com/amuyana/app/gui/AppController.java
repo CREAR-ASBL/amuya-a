@@ -1,8 +1,12 @@
 package com.amuyana.app.gui;
 
 import com.amuyana.app.data.Conexion;
+import com.amuyana.app.data.Conjunction;
+import com.amuyana.app.data.Deduction;
+import com.amuyana.app.data.Element;
 import com.amuyana.app.data.Fcc;
 import com.amuyana.app.data.FccHasLogicSystem;
+import com.amuyana.app.data.Implication;
 import com.amuyana.app.data.Log;
 import com.amuyana.app.data.LogicSystem;
 import com.amuyana.app.data.User;
@@ -241,12 +245,25 @@ public class AppController {
                             dualitiesController.getListFcc(), 
                             logicSystemController.getListLogicSystem());
                     
+                    Implication.loadList(this.conexion.getConnection(),
+                            dualitiesController.getListImplication(),
+                            dualitiesController.getListFcc());
+                    
+                    Deduction.loadList(this.conexion.getConnection(),
+                            dualitiesController.getListDeduction(),
+                            dualitiesController.getListFcc(),
+                            dualitiesController.getListImplication());
+                    
+                    Element.loadList(this.conexion.getConnection(), 
+                            dualitiesController.getListElement(), 
+                            dualitiesController.getListFcc());
+                    
+                    Conjunction.loadData(this.conexion.getConnection(), 
+                            dualitiesController.getListConjunction(),
+                            dualitiesController.getListFcc());
+                    
                     dualitiesController.fillData();
                     
-                    //this.listElement = FXCollections.observableArrayList();
-                    //Fcc.loadList(this.conexion.getConnection(), listFcc);
-                    //Element.loadList(this.conexion.getConnection(), listElement);
-                    //dualitiesController.fillData(this.listFcc, this.listElement, this.listConjunction);
                     break;
                 }
 //                case TOD:{
@@ -310,6 +327,4 @@ public class AppController {
     public void addLog(String type, String message){
         logList.add(new Log(Timestamp.valueOf(LocalDateTime.now()), type, message));
     }
-    
-    
 }

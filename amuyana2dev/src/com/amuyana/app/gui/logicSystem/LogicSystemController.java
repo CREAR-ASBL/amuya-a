@@ -79,13 +79,17 @@ public class LogicSystemController implements Initializable {
                         ttfdLabel.setText(newValue.getLabel());
                         lblCreationDate.setText(newValue.getCreationDate().toString());
                         ttaaDescription.setText(newValue.getDescription());
-                    }
-                    bnSave.setDisable(true);
-                    bnUpdate.setDisable(false);
-                    bnDelete.setDisable(false);
+                        
+                        bnSave.setDisable(true);
+                        bnUpdate.setDisable(false);
+                        bnDelete.setDisable(false);
 
-                    bnDuplicate.setDisable(false);
-                    bnJoin.setDisable(false);
+                        bnDuplicate.setDisable(false);
+                        bnJoin.setDisable(false);
+                    } else if (newValue==null){
+                        newLogicSystem();
+                    }
+                    
 
                 }
 
@@ -99,7 +103,11 @@ public class LogicSystemController implements Initializable {
         ttfdLabel.setText(null);
         lblCreationDate.setText(null);
         ttaaDescription.setText(null);
-        tevwLogicSystem.getSelectionModel().clearSelection();
+        // take into account that this might be called when selection is already clear
+        if(!tevwLogicSystem.getSelectionModel().isEmpty()){
+            tevwLogicSystem.getSelectionModel().clearSelection();
+        }
+        
         
         bnSave.setDisable(false);
         bnUpdate.setDisable(true);

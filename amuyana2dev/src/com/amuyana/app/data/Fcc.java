@@ -6,6 +6,7 @@
  */
 package com.amuyana.app.data;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -21,6 +22,7 @@ public class Fcc{
     private IntegerProperty idFcc;
     private StringProperty label;
     private StringProperty description;
+    public static int currentAutoIncrement;
 
     public Fcc(int idFcc, String label, String description) { 
             this.idFcc = new SimpleIntegerProperty(idFcc);
@@ -60,17 +62,51 @@ public class Fcc{
     }
 
 
-    public void saveData(){
-
+    public int saveData(Connection connection){
+        String sql = "INSERT INTO amuyana.tbl_fcc (id_fcc, label, description)"
+                    + "VALUES (?,?,?)";
+        try {            
+            PreparedStatement statement = connection.prepareStatement(sql,
+                    Statement.RETURN_GENERATED_KEYS);
+            
+            statement.setInt(1, this.getIdFcc());
+            statement.setString(2, this.getLabel());
+            statement.setString(3, this.getDescription());
+            
+            int result = statement.executeUpdate();
+            
+            ResultSet rs = statement.getGeneratedKeys();
+            if(rs.next()){
+                Fcc.currentAutoIncrement = rs.getInt(1);
+            }
+            
+            return result;
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(Fcc.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return 0;
     }
 
     public void updateData(){
 
     }
 
-    public void deleteData(){
-
+    public int deleteData(Connection connection){
+        try {
+                PreparedStatement instruccion = connection.prepareStatement(
+                                                "DELETE FROM amuyana.tbl_fcc "+
+                                                "WHERE id_fcc = ?"
+                );
+                instruccion.setInt(1, this.idFcc.get());
+                return instruccion.executeUpdate();
+        } catch (SQLException e) {
+                e.printStackTrace();
+                return 0;
+        }
     }
+
 
     public static void loadList(Connection connection, 
             ObservableList<Fcc> listFcc){
