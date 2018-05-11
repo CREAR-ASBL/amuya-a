@@ -44,13 +44,13 @@
                                           <HBox alignment="CENTER_LEFT">
                                              <children>
                                                 <Label text="Label:" />
-                                                <TextField fx:id="ttfdFccLabel" HBox.hgrow="ALWAYS" />
+                                                <TextField fx:id="ttfdFccLabel" text="test" HBox.hgrow="ALWAYS" />
                                              </children>
                                           </HBox>
                                           <HBox>
                                              <children>
                                                 <Label text="Description:" />
-                                                <TextArea fx:id="ttaaFccDescription" prefHeight="100.0" wrapText="true" HBox.hgrow="ALWAYS" />
+                                                <TextArea fx:id="ttaaFccDescription" prefHeight="100.0" text="test" wrapText="true" HBox.hgrow="ALWAYS" />
                                              </children>
                                           </HBox>
                                           <VBox>
@@ -100,13 +100,13 @@
                                                 <HBox alignment="CENTER_LEFT" prefWidth="200.0" HBox.hgrow="ALWAYS">
                                                    <children>
                                                       <Label text="Symbol of element:" />
-                                                      <TextField fx:id="ttfdElementSymbol" maxWidth="80.0" />
+                                                      <TextField fx:id="ttfdElementSymbol" maxWidth="80.0" text="e" />
                                                    </children>
                                                 </HBox>
                                                 <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="10.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
                                                    <children>
                                                       <Label text="Symbol of anti-element:" />
-                                                      <TextField fx:id="ttfdAElementSymbol" maxWidth="80.0" />
+                                                      <TextField fx:id="ttfdAElementSymbol" maxWidth="80.0" text="-e" />
                                                    </children>
                                                 </HBox>
                                              </children>
@@ -125,13 +125,13 @@
                                                       <HBox layoutX="10.0" layoutY="25.0" prefWidth="200.0">
                                                          <children>
                                                             <Label text="Propositional formulation:" />
-                                                            <TextField fx:id="ttfdPositiveFormulation" HBox.hgrow="ALWAYS" />
+                                                            <TextField fx:id="ttfdPositiveFormulation" text="positive" HBox.hgrow="ALWAYS" />
                                                          </children>
                                                       </HBox>
                                                       <HBox layoutX="10.0" layoutY="40.0" prefWidth="200.0">
                                                          <children>
                                                             <Label text="Description:" />
-                                                            <TextArea fx:id="ttaaPositiveDescription" prefHeight="100.0" wrapText="true" HBox.hgrow="ALWAYS" />
+                                                            <TextArea fx:id="ttaaPositiveDescription" prefHeight="100.0" text="comment" wrapText="true" HBox.hgrow="ALWAYS" />
                                                          </children>
                                                       </HBox>
                                                    </children>
@@ -148,13 +148,13 @@
                                                       <HBox layoutX="10.0" layoutY="25.0" prefWidth="200.0">
                                                          <children>
                                                             <Label text="Propositional formulation:" />
-                                                            <TextField fx:id="ttfdNegativeFormulation" HBox.hgrow="ALWAYS" />
+                                                            <TextField fx:id="ttfdNegativeFormulation" text="negative" HBox.hgrow="ALWAYS" />
                                                          </children>
                                                       </HBox>
                                                       <HBox layoutX="10.0" layoutY="40.0" prefWidth="200.0">
                                                          <children>
                                                             <Label text="Description:" />
-                                                            <TextArea fx:id="ttaaNegativeDescription" prefHeight="100.0" wrapText="true" HBox.hgrow="ALWAYS" />
+                                                            <TextArea fx:id="ttaaNegativeDescription" prefHeight="100.0" text="desc" wrapText="true" HBox.hgrow="ALWAYS" />
                                                          </children>
                                                       </HBox>
                                                    </children>
@@ -171,13 +171,13 @@
                                                       <HBox layoutX="10.0" layoutY="25.0" prefWidth="200.0">
                                                          <children>
                                                             <Label text="Propositional formulation:" />
-                                                            <TextField fx:id="ttfdSymmetricFormulation" HBox.hgrow="ALWAYS" />
+                                                            <TextField fx:id="ttfdSymmetricFormulation" text="symmetric" HBox.hgrow="ALWAYS" />
                                                          </children>
                                                       </HBox>
                                                       <HBox layoutX="10.0" layoutY="40.0" prefWidth="200.0">
                                                          <children>
                                                             <Label text="Description:" />
-                                                            <TextArea fx:id="ttaaSymmetricDescription" prefHeight="100.0" wrapText="true" HBox.hgrow="ALWAYS" />
+                                                            <TextArea fx:id="ttaaSymmetricDescription" prefHeight="100.0" text="test" wrapText="true" HBox.hgrow="ALWAYS" />
                                                          </children>
                                                       </HBox>
                                                    </children>
