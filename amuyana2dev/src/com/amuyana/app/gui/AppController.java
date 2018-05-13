@@ -217,9 +217,6 @@ public class AppController {
     public void loadData() {
         this.conexion.establecerConexion();
         
-//        Implication.loadList(conexion.getConnection(), listImplication);
-//        Deduction.loadList(conexion.getConnection(), listDeduction);
-//        Conjunction.loadList(conexion.getConnection(), listConjunction);
 //        Dialectic.loadList(conexion.getConnection(), listDialectic);
 //        Register.loadList(conexion.getConnection(), listRegister);
 //        Space.loadList(conexion.getConnection(), listSpace);
@@ -227,8 +224,6 @@ public class AppController {
 //        Quantum.loadList(conexion.getConnection(), listQuantum);
 //        Syllogism.loadList(conexion.getConnection(), listSyllogism);
         
-        
-             
         for(Module m:Module.values()){
             switch(m){
                 case LOGIC_SYSTEM:{
@@ -266,11 +261,10 @@ public class AppController {
                     
                     break;
                 }
-//                case TOD:{
-//                    this.listLogicSystem = FXCollections.observableArrayList();
-//                    logicSystemController.fillData(conexion, this.listLogicSystem);
-//                    break;
-//                }
+                case TOD:{
+                    
+                    break;
+                }
 //                case DIALECTIC:{
 //                    this.listLogicSystem = FXCollections.observableArrayList();
 //                    logicSystemController.fillData(conexion, this.listLogicSystem);

@@ -17,6 +17,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
+import org.scilab.forge.jlatexmath.*;
 
 
 
@@ -37,7 +38,7 @@ String description, Fcc fcc) {
             this.propFormulation = new SimpleStringProperty(propFormulation);
             this.description = new SimpleStringProperty(description);
             this.fcc = fcc;
-
+            
     }
 
     //Metodos atributo: idConjunction
@@ -138,11 +139,10 @@ String description, Fcc fcc) {
             instruction.setString(4,this.getDescription());
             instruction.setInt(5,this.getFcc().getIdFcc());
             
-            
             int result = instruction.executeUpdate();
             
             ResultSet rs = instruction.getGeneratedKeys();
-            if(rs.next()){
+            while(rs.next()){
                 Conjunction.currentAutoIncrement = rs.getInt(1);
             }
             
@@ -155,13 +155,30 @@ String description, Fcc fcc) {
                 
     }
     
+    public int updateData(Connection connection){
+        String sql = "UPDATE amuyana.tbl_conjunction SET prop_formulation = ?,  "+
+            " description = ? WHERE id_conjunction = ?";
+        try {
+            PreparedStatement instruccion =
+                            connection.prepareStatement(sql);
+            instruccion.setString(1, propFormulation.get());
+            instruccion.setString(2, description.get());
+            instruccion.setInt(3, idConjunction.get());
+            
+            return instruccion.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+    
     public int deleteData(Connection connection){
-        String sql="DELETE FROM amuyana.tbl_conjunction WHERE id_conjunction=?";
+        String sql="DELETE FROM amuyana.tbl_conjunction WHERE id_conjunction = ?";
         try {
             PreparedStatement instruccion = connection.prepareStatement(sql);
             instruccion.setInt(1, this.idConjunction.get());
             int response = instruccion.executeUpdate();
-            System.out.println(instruccion.getWarnings());
             return response;
         } catch (SQLException ex) {
             Logger.getLogger(Conjunction.class.getName()).log(Level.SEVERE, null, ex);

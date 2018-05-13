@@ -89,8 +89,22 @@ public class Fcc{
         return 0;
     }
 
-    public void updateData(){
+    public int updateData(Connection connection){
+        String sql = "UPDATE amuyana.tbl_fcc SET label = ?,  "+
+            " description = ? WHERE id_fcc = ?";
+        try {
+            PreparedStatement instruccion =
+                            connection.prepareStatement(sql);
+            instruccion.setString(1, label.get());
+            instruccion.setString(2, description.get());
+            instruccion.setInt(3, idFcc.get());
+            
+            return instruccion.executeUpdate();
 
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0;
+        }
     }
 
     public int deleteData(Connection connection){

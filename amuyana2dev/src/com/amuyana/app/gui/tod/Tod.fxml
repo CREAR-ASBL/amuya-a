@@ -20,7 +20,7 @@
                         <Label text="Zoom" />
                         <Slider orientation="VERTICAL" />
                         <TextField prefWidth="50.0" />
-                        <Button maxWidth="-Infinity" mnemonicParsing="false" prefWidth="100.0" styleClass="bttn_tod" text="Default view" textAlignment="CENTER" wrapText="true" />
+                        <Button fx:id="bnDefaultView" maxWidth="-Infinity" mnemonicParsing="false" onAction="#defaultView" prefWidth="100.0" styleClass="bttn_tod" text="Default view" textAlignment="CENTER" wrapText="true" />
                         <Button layoutX="20.0" layoutY="175.0" maxWidth="-Infinity" mnemonicParsing="false" prefWidth="100.0" styleClass="bttn_tod" text="Center at selected dynamism" textAlignment="CENTER" wrapText="true" />
                      </children>
                   </VBox>
@@ -44,15 +44,7 @@
    <center>
       <ScrollPane fitToHeight="true" fitToWidth="true" minHeight="-Infinity" minWidth="-Infinity" BorderPane.alignment="CENTER">
          <content>
-            <StackPane styleClass="base">
-               <children>
-                  <Pane styleClass="canvas">
-                     <StackPane.margin>
-                        <Insets />
-                     </StackPane.margin>
-                  </Pane>
-               </children>
-            </StackPane>
+            <StackPane fx:id="pane" styleClass="base" />
          </content>
       </ScrollPane>
    </center>

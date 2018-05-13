@@ -346,25 +346,145 @@ public class DualitiesController implements Initializable {
         
         // Conjunction
         Conjunction c0 = new Conjunction(0, 0, ttfdPositiveFormulation.getText(), ttaaPositiveDescription.getText(), fcc);
+        int resultC0 = c0.saveData(conexion.getConnection());
         c0.setIdConjunction(Conjunction.currentAutoIncrement);
         Conjunction c1 = new Conjunction(0, 1, ttfdNegativeFormulation.getText(), ttaaNegativeDescription.getText(), fcc);
+        int resultC1 = c1.saveData(conexion.getConnection());
         c1.setIdConjunction(Conjunction.currentAutoIncrement);
         Conjunction c2 = new Conjunction(0, 2, ttfdSymmetricFormulation.getText(), ttaaSymmetricDescription.getText(), fcc);
-        c2.setIdConjunction(Conjunction.currentAutoIncrement);
-        
-        int resultC0 = c0.saveData(conexion.getConnection());
-        int resultC1 = c1.saveData(conexion.getConnection());
         int resultC2 = c2.saveData(conexion.getConnection());
+        c2.setIdConjunction(Conjunction.currentAutoIncrement);
         
         if(resultC0==1 && resultC1 == 1 && resultC2 == 1){
             listConjunction.addAll(c0,c1,c2);
         }
         conexion.cerrarConexion();
+        
+        tevwFcc.getSelectionModel().selectLast();
     }
     
     @FXML
     public void updateFcc(){
+        Conexion conexion = appController.getConexion();
+        conexion.establecerConexion();
         
+        String newFccLabel = ttfdFccLabel.getText();
+        String newFccDescription = ttaaFccDescription.getText();
+        
+        String newESymbol = ttfdElementSymbol.getText();
+        String newAESymbol = ttfdAElementSymbol.getText();
+        
+        String newPConjunctionProp = ttfdPositiveFormulation.getText();
+        String newNConjunctionProp = ttfdNegativeFormulation.getText();
+        String newSConjunctionProp = ttfdSymmetricFormulation.getText();
+        
+        String newPConjunctionDesc = ttaaPositiveDescription.getText();
+        String newNConjunctionDesc = ttaaNegativeDescription.getText();
+        String newSConjunctionDesc = ttaaSymmetricDescription.getText();
+        
+        int result;
+        
+        Fcc selectedFcc = (Fcc)tevwFcc.getSelectionModel().getSelectedItem();
+        
+        selectedFcc.setLabel(newFccLabel);
+        selectedFcc.setDescription(newFccDescription);
+        
+        result = selectedFcc.updateData(conexion.getConnection());
+        
+        if (result == 1){
+            listFcc.set(listFcc.indexOf(selectedFcc), selectedFcc);
+        }
+
+        // ELEMENT
+        Element e0 = null;
+        Element e1 = null;
+        int iE0=0;
+        int iE1=0;
+        
+        // which Elements are of the selected Fcc?
+        for(Element e:listElement){
+            if(e.getFcc().equals(selectedFcc)){
+                if(e.getPolarity()==0){
+                    e0=e;
+                    iE0=listElement.indexOf(e);
+                } else if(e.getPolarity()==1){
+                    e1=e;
+                    iE1=listElement.indexOf(e);
+                    
+                }    
+            }
+        }
+        
+        e0.setSymbol(newESymbol);
+        result = e0.updateData(conexion.getConnection());
+        if (result == 1){
+            listElement.set(iE0, e0);
+        }
+        
+        e1.setSymbol(newAESymbol);
+        result = e1.updateData(conexion.getConnection());
+        if (result == 1){
+            listElement.set(iE1, e1);
+        }
+        
+        
+        
+        // CONJUNCTION
+        Conjunction c0 = null;
+        Conjunction c1 = null;
+        Conjunction c2 = null;
+        int iC0=0;
+        int iC1=0;
+        int iC2=0;
+        
+        // which Elements are of the selected Fcc?
+        for(Conjunction c:listConjunction){
+            if(c.getFcc().equals(selectedFcc)){
+                switch (c.getOrientation()) {
+                    case 0:
+                        c0=c;
+                        iC0=listConjunction.indexOf(c);
+                        break;
+                    case 1:
+                        c1=c;
+                        iC1=listConjunction.indexOf(c);
+                        break;
+                    case 2:
+                        c2=c;
+                        iC2=listConjunction.indexOf(c);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+        
+        c0.setPropFormulation(newPConjunctionProp);
+        c0.setDescription(newPConjunctionDesc);
+        c1.setPropFormulation(newNConjunctionProp);
+        c1.setDescription(newNConjunctionDesc);
+        c2.setPropFormulation(newSConjunctionProp);
+        c2.setDescription(newSConjunctionDesc);
+        
+        result = c0.updateData(conexion.getConnection());
+        if (result == 1){
+            listConjunction.set(iC0, c0);
+        }
+        
+        result = c1.updateData(conexion.getConnection());
+        if (result == 1){
+            listConjunction.set(iC1, c1);
+        }
+        
+        result = c2.updateData(conexion.getConnection());
+        if (result == 1){
+            listConjunction.set(iC2, c2);
+        }
+        
+        
+        reselectFcc();
+        
+        conexion.cerrarConexion();
     }
     
     @FXML
@@ -409,20 +529,15 @@ public class DualitiesController implements Initializable {
         
         // conjunction
         for(Conjunction c:listConjunction){
-            log("debug","I inspect " + c);
             if(c.getFcc().equals(fcc)){
-                log("debug","\"" + c.getFcc() + "\" is equal to \""+fcc+"\"");
                 int response = c.deleteData(conexion.getConnection());
-                log("response",String.valueOf(response));
                 if(response==1){
                     conjunctions.add(c);
-                    log("debug", "adding conjunction " + c + " to conjunctions");
                 }
             }
         }
         for(Conjunction c:conjunctions){
             listConjunction.remove(c);
-            log("debug", "i remove " + c);
         }
         
         // element

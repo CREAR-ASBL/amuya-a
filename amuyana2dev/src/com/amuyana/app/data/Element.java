@@ -135,6 +135,25 @@ int polarity, Fcc fcc) {
         }
                 
     }
+    
+    public int updateData(Connection connection){
+        String sql = "UPDATE amuyana.tbl_element SET symbol = ?,  "+
+            " polarity = ? WHERE id_element = ?";
+        try {
+            PreparedStatement instruccion =
+                            connection.prepareStatement(sql);
+            instruccion.setString(1, symbol.get());
+            instruccion.setInt(2, polarity.get());
+            instruccion.setInt(3, idElement.get());
+            
+            return instruccion.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+    
     public int deleteData(Connection connection){
         String sql="DELETE FROM amuyana.tbl_element WHERE id_element = ?";
         try {

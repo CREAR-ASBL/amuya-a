@@ -6,14 +6,6 @@
 
 }
 
-.elementImplication {
-    -fx-color:red;
-}
-
-.ttldPn_{
-    -fx-text-fill: red;
-    -fx-scale-x: 5;
-}
 
 /* from here */
 .base{
@@ -26,10 +18,6 @@
     
 }
 
-.pn_dialectic{
-    -fx-background-color: aliceblue;
-}
-
 .lbl_title1{
     -fx-font: 20px black;
 }
@@ -40,8 +28,6 @@
     -fx-wrap-text: true;
     -fx-text-alignment: center;
 }
-
-
 
 .tlbr_logicsystem{
     -fx-border-color: black;
@@ -56,4 +42,16 @@
 
 .subtitle{
     -fx-font-size: 20px;
+}
+
+
+/* CSS FOR FORMULATIONS*/
+/* TABLE OF DEDUCTIONS*/
+
+.tod_parenthesis{
+    
+}
+
+.tod_element{
+    
 }

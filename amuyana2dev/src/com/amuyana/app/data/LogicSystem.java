@@ -141,14 +141,11 @@ public class LogicSystem{
     }
     
     public int updateData(Connection connection){
+        String sql = "UPDATE amuyana.tbl_logic_system SET label = ?,  "+
+            " description = ? WHERE id_logic_system = ?";
         try {
             PreparedStatement instruccion =
-                            connection.prepareStatement(
-                                                    "UPDATE amuyana.tbl_logic_system "+
-                                                    " SET label = ?,  "+
-                                                    " description = ?  "+
-                                                    " WHERE id_logic_system = ?"
-                            );
+                            connection.prepareStatement(sql);
             instruccion.setString(1, label.get());
             instruccion.setString(2, description.get());
             instruccion.setInt(3, idLogicSystem.get());
