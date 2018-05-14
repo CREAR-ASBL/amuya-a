@@ -5,13 +5,11 @@
  */
 package com.amuyana.app.gui;
 
-import com.proudapes.jlatexmathfx.Control.LateXMathControl;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 /**
@@ -27,7 +25,6 @@ public class App extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("App.fxml"));
         Parent root = loader.load();
         appController = loader.getController();
-        
         
         Scene scene = new Scene(root);
         

@@ -19,6 +19,7 @@ import com.amuyana.app.gui.stats.StatsController;
 import com.amuyana.app.gui.stc.StcController;
 import com.amuyana.app.gui.syllogism.SyllogismController;
 import com.amuyana.app.gui.tod.TodController;
+
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -34,6 +35,7 @@ import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.paint.Paint;
 
 public class AppController {
     
@@ -84,6 +86,7 @@ public class AppController {
         
         addLog("System", "Welcome to Amuyaña!");
         settingsController.autoClicks();
+        
     }
     
     public ObservableList<LogicSystem> getListLogicSystem(){
@@ -163,6 +166,7 @@ public class AppController {
                     break;
                 }
                 case DUALITIES:{
+                    
                     this.dualitiesController = loader.getController();
                     this.dualitiesController.setAppController(this);
                     this.tab_dualities.setContent(m.getNode());

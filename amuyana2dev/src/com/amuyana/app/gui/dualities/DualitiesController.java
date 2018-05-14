@@ -439,11 +439,14 @@ public class DualitiesController implements Initializable {
         
         // which Elements are of the selected Fcc?
         for(Conjunction c:listConjunction){
+            
             if(c.getFcc().equals(selectedFcc)){
+                
                 switch (c.getOrientation()) {
                     case 0:
                         c0=c;
                         iC0=listConjunction.indexOf(c);
+                        
                         break;
                     case 1:
                         c1=c;

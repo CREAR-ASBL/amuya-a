@@ -17,9 +17,6 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
-import org.scilab.forge.jlatexmath.*;
-
-
 
 public class Conjunction{
 
