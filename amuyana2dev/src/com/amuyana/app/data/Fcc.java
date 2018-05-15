@@ -148,4 +148,9 @@ public class Fcc{
             Logger.getLogger(Fcc.class.getName()).log(Level.SEVERE, null, ex);
         }
     }  
+    
+    @Override
+    public String toString(){
+        return "(" + this.idFcc.get() + ") " + this.getLabel();
+    }
 }

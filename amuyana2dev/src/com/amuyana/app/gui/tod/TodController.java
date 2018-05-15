@@ -1,6 +1,7 @@
 
 package com.amuyana.app.gui.tod;
 
+import com.amuyana.app.data.Fcc;
 import com.amuyana.app.formulas.Formula;
 import com.amuyana.app.gui.AppController;
 import java.net.URL;
@@ -8,6 +9,7 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TitledPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -48,12 +50,14 @@ public class TodController implements Initializable {
         cobxFcc.setItems(appController.getListFcc());
     }
 
-    public VBox listConjunction(){
-        VBox list = new VBox();
+    private TitledPane fccContainer(Fcc fcc){
         
-        //Formula.conjunction(0, element, antielement);
+        VBox content = new VBox(); 
+        TitledPane fccContainer = new TitledPane(fcc.toString(), content);
         
-        return list;
+        content.getChildren().add(Formula.implication(0, appController.elementOf(0, fcc), appController.elementOf(1, fcc)));
+        
+        return fccContainer;
     }
     
 }
