@@ -101,6 +101,14 @@ public class AppController {
         return dualitiesController.getListFccHasLogicSystem();
     }
     
+    public ObservableList<Element> getListElement(){
+        return dualitiesController.getListElement();
+    }
+    
+    public ObservableList<Conjunction> getListConjunction(){
+        return dualitiesController.getListConjunction();
+    }
+    
     public ObservableList<User> getListUser(){
         return settingsController.getListUser();
     }
@@ -166,7 +174,6 @@ public class AppController {
                     break;
                 }
                 case DUALITIES:{
-                    
                     this.dualitiesController = loader.getController();
                     this.dualitiesController.setAppController(this);
                     this.tab_dualities.setContent(m.getNode());
@@ -266,7 +273,7 @@ public class AppController {
                     break;
                 }
                 case TOD:{
-                    
+                    todController.fillData();
                     break;
                 }
 //                case DIALECTIC:{
@@ -325,4 +332,27 @@ public class AppController {
     public void addLog(String type, String message){
         logList.add(new Log(Timestamp.valueOf(LocalDateTime.now()), type, message));
     }
+    
+    public Element elementOf(int polarity, Fcc fcc){
+        for(Element e:getListElement()){
+            if(e.getFcc().equals(fcc)){
+                if(e.getPolarity()==polarity){
+                    return e;
+                }
+            }
+        }
+        return null;
+    }
+    
+    public Conjunction conjunctionOf(int orientation, Fcc fcc){
+        for(Conjunction c:getListConjunction()){
+            if(c.getFcc().equals(fcc)){
+                if(c.getOrientation()==orientation){
+                    return c;
+                }
+            }
+        }
+        return null;
+    }
+    
 }

@@ -158,6 +158,9 @@ public class DualitiesController implements Initializable {
                 @Override
                 public void changed(ObservableValue<? extends Fcc> observable, 
                     Fcc oldValue, Fcc newValue) {
+                    
+                    Fcc selectedFcc = (Fcc)tevwFcc.getSelectionModel().getSelectedItem();
+                    
                     if(newValue != null){
                         bnSaveFcc.setDisable(true);
                         bnUpdateFcc.setDisable(false);
@@ -191,7 +194,7 @@ public class DualitiesController implements Initializable {
                         d2.addAll(listImplication);
                         
                         for(Deduction d:listDeduction){
-                            if(d.getFcc().equals(tevwFcc.getSelectionModel().getSelectedItem())){
+                            if(d.getFcc().equals(selectedFcc)){
                                 d2.remove(d.getImplication());
                                 d1.add(d.getImplication());
                             }
@@ -203,42 +206,30 @@ public class DualitiesController implements Initializable {
                         cobxImplication.setDisable(false);
 
                         // ELEMENTS section
-                        for(Element e:listElement){
-                            if(e.getFcc().equals(tevwFcc.getSelectionModel().getSelectedItem())){
-                                if(e.getPolarity()==0){
-                                    ttfdElementSymbol.setText(e.getSymbol());
-                                } else if(e.getPolarity()==1){
-                                    ttfdAElementSymbol.setText(e.getSymbol());
-                                }
-                                
-                            }
-                        }
+                        Element e = appController.elementOf(0, selectedFcc);
+                        Element ae= appController.elementOf(1, selectedFcc);
+                        
+                        ttfdElementSymbol.setText(e.getSymbol());
+                        ttfdAElementSymbol.setText(ae.getSymbol());
+                        
                         
                         // CONJUNCTIONS section
-                        for(Conjunction c:listConjunction){
-                            if(c.getFcc().equals(tevwFcc.getSelectionModel().getSelectedItem())){
-                                switch (c.getOrientation()) {
-                                    case 0:{
-                                        lblPositiveFormulation.setText(c.toString());
-                                        ttfdPositiveFormulation.setText(c.getPropFormulation());
-                                        ttaaPositiveDescription.setText(c.getDescription());
-                                        break;
-                                    }
-                                    case 1:{
-                                        lblNegativeFormulation.setText(c.toString());
-                                        ttfdNegativeFormulation.setText(c.getPropFormulation());
-                                        ttaaNegativeDescription.setText(c.getDescription());
-                                        break;
-                                    }
-                                    case 2:{
-                                        lblSymmetricFormulation.setText(c.toString());
-                                        ttfdSymmetricFormulation.setText(c.getPropFormulation());
-                                        ttaaSymmetricDescription.setText(c.getDescription());
-                                        break;
-                                    }
-                                }
-                            }
-                        }
+                        
+                        Conjunction c0 = appController.conjunctionOf(0, selectedFcc);
+                        Conjunction c1 = appController.conjunctionOf(1, selectedFcc);
+                        Conjunction c2 = appController.conjunctionOf(2, selectedFcc);
+                        
+                        lblPositiveFormulation.setText(c0.toString());
+                        ttfdPositiveFormulation.setText(c0.getPropFormulation());
+                        ttaaPositiveDescription.setText(c0.getDescription());
+                        
+                        lblNegativeFormulation.setText(c0.toString());
+                        ttfdNegativeFormulation.setText(c1.getPropFormulation());
+                        ttaaNegativeDescription.setText(c1.getDescription());
+                        
+                        lblSymmetricFormulation.setText(c2.toString());
+                        ttfdSymmetricFormulation.setText(c2.getPropFormulation());
+                        ttaaSymmetricDescription.setText(c2.getDescription());
                         
                     } else if (newValue==null){
                         newFcc();
@@ -396,24 +387,11 @@ public class DualitiesController implements Initializable {
         }
 
         // ELEMENT
-        Element e0 = null;
-        Element e1 = null;
-        int iE0=0;
-        int iE1=0;
+        Element e0 = appController.elementOf(0, selectedFcc);
+        Element e1 = appController.elementOf(1, selectedFcc);
         
-        // which Elements are of the selected Fcc?
-        for(Element e:listElement){
-            if(e.getFcc().equals(selectedFcc)){
-                if(e.getPolarity()==0){
-                    e0=e;
-                    iE0=listElement.indexOf(e);
-                } else if(e.getPolarity()==1){
-                    e1=e;
-                    iE1=listElement.indexOf(e);
-                    
-                }    
-            }
-        }
+        int iE0=listElement.indexOf(e0);
+        int iE1=listElement.indexOf(e1);
         
         e0.setSymbol(newESymbol);
         result = e0.updateData(conexion.getConnection());
@@ -430,37 +408,12 @@ public class DualitiesController implements Initializable {
         
         
         // CONJUNCTION
-        Conjunction c0 = null;
-        Conjunction c1 = null;
-        Conjunction c2 = null;
-        int iC0=0;
-        int iC1=0;
-        int iC2=0;
-        
-        // which Elements are of the selected Fcc?
-        for(Conjunction c:listConjunction){
-            
-            if(c.getFcc().equals(selectedFcc)){
-                
-                switch (c.getOrientation()) {
-                    case 0:
-                        c0=c;
-                        iC0=listConjunction.indexOf(c);
-                        
-                        break;
-                    case 1:
-                        c1=c;
-                        iC1=listConjunction.indexOf(c);
-                        break;
-                    case 2:
-                        c2=c;
-                        iC2=listConjunction.indexOf(c);
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
+        Conjunction c0 = appController.conjunctionOf(0, selectedFcc);
+        Conjunction c1 = appController.conjunctionOf(1, selectedFcc);;
+        Conjunction c2 = appController.conjunctionOf(2, selectedFcc);;
+        int iC0=listConjunction.indexOf(c0);
+        int iC1=listConjunction.indexOf(c1);
+        int iC2=listConjunction.indexOf(c2);
         
         c0.setPropFormulation(newPConjunctionProp);
         c0.setDescription(newPConjunctionDesc);

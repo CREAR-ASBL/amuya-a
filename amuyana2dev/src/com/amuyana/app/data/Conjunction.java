@@ -27,7 +27,7 @@ public class Conjunction{
     private StringProperty propFormulation;
     private StringProperty description;
     private Fcc fcc;
-
+    
     public Conjunction(int idConjunction, int orientation, String propFormulation, 
 String description, Fcc fcc) { 
             this.idConjunction = new SimpleIntegerProperty(idConjunction);
@@ -85,7 +85,7 @@ String description, Fcc fcc) {
     public void setFcc(Fcc idFcc) {
             this.fcc = idFcc;
     }
-
+    
     public static void loadData(Connection connection, 
             ObservableList<Conjunction> listConjunctions, 
             ObservableList<Fcc> listFcc) {
