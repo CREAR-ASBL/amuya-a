@@ -31,7 +31,7 @@
                                     </ToolBar>
                                     <VBox spacing="10.0" HBox.hgrow="ALWAYS">
                                        <children>
-                                          <TableView prefHeight="150.0" styleClass="tblvw_logicsystem">
+                                          <TableView prefHeight="150.0" styleClass="tblvw">
                                              <columns>
                                                 <TableColumn prefWidth="131.0" text="Date of creation" />
                                                 <TableColumn prefWidth="105.0" text="label" />
@@ -67,7 +67,7 @@
                                     </ToolBar>
                                     <VBox layoutX="142.0" layoutY="24.0" spacing="10.0" HBox.hgrow="ALWAYS">
                                        <children>
-                                          <TableView prefHeight="150.0" styleClass="tblvw_logicsystem">
+                                          <TableView prefHeight="150.0" styleClass="tblvw">
                                              <columns>
                                                 <TableColumn prefWidth="51.0" text="Level" />
                                                 <TableColumn prefWidth="183.0" text="Particular notion" />

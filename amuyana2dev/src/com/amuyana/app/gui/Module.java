@@ -19,8 +19,7 @@ public enum Module {
     STC("stc/Stc.fxml"),
     SYLLOGISM("syllogism/Syllogism.fxml"),
     STATS("stats/Stats.fxml"),
-    SETTINGS("settings/Settings.fxml"),
-    LOG("log/Log.fxml");
+    SETTINGS("settings/Settings.fxml");
     
     private final String url;
     

@@ -11,7 +11,6 @@ import com.amuyana.app.data.Log;
 import com.amuyana.app.data.LogicSystem;
 import com.amuyana.app.data.User;
 import com.amuyana.app.gui.dialectic.DialecticController;
-import com.amuyana.app.gui.log.LogController;
 import com.amuyana.app.gui.dualities.DualitiesController;
 import com.amuyana.app.gui.logicSystem.LogicSystemController;
 import com.amuyana.app.gui.settings.SettingsController;
@@ -41,18 +40,8 @@ public class AppController {
     
     private Conexion conexion;
     
-    // FOR LOG
     @FXML private SplitPane stpeContents;
-    @FXML private ScrollPane slpeLog;
-    @FXML private TableView tevwLog;
-    @FXML private MenuItem muimShowHideLog;
     
-    @FXML TableColumn<Log, Timestamp> tecnDate;
-    @FXML TableColumn<Log, String> tecnType;
-    @FXML TableColumn<Log, String> tecnMessage;
-
-    ObservableList<Log> logList;
-        
     // CONTROLLERS
     @FXML private LogicSystemController logicSystemController;
     @FXML private DualitiesController dualitiesController;
@@ -62,7 +51,6 @@ public class AppController {
     @FXML private SyllogismController syllogismController;
     @FXML private StatsController statsController;
     @FXML private SettingsController settingsController;
-    @FXML private LogController logController;
     
     // MAIN TABS
     @FXML Tab tab_logicSystem;
@@ -73,13 +61,25 @@ public class AppController {
     @FXML Tab tab_syllogism;
     @FXML Tab tab_stats;
     @FXML Tab tab_settings;
-    @FXML Tab tab_log;
     
     // Why is it instantiated this one?
     private final ObservableList<Log> listLog = FXCollections.observableArrayList();
     
+    // FOR LOG
+    @FXML private MenuItem muimShowHideLog;
+    
+    private ScrollPane slpeLog;
+    private TableView tevwLog;
+    
+    TableColumn<Log, Timestamp> tecnDate;
+    TableColumn<Log, String> tecnType;
+    TableColumn<Log, String> tecnMessage;
+
+        
+    
     public void initialize() throws IOException {
-        setupTevwLog();
+        initLog();
+        
         this.conexion = new Conexion();
         
         loadModules();
@@ -114,13 +114,14 @@ public class AppController {
     }
     
     @FXML public void showHideLog(){
+        System.out.println("muimShowHideLog.toString(): " + muimShowHideLog.toString());
+        System.out.println("muimShowHideLog.getText(): " + muimShowHideLog.getText());
         if("Show Log panel".equals(muimShowHideLog.getText())) {
-            
-            stpeContents.setDividerPosition(0, 0.5);
+            stpeContents.getItems().add(slpeLog);
             muimShowHideLog.setText("Hide Log panel");
             
         } else if ("Hide Log panel".equals(muimShowHideLog.getText())){
-            stpeContents.setDividerPosition(0, 1);
+            stpeContents.getItems().remove(stpeContents.getItems().size()-1);
             muimShowHideLog.setText("Show Log panel");
         }
     }
@@ -215,12 +216,6 @@ public class AppController {
                     this.tab_settings.setContent(m.getNode());
                     break;
                 }
-                case LOG:{
-                    this.logController = loader.getController();
-                    this.logController.setAppController(this);
-                    this.tab_log.setContent(m.getNode());
-                    break;
-                }
             }
         }
     }
@@ -304,16 +299,28 @@ public class AppController {
         }    
         
         conexion.cerrarConexion();
-    }    
+    }
     
-    public void setupTevwLog(){
+    public void initLog(){
+        
+        tevwLog = new TableView(listLog);
+        
+        slpeLog = new ScrollPane(tevwLog);
+        slpeLog.setFitToWidth(true);
+        slpeLog.setFitToHeight(true);
+        
+        tecnDate = new TableColumn<>("Date");
+        tecnType = new TableColumn<>("Type");
+        tecnMessage = new TableColumn<>("Message");
+        
         tecnDate.setCellValueFactory(new PropertyValueFactory<Log,Timestamp>("date"));
         tecnType.setCellValueFactory(new PropertyValueFactory<Log,String>("type"));
         tecnMessage.setCellValueFactory(new PropertyValueFactory<Log,String>("message"));
         
-        logList = FXCollections.observableArrayList();
+        tevwLog.getColumns().addAll(tecnDate,tecnType,tecnMessage);
         
-        tevwLog.setItems(logList);
+        //listLog = FXCollections.observableArrayList();
+        tevwLog.setItems(listLog);
         
 //        tevwLog.getSelectionModel().selectedItemProperty().addListener(
 //				new ChangeListener<Log>() {
@@ -330,7 +337,7 @@ public class AppController {
     }
     
     public void addLog(String type, String message){
-        logList.add(new Log(Timestamp.valueOf(LocalDateTime.now()), type, message));
+        listLog.add(new Log(Timestamp.valueOf(LocalDateTime.now()), type, message));
     }
     
     public Element elementOf(int polarity, Fcc fcc){

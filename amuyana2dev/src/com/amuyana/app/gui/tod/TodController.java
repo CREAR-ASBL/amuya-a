@@ -13,17 +13,17 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TitledPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 
 public class TodController implements Initializable {
 
     @FXML private AppController appController;
-    @FXML private StackPane pane;
-    @FXML private BorderPane borderpane;
+    
+    @FXML private Pane todContent;
     @FXML private ComboBox cobxFcc;
+    @FXML private TitledPane tdpeMenu;
     
     /**
      * Initializes the controller class.
@@ -58,15 +58,28 @@ public class TodController implements Initializable {
             @Override
             public void changed(ObservableValue observable, Object oldValue, Object newValue) {
                 if(newValue!=null){
+                    // clear todContent
+                    todContent.getChildren().clear();
                     draw((Fcc)newValue);
+                    
                 }
             }
         });
     }
 
     public void draw(Fcc fcc){
-        pane.getChildren().add(fccContainer(fcc));
+        // VBOX
+//        VBox vbox = new VBox();
+//        vbox.getChildren().addAll(fccContainer(fcc),
+//                fccContainer(fcc),
+//                fccContainer(fcc),
+//                fccContainer(fcc),
+//                fccContainer(fcc));
+//        todContent.getChildren().add(vbox);
+
+        todContent.getChildren().add(fccContainer(fcc));
     }
+    
     
     private TitledPane fccContainer(Fcc fcc){
         Element e = appController.elementOf(0, fcc);
@@ -82,8 +95,6 @@ public class TodController implements Initializable {
         content.getChildren().add(Formula.implication(0, e.getSymbol(), ae.getSymbol()));
         content.getChildren().add(Formula.implication(1, e.getSymbol(), ae.getSymbol()));
         content.getChildren().add(Formula.implication(2, e.getSymbol(), ae.getSymbol()));
-        
-        
         
         return fccContainer;
     }
