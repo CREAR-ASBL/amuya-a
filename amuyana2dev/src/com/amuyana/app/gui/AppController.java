@@ -238,7 +238,6 @@ public class AppController {
                     break;
                 }
                 case DUALITIES:{
-                    
                     Fcc.loadList(this.conexion.getConnection(), dualitiesController.getListFcc());
                     
                     FccHasLogicSystem.loadList(this.conexion.getConnection(), 
