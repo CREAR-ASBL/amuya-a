@@ -77,22 +77,6 @@
                                           <VBox>
                                              <children>
                                                 <Label text="Is deduced from Contradictional Implications:" wrapText="true" />
-                                                <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="170.0" spacing="5.0">
-                                                   <children>
-                                                      <ListView fx:id="ltvwImplication" prefHeight="100.0" HBox.hgrow="ALWAYS" />
-                                                      <VBox alignment="CENTER">
-                                                         <children>
-                                                            <ComboBox fx:id="cobxImplication" disable="true" prefWidth="150.0" />
-                                                            <HBox>
-                                                               <children>
-                                                                  <Button fx:id="bnRemoveImplication" disable="true" mnemonicParsing="false" onAction="#removeDeduction" text="Remove" />
-                                                                  <Button fx:id="bnAddImplication" disable="true" mnemonicParsing="false" onAction="#addDeduction" text="Add" />
-                                                               </children>
-                                                            </HBox>
-                                                         </children>
-                                                      </VBox>
-                                                   </children>
-                                                </HBox>
                                              </children>
                                           </VBox>
                                           <HBox alignment="CENTER_LEFT">

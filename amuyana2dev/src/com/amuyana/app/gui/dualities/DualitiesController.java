@@ -7,11 +7,10 @@ package com.amuyana.app.gui.dualities;
 
 import com.amuyana.app.data.Conexion;
 import com.amuyana.app.data.Conjunction;
-import com.amuyana.app.data.Deduction;
+//import com.amuyana.app.data.Deduction;
 import com.amuyana.app.data.Element;
 import com.amuyana.app.data.Fcc;
 import com.amuyana.app.data.FccHasLogicSystem;
-import com.amuyana.app.data.Implication;
 
 import com.amuyana.app.data.LogicSystem;
 import com.amuyana.app.data.User;
@@ -63,16 +62,16 @@ public class DualitiesController implements Initializable {
     @FXML private TextField ttfdFccLabel;
     @FXML private TextArea ttaaFccDescription;
     
-    @FXML private ComboBox cobxLogicSystem;
+    @FXML private ComboBox<LogicSystem> cobxLogicSystem;
     @FXML private Button bnAddLogicSystem;
     @FXML private Button bnRemoveLogicSystem;
     @FXML private ListView<LogicSystem> ltvwLogicSystem;
     
-    @FXML private ComboBox cobxImplication;
-    @FXML private Button bnAddImplication;
-    @FXML private Button bnRemoveImplication;
-    @FXML private ListView<Implication> ltvwImplication;
-    //@FXML private ListView<Deduction> ltvwDeduction;
+//    @FXML private ComboBox cobxImplication;
+//    @FXML private Button bnAddImplication;
+//    @FXML private Button bnRemoveImplication;
+//    @FXML private ListView<Implication> ltvwImplication;
+//    @FXML private ListView<Deduction> ltvwDeduction;
 
     @FXML private TextField ttfdElementSymbol;
     @FXML private TextField ttfdAElementSymbol;
@@ -89,8 +88,8 @@ public class DualitiesController implements Initializable {
     
     private ObservableList<Fcc> listFcc;
     private ObservableList<FccHasLogicSystem> listFccHasLogicSystem;
-    private ObservableList<Implication> listImplication;
-    private ObservableList<Deduction> listDeduction;
+//    private ObservableList<Implication> listImplication;
+//    private ObservableList<Deduction> listDeduction;
     
     private ObservableList<Element> listElement;
     private ObservableList<Conjunction> listConjunction;
@@ -104,13 +103,14 @@ public class DualitiesController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         this.listFcc=FXCollections.observableArrayList();
         this.listFccHasLogicSystem=FXCollections.observableArrayList();
-        this.listImplication=FXCollections.observableArrayList();
-        this.listDeduction=FXCollections.observableArrayList();
+//        this.listImplication=FXCollections.observableArrayList();
+//        this.listDeduction=FXCollections.observableArrayList();
         this.listElement=FXCollections.observableArrayList();
         this.listConjunction=FXCollections.observableArrayList();
         manageEvents();
     }
 
+    
     public void setAppController(AppController aThis) {
         this.appController=aThis;
     }
@@ -123,14 +123,6 @@ public class DualitiesController implements Initializable {
         return this.listFccHasLogicSystem;
     }
     
-    public ObservableList<Implication> getListImplication(){
-        return this.listImplication;
-    }
-    
-    public ObservableList<Deduction> getListDeduction(){
-        return this.listDeduction;
-    }
-    
     public ObservableList<Element> getListElement(){
         return this.listElement;
     }
@@ -138,7 +130,6 @@ public class DualitiesController implements Initializable {
     public ObservableList<Conjunction> getListConjunction(){
         return this.listConjunction;
     }
-    
     
     public void fillData() {
         tevwFcc.setItems(listFcc);
@@ -186,24 +177,6 @@ public class DualitiesController implements Initializable {
                         ltvwLogicSystem.setItems(ls1);
                         cobxLogicSystem.setItems(ls2);
                         cobxLogicSystem.setDisable(false);
-
-                        // DEDUCTION section
-                        ObservableList<Implication> d1 = FXCollections.observableArrayList();
-                        ObservableList<Implication> d2 = FXCollections.observableArrayList();
-
-                        d2.addAll(listImplication);
-                        
-                        for(Deduction d:listDeduction){
-                            if(d.getFcc().equals(selectedFcc)){
-                                d2.remove(d.getImplication());
-                                d1.add(d.getImplication());
-                            }
-                        }
-                        
-                        ltvwImplication.setItems(d1);
-                        cobxImplication.setItems(d2);
-                        //also disable the implications of the same Fcc in combobox
-                        cobxImplication.setDisable(false);
 
                         // ELEMENTS section
                         Element e = appController.elementOf(0, selectedFcc);
@@ -263,30 +236,6 @@ public class DualitiesController implements Initializable {
                 }
             }
         });
-        
-        //LISTVIEW WITH IMPLICATIONS
-        ltvwImplication.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Implication>() {
-            @Override
-            public void changed(ObservableValue<? extends Implication> observable, Implication oldValue, Implication newValue) {
-                if(newValue!=null){
-                    bnRemoveImplication.setDisable(false);
-                } else if (newValue==null){
-                    bnRemoveImplication.setDisable(true);
-                }
-            }
-        });
-        
-        //COMBOBOX WITH IMPLICATIONS
-        cobxImplication.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Implication>() {
-            @Override
-            public void changed(ObservableValue<? extends Implication> observable, Implication oldValue, Implication newValue) {
-                if(newValue!=null){
-                    bnAddImplication.setDisable(false);
-                } else if(newValue==null){
-                    bnAddImplication.setDisable(true);
-                }
-            }
-        });
     }
     
     @FXML
@@ -305,23 +254,7 @@ public class DualitiesController implements Initializable {
         if (resultFcc == 1){
             listFcc.add(fcc);
         }
-        
-        // Implication
-        Implication imp0 = new Implication(0, 0, fcc);
-        Implication imp1 = new Implication(0, 1, fcc);
-        Implication imp2 = new Implication(0, 2, fcc);
-        
-        int resultImp0 = imp0.saveData(conexion.getConnection());
-        imp0.setIdImplication(Implication.currentAutoIncrement);
-        int resultImp1 = imp1.saveData(conexion.getConnection());
-        imp1.setIdImplication(Implication.currentAutoIncrement);
-        int resultImp2 = imp2.saveData(conexion.getConnection());
-        imp2.setIdImplication(Implication.currentAutoIncrement);
-        
-        if (resultImp0 == 1 && resultImp1 == 1 && resultImp2 == 1){
-            listImplication.addAll(imp0,imp1,imp2);
-        }
-        
+
         // Element
         Element e0 = new Element(0, ttfdElementSymbol.getText(), 0, fcc);
         Element e1 = new Element(0, ttfdAElementSymbol.getText(), 1, fcc);
@@ -452,36 +385,7 @@ public class DualitiesController implements Initializable {
         
         ArrayList<Conjunction> conjunctions = new ArrayList<>();
         ArrayList<Element> elements = new ArrayList<>();
-        ArrayList<Deduction> deductions = new ArrayList<>();
         ArrayList<FccHasLogicSystem> fhlss = new ArrayList<>();
-        ArrayList<Implication> implications = new ArrayList<>();
-        
-        
-        // deduction: when fcc is cause
-        for(Implication i:listImplication){
-            if(i.getFcc().equals(fcc)){
-                for(Deduction d:listDeduction){
-                    if(i.equals(d.getImplication())){
-                        if(d.deleteData(conexion.getConnection())==1){
-                            deductions.add(d);
-                        }
-                    }
-                }
-            }
-        }
-        
-        // deduction: when fcc is consequence
-        for(Deduction d:listDeduction){
-            if(d.getFcc().equals(fcc)){
-                if(d.deleteData(conexion.getConnection())==1){
-                    deductions.add(d);
-                }
-            }
-        }
-        
-        for(Deduction d:deductions){
-            listDeduction.remove(d);
-        }
         
         // conjunction
         for(Conjunction c:listConjunction){
@@ -506,19 +410,6 @@ public class DualitiesController implements Initializable {
         }
         for(Element e:elements){
             listElement.remove(e);
-        }
-        
-        
-        // implication
-        for(Implication i:listImplication){
-            if(i.getFcc().equals(fcc)){
-                if(i.deleteData(conexion.getConnection())==1){
-                    implications.add(i);
-                }
-            }
-        }
-        for(Implication i:implications){
-            listImplication.remove(i);
         }
         
         // logicSystem
@@ -549,12 +440,12 @@ public class DualitiesController implements Initializable {
             tevwFcc.getSelectionModel().clearSelection();
         }
         
-        ltvwImplication.setItems(null);
+//        ltvwImplication.setItems(null);
         ltvwLogicSystem.setItems(null);
         cobxLogicSystem.getSelectionModel().clearSelection();
         cobxLogicSystem.setDisable(true);
-        cobxImplication.getSelectionModel().clearSelection();
-        cobxImplication.setDisable(true);
+//        cobxImplication.getSelectionModel().clearSelection();
+//        cobxImplication.setDisable(true);
         lblPositiveFormulation.setText(null);
         lblNegativeFormulation.setText(null);
         lblSymmetricFormulation.setText(null);
@@ -592,6 +483,7 @@ public class DualitiesController implements Initializable {
             listFccHasLogicSystem.add(fhls);
             reselectFcc();
         }
+        conexion.cerrarConexion();
     }
     
     @FXML
@@ -609,41 +501,7 @@ public class DualitiesController implements Initializable {
         }
         
     }
-    
-    @FXML
-    public void addDeduction() {
-        Conexion conexion = appController.getConexion();
-        conexion.establecerConexion();
-        
-        Deduction d = new Deduction(
-                (Fcc)tevwFcc.getSelectionModel().getSelectedItem(),
-                (Implication)cobxImplication.getSelectionModel().getSelectedItem()
-        );
-        
-        
-        int result = d.saveData(conexion.getConnection());
-        
-        if (result == 1){
-            listDeduction.add(d);
-            reselectFcc();
-        }
-    }
-    
-    @FXML
-    public void removeDeduction(){
-        Conexion conexion = appController.getConexion();
-        conexion.establecerConexion();
-        
-        Deduction d = getDeduction();
-        int resultado = d.deleteData(conexion.getConnection());
-        conexion.cerrarConexion();
-        
-        if(resultado==1){
-            listDeduction.remove(d);
-            reselectFcc();
-        }
-    }
-    
+
     public void log(String type, String message){
         appController.addLog(type, message);
     }
@@ -665,17 +523,5 @@ public class DualitiesController implements Initializable {
         
         return null;
     }
-    
-    private Deduction getDeduction(){
-        Fcc fcc = (Fcc)tevwFcc.getSelectionModel().getSelectedItem();
-        Implication implication = ltvwImplication.getSelectionModel().getSelectedItem();
-        for(Deduction d:listDeduction){
-            if(fcc.equals(d.getFcc())){
-                if(implication.equals(d.getImplication())){
-                    return d;
-                }
-            }
-        }
-        return null;
-    }
+
 }

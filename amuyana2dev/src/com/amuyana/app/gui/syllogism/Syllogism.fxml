@@ -8,7 +8,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="600.0" prefWidth="850.0" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.amuyana.app.gui.syllogism.SyllogismController">
+<ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="1300.0" prefWidth="850.0" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.amuyana.app.gui.syllogism.SyllogismController">
    <content>
       <VBox alignment="TOP_CENTER" fillWidth="false" maxHeight="1.7976931348623157E308" styleClass="base">
          <children>
@@ -16,75 +16,54 @@
                <children>
                   <VBox maxWidth="1.7976931348623157E308" minWidth="600.0" prefWidth="800.0" spacing="20.0">
                      <children>
-                        <TitledPane id="ttldPn_" maxWidth="900.0" minHeight="-Infinity" minWidth="600.0" text="Syllogisms">
+                        <TitledPane id="ttldPn_" layoutX="10.0" layoutY="10.0" maxWidth="900.0" minHeight="-Infinity" minWidth="600.0" text="Syllogism">
                            <content>
                               <HBox spacing="10.0">
                                  <children>
                                     <ToolBar orientation="VERTICAL" styleClass="tlbr_logicsystem">
                                        <items>
                                           <TextField prefWidth="90.0" promptText="Filter" />
-                                          <ToggleButton disable="true" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" styleClass="bttn_toolbar" text="Edit" />
-                                          <Button mnemonicParsing="false" prefWidth="90.0" styleClass="bttn_toolbar" text="New" textAlignment="CENTER" wrapText="true" />
-                                          <Button disable="true" layoutX="10.0" layoutY="43.0" mnemonicParsing="false" prefWidth="90.0" styleClass="bttn_toolbar" text="Delete" textAlignment="CENTER" wrapText="true" />
-                                          <Button disable="true" layoutX="10.0" layoutY="76.0" mnemonicParsing="false" prefWidth="90.0" styleClass="bttn_toolbar" text="Duplicate" textAlignment="CENTER" wrapText="true" />
-                                       </items>
-                                    </ToolBar>
-                                    <VBox spacing="10.0" HBox.hgrow="ALWAYS">
-                                       <children>
-                                          <TableView prefHeight="150.0" styleClass="tblvw">
-                                             <columns>
-                                                <TableColumn prefWidth="131.0" text="Date of creation" />
-                                                <TableColumn prefWidth="105.0" text="label" />
-                                                <TableColumn prefWidth="105.0" text="conjunctions" />
-                                             </columns>
-                                          </TableView>
-                                          <HBox alignment="CENTER_LEFT" fillHeight="false" prefWidth="200.0">
-                                             <children>
-                                                <Label text="Label of syllogism:" />
-                                                <TextField HBox.hgrow="ALWAYS" />
-                                             </children>
-                                          </HBox>
-                                       </children>
-                                    </VBox>
-                                 </children>
-                              </HBox>
-                           </content>
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </TitledPane>
-                        <TitledPane id="ttldPn_" layoutX="10.0" layoutY="10.0" maxWidth="900.0" minHeight="-Infinity" minWidth="600.0" text="Associated Inclusions">
-                           <content>
-                              <HBox spacing="10.0">
-                                 <children>
-                                    <ToolBar orientation="VERTICAL" styleClass="tlbr_logicsystem">
-                                       <items>
-                                          <TextField prefWidth="90.0" promptText="Filter" />
-                                          <ToggleButton disable="true" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" styleClass="bttn_toolbar" text="Edit" />
-                                          <Button layoutX="10.0" layoutY="76.0" mnemonicParsing="false" prefWidth="90.0" styleClass="bttn_toolbar" text="New" textAlignment="CENTER" wrapText="true" />
+                                          <Button layoutX="10.0" layoutY="76.0" mnemonicParsing="false" prefWidth="90.0" styleClass="bttn_toolbar" text="Save" textAlignment="CENTER" wrapText="true" />
+                                          <Button disable="true" layoutX="10.0" layoutY="76.0" mnemonicParsing="false" prefWidth="90.0" styleClass="bttn_toolbar" text="Update" textAlignment="CENTER" wrapText="true" />
                                           <Button disable="true" layoutX="10.0" layoutY="76.0" mnemonicParsing="false" prefWidth="90.0" styleClass="bttn_toolbar" text="Delete" textAlignment="CENTER" wrapText="true" />
+                                          <Button layoutX="10.0" layoutY="43.0" mnemonicParsing="false" prefWidth="90.0" styleClass="bttn_toolbar" text="New" textAlignment="CENTER" wrapText="true" />
                                        </items>
                                     </ToolBar>
                                     <VBox layoutX="142.0" layoutY="24.0" spacing="10.0" HBox.hgrow="ALWAYS">
                                        <children>
                                           <TableView prefHeight="150.0" styleClass="tblvw">
                                              <columns>
-                                                <TableColumn prefWidth="51.0" text="Level" />
-                                                <TableColumn prefWidth="183.0" text="Particular notion" />
-                                                <TableColumn prefWidth="185.0" text="General notion" />
-                                                <TableColumn minWidth="0.0" prefWidth="204.0" text="Algebraic formulation" />
+                                                <TableColumn prefWidth="139.0" text="Label" />
+                                                <TableColumn minWidth="0.0" prefWidth="369.0" text="Inclusions" />
+                                                <TableColumn prefWidth="139.0" text="Final conjunction" />
                                              </columns>
                                           </TableView>
-                                          <HBox alignment="CENTER_LEFT" fillHeight="false" prefWidth="200.0">
-                                             <children>
-                                                <Label text="Particular notion:" />
-                                                <ChoiceBox prefWidth="150.0" />
-                                             </children>
-                                          </HBox>
                                           <HBox alignment="CENTER_LEFT" fillHeight="false" layoutX="10.0" layoutY="170.0" prefWidth="200.0">
                                              <children>
-                                                <Label text="General notion:" />
-                                                <ChoiceBox prefWidth="150.0" />
+                                                <Label text="Label:" />
+                                                <TextField />
+                                             </children>
+                                          </HBox>
+                                          <HBox>
+                                             <children>
+                                                <VBox>
+                                                   <children>
+                                                      <Label text="Associated Inclusions:" />
+                                                      <ListView prefHeight="200.0" prefWidth="200.0" />
+                                                   </children>
+                                                </VBox>
+                                                <VBox>
+                                                   <children>
+                                                      <Button mnemonicParsing="false" text="Add" />
+                                                      <Button layoutX="210.0" layoutY="10.0" mnemonicParsing="false" text="Remove" />
+                                                   </children>
+                                                </VBox>
+                                                <VBox>
+                                                   <children>
+                                                      <Label text="Inclusions" />
+                                                      <ListView layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" />
+                                                   </children>
+                                                </VBox>
                                              </children>
                                           </HBox>
                                        </children>

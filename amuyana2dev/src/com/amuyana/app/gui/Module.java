@@ -14,6 +14,7 @@ import javafx.scene.Node;
 public enum Module {
     LOGIC_SYSTEM("logicSystem/LogicSystem.fxml"),
     DUALITIES("dualities/Dualities.fxml"),
+    INCLUSIONS("inclusion/Inclusion.fxml"),
     TOD("tod/Tod.fxml"),
     DIALECTIC("dialectic/Dialectic.fxml"),
     STC("stc/Stc.fxml"),

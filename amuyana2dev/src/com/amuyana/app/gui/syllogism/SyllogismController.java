@@ -1,24 +1,25 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.amuyana.app.gui.syllogism;
 
 import com.amuyana.app.gui.AppController;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 
-/**
- * FXML Controller class
- *
- * @author ayar
- */
 public class SyllogismController implements Initializable {
 
     private AppController appController;
-
+    // INCLUSION SECTION
+    
+    
+    // SYLLOGISM
+    @FXML Button bnSave;
+    @FXML Button bnUpdate;
+    @FXML Button bnDelete;
+    @FXML Button bnNew;
+    
     /**
      * Initializes the controller class.
      */

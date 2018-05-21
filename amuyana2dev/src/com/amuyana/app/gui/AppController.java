@@ -2,16 +2,18 @@ package com.amuyana.app.gui;
 
 import com.amuyana.app.data.Conexion;
 import com.amuyana.app.data.Conjunction;
-import com.amuyana.app.data.Deduction;
+//import com.amuyana.app.data.Deduction;
 import com.amuyana.app.data.Element;
 import com.amuyana.app.data.Fcc;
 import com.amuyana.app.data.FccHasLogicSystem;
-import com.amuyana.app.data.Implication;
+import com.amuyana.app.data.General;
+import com.amuyana.app.data.Inclusion;
 import com.amuyana.app.data.Log;
 import com.amuyana.app.data.LogicSystem;
 import com.amuyana.app.data.User;
 import com.amuyana.app.gui.dialectic.DialecticController;
 import com.amuyana.app.gui.dualities.DualitiesController;
+import com.amuyana.app.gui.inclusion.InclusionController;
 import com.amuyana.app.gui.logicSystem.LogicSystemController;
 import com.amuyana.app.gui.settings.SettingsController;
 import com.amuyana.app.gui.stats.StatsController;
@@ -34,7 +36,6 @@ import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.paint.Paint;
 
 public class AppController {
     
@@ -45,6 +46,7 @@ public class AppController {
     // CONTROLLERS
     @FXML private LogicSystemController logicSystemController;
     @FXML private DualitiesController dualitiesController;
+    @FXML private InclusionController inclusionController;
     @FXML private TodController todController;
     @FXML private DialecticController dialecticController;
     @FXML private StcController stcController;
@@ -53,14 +55,15 @@ public class AppController {
     @FXML private SettingsController settingsController;
     
     // MAIN TABS
-    @FXML Tab tab_logicSystem;
-    @FXML Tab tab_dualities; 
-    @FXML Tab tab_tod;
-    @FXML Tab tab_dialectic;
-    @FXML Tab tab_stc;
-    @FXML Tab tab_syllogism;
-    @FXML Tab tab_stats;
-    @FXML Tab tab_settings;
+    @FXML Tab tbLogicSystem;
+    @FXML Tab tbDualities; 
+    @FXML Tab tbInclusions; 
+    @FXML Tab tbSyllogism;
+    @FXML Tab tbTod;
+    @FXML Tab tbDialectic;
+    @FXML Tab tbStc;
+    @FXML Tab tbStats;
+    @FXML Tab tbSettings;
     
     // Why is it instantiated this one?
     private final ObservableList<Log> listLog = FXCollections.observableArrayList();
@@ -171,49 +174,55 @@ public class AppController {
                 case LOGIC_SYSTEM:{
                     this.logicSystemController = loader.getController();
                     this.logicSystemController.setAppController(this);
-                    this.tab_logicSystem.setContent(m.getNode());
+                    this.tbLogicSystem.setContent(m.getNode());
                     break;
                 }
                 case DUALITIES:{
                     this.dualitiesController = loader.getController();
                     this.dualitiesController.setAppController(this);
-                    this.tab_dualities.setContent(m.getNode());
+                    this.tbDualities.setContent(m.getNode());
+                    break;
+                }
+                case INCLUSIONS:{
+                    this.inclusionController = loader.getController();
+                    this.inclusionController.setAppController(this);
+                    this.tbInclusions.setContent(m.getNode());
                     break;
                 }
                 case TOD:{
                     this.todController = loader.getController();
                     this.todController.setAppController(this);
-                    this.tab_tod.setContent(m.getNode());
+                    this.tbTod.setContent(m.getNode());
                     break;
                 }
                 case DIALECTIC:{
                     this.dialecticController = loader.getController();
                     this.dialecticController.setAppController(this);
-                    this.tab_dialectic.setContent(m.getNode());
+                    this.tbDialectic.setContent(m.getNode());
                     break;
                 }
                 case STC:{
                     this.stcController = loader.getController();
                     this.stcController.setAppController(this);
-                    this.tab_stc.setContent(m.getNode());
+                    this.tbStc.setContent(m.getNode());
                     break;
                 }
                 case SYLLOGISM:{
                     this.syllogismController = loader.getController();
                     this.syllogismController.setAppController(this);
-                    this.tab_syllogism.setContent(m.getNode());
+                    this.tbSyllogism.setContent(m.getNode());
                     break;
                 }
                 case STATS:{
                     this.statsController = loader.getController();
                     this.statsController.setAppController(this);
-                    this.tab_stats.setContent(m.getNode());
+                    this.tbStats.setContent(m.getNode());
                     break;
                 }
                 case SETTINGS:{
                     this.settingsController = loader.getController();
                     this.settingsController.setAppController(this);
-                    this.tab_settings.setContent(m.getNode());
+                    this.tbSettings.setContent(m.getNode());
                     break;
                 }
             }
@@ -245,14 +254,14 @@ public class AppController {
                             dualitiesController.getListFcc(), 
                             logicSystemController.getListLogicSystem());
                     
-                    Implication.loadList(this.conexion.getConnection(),
-                            dualitiesController.getListImplication(),
-                            dualitiesController.getListFcc());
+//                    Implication.loadList(this.conexion.getConnection(),
+//                            dualitiesController.getListImplication(),
+//                            dualitiesController.getListFcc());
                     
-                    Deduction.loadList(this.conexion.getConnection(),
-                            dualitiesController.getListDeduction(),
-                            dualitiesController.getListFcc(),
-                            dualitiesController.getListImplication());
+//                    Deduction.loadList(this.conexion.getConnection(),
+//                            dualitiesController.getListDeduction(),
+//                            dualitiesController.getListFcc(),
+//                            dualitiesController.getListImplication());
                     
                     Element.loadList(this.conexion.getConnection(), 
                             dualitiesController.getListElement(), 
@@ -264,6 +273,31 @@ public class AppController {
                     
                     dualitiesController.fillData();
                     
+                    break;
+                }
+                case INCLUSIONS:{
+                    Inclusion.loadList(this.conexion.getConnection(), 
+                            inclusionController.getListInclusion(), 
+                            dualitiesController.getListConjunction());
+                    
+                    General.loadList(this.conexion.getConnection(),
+                            inclusionController.getListGeneral(),
+                            dualitiesController.getListConjunction(),
+                            inclusionController.getListInclusion());
+                    
+                    inclusionController.fillData();
+                    break;
+                }
+                case SYLLOGISM:{
+//                    Syllogism.loadList(this.conexion.getConnection(), 
+//                            dualitiesController.getListConjunction(),
+//                            inclusionsController.getListInclusion() );
+//                    
+//                    InclusionHasSyllogism.loadList(this.conexion.getConnection(), 
+//                            dualitiesController.getListConjunction(),
+//                            inclusionsController.getListInclusion() );
+//                    
+//                    syllogismController.fillData();
                     break;
                 }
                 case TOD:{
@@ -299,6 +333,8 @@ public class AppController {
         
         conexion.cerrarConexion();
     }
+    
+    
     
     public void initLog(){
         

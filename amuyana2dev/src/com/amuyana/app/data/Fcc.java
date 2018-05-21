@@ -121,7 +121,6 @@ public class Fcc{
         }
     }
 
-
     public static void loadList(Connection connection, 
             ObservableList<Fcc> listFcc){
         try {
