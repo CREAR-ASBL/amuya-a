@@ -92,24 +92,6 @@ public class Inclusion{
         }
     }
     
-//    public int updateData(Connection connection){
-//        String sql = "UPDATE amuyana.tbl_inclusion SET label = ?,  "+
-//            " description = ? WHERE id_logic_system = ?";
-//        try {
-//            PreparedStatement instruccion =
-//                            connection.prepareStatement(sql);
-//            instruccion.setString(1, label.get());
-//            instruccion.setString(2, description.get());
-//            instruccion.setInt(3, idLogicSystem.get());
-//            
-//            return instruccion.executeUpdate();
-//
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//            return 0;
-//        }
-//    }
-    
     public int deleteData(Connection connection){
         String sql = "DELETE FROM amuyana.tbl_inclusion " +
                         "WHERE id_inclusion = ? and id_conjunction = ? ";
@@ -127,8 +109,6 @@ public class Inclusion{
     
     @Override
     public String toString(){
-        String s;
-        s=this.idInclusion.toString();
-        return s;
+        return "Inclusion: " + this.getIdInclusion();
     }
 }

@@ -2,12 +2,13 @@ package com.amuyana.app.gui;
 
 import com.amuyana.app.data.Conexion;
 import com.amuyana.app.data.Conjunction;
-//import com.amuyana.app.data.Deduction;
 import com.amuyana.app.data.Element;
 import com.amuyana.app.data.Fcc;
 import com.amuyana.app.data.FccHasLogicSystem;
 import com.amuyana.app.data.General;
 import com.amuyana.app.data.Inclusion;
+import com.amuyana.app.data.InclusionHasSyllogism;
+import com.amuyana.app.data.Syllogism;
 import com.amuyana.app.data.Log;
 import com.amuyana.app.data.LogicSystem;
 import com.amuyana.app.data.User;
@@ -19,6 +20,7 @@ import com.amuyana.app.gui.settings.SettingsController;
 import com.amuyana.app.gui.stats.StatsController;
 import com.amuyana.app.gui.stc.StcController;
 import com.amuyana.app.gui.syllogism.SyllogismController;
+
 import com.amuyana.app.gui.tod.TodController;
 
 import java.io.IOException;
@@ -136,25 +138,6 @@ public class AppController {
     public void clearLists(){
         logicSystemController.getListLogicSystem().clear();
         
-        
-//        private ObservableList<User> listUser;
-//        private ObservableList<Fcc> listFcc;
-//        private ObservableList<Element> listElement;
-//        private ObservableList<Deduction> listDeduction;
-//        private ObservableList<Implication> listImplication;
-//        private ObservableList<Conjunction> listConjunction;
-//
-//        private ObservableList<Dialectic> listDialectic;
-//
-//        private ObservableList<Register> listRegister;
-//
-//        private ObservableList<Conjunction> listSpace;
-//
-//        private ObservableList<Conjunction> listTime;
-//
-//        private ObservableList<Conjunction> listQuantum;
-//
-//        private ObservableList<Conjunction> listSyllogism;
     }
     
 
@@ -189,6 +172,12 @@ public class AppController {
                     this.tbInclusions.setContent(m.getNode());
                     break;
                 }
+                case SYLLOGISM:{
+                    this.syllogismController = loader.getController();
+                    this.syllogismController.setAppController(this);
+                    this.tbSyllogism.setContent(m.getNode());
+                    break;
+                }
                 case TOD:{
                     this.todController = loader.getController();
                     this.todController.setAppController(this);
@@ -205,12 +194,6 @@ public class AppController {
                     this.stcController = loader.getController();
                     this.stcController.setAppController(this);
                     this.tbStc.setContent(m.getNode());
-                    break;
-                }
-                case SYLLOGISM:{
-                    this.syllogismController = loader.getController();
-                    this.syllogismController.setAppController(this);
-                    this.tbSyllogism.setContent(m.getNode());
                     break;
                 }
                 case STATS:{
@@ -231,13 +214,13 @@ public class AppController {
 
     public void loadData() {
         this.conexion.establecerConexion();
-        
+
 //        Dialectic.loadList(conexion.getConnection(), listDialectic);
 //        Register.loadList(conexion.getConnection(), listRegister);
 //        Space.loadList(conexion.getConnection(), listSpace);
 //        Time.loadList(conexion.getConnection(), listTime);
 //        Quantum.loadList(conexion.getConnection(), listQuantum);
-//        Syllogism.loadList(conexion.getConnection(), listSyllogism);
+
         
         for(Module m:Module.values()){
             switch(m){
@@ -253,15 +236,6 @@ public class AppController {
                             dualitiesController.getListFccHasLogicSystem(), 
                             dualitiesController.getListFcc(), 
                             logicSystemController.getListLogicSystem());
-                    
-//                    Implication.loadList(this.conexion.getConnection(),
-//                            dualitiesController.getListImplication(),
-//                            dualitiesController.getListFcc());
-                    
-//                    Deduction.loadList(this.conexion.getConnection(),
-//                            dualitiesController.getListDeduction(),
-//                            dualitiesController.getListFcc(),
-//                            dualitiesController.getListImplication());
                     
                     Element.loadList(this.conexion.getConnection(), 
                             dualitiesController.getListElement(), 
@@ -289,15 +263,16 @@ public class AppController {
                     break;
                 }
                 case SYLLOGISM:{
-//                    Syllogism.loadList(this.conexion.getConnection(), 
-//                            dualitiesController.getListConjunction(),
-//                            inclusionsController.getListInclusion() );
-//                    
-//                    InclusionHasSyllogism.loadList(this.conexion.getConnection(), 
-//                            dualitiesController.getListConjunction(),
-//                            inclusionsController.getListInclusion() );
-//                    
-//                    syllogismController.fillData();
+  
+                    Syllogism.loadList(this.conexion.getConnection(), 
+                            syllogismController.getListSyllogism());
+                    
+                    InclusionHasSyllogism.loadList(this.conexion.getConnection(),
+                            syllogismController.getListIHS(),
+                            inclusionController.getListInclusion(),
+                            syllogismController.getListSyllogism() );
+                    
+                    syllogismController.fillData();
                     break;
                 }
                 case TOD:{

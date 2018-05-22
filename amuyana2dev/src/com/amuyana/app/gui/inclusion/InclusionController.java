@@ -5,6 +5,7 @@ import com.amuyana.app.data.Conexion;
 import com.amuyana.app.data.Conjunction;
 import com.amuyana.app.data.General;
 import com.amuyana.app.data.Inclusion;
+import com.amuyana.app.data.InclusionHasSyllogism;
 import com.amuyana.app.gui.AppController;
 import java.net.URL;
 import java.util.ArrayList;
@@ -68,7 +69,7 @@ public class InclusionController implements Initializable {
     public ObservableList<General> getListGeneral(){
         return this.listGeneral;
     }
-
+    
 
     public void setAppController(AppController aThis) {
         this.appController=aThis;
@@ -200,7 +201,7 @@ public class InclusionController implements Initializable {
     @FXML
     public void save(){
         
-        // check that a particular notion is selected
+        // check that a Particular notion -a Conjunction- is selected
         if(cobxParticular.getSelectionModel().isEmpty()){
             Alert alert = new Alert(AlertType.INFORMATION);
             alert.setTitle("Save Inclusion");
@@ -209,7 +210,9 @@ public class InclusionController implements Initializable {
             alert.showAndWait();
             return;
         }
-        if(ltvwGeneralNotions.getSelectionModel().isEmpty()){
+        
+        // check that there's at least one General conjunction in the listGeneralNotions
+        if(listGeneralNotions.isEmpty()){
             Alert alert = new Alert(AlertType.INFORMATION);
             alert.setTitle("Save Inclusion");
             alert.setHeaderText(null);
@@ -217,6 +220,9 @@ public class InclusionController implements Initializable {
             alert.showAndWait();
             return;
         }
+        
+        // check that the disjunction doesn't exist yet
+        // TODO: this is a bit more complex
         
         Conexion conexion = appController.getConexion();
         conexion.establecerConexion();
@@ -243,12 +249,46 @@ public class InclusionController implements Initializable {
             }
             
         }
+        
+        ltvwInclusions.getSelectionModel().selectLast();
+        
         conexion.cerrarConexion();
     }
     
     @FXML
     public void update(){
+        // check listGeneralNotions is not empty
+        // TODO
         
+        Inclusion selectedInclusion = ltvwInclusions.getSelectionModel().getSelectedItem();
+        
+        Conexion conexion = appController.getConexion();
+        conexion.establecerConexion();
+        
+        General.dropData(conexion.getConnection(),selectedInclusion.getIdInclusion());
+        
+        ArrayList<General> lg = new ArrayList<>();
+        todo
+        for(Conjunction c:listGeneralNotions){
+            for(General g:listGeneral){
+                if(g.getInclusion().equals(selectedInclusion) && g.getConjunction().equals(c)){
+                    listGeneral.remove(g);
+                    General general = new General(c, selectedInclusion);
+                    if(general.updateData(conexion.getConnection())==1){
+                        lg.add(general);
+                    }
+                }
+            }
+            
+        }
+        
+        //listGeneral.clear();
+        
+        for (General g:lg){
+            listGeneral.add(g);
+            reselectInclusion();
+        }
+        conexion.cerrarConexion();
     }
     
     @FXML
@@ -310,28 +350,23 @@ public class InclusionController implements Initializable {
         Conjunction selectedConjunction = ltvwAllNotions.getSelectionModel().getSelectedItem();
         listGeneralNotions.add(selectedConjunction);
         listAllNotions.remove(selectedConjunction);
-//        //Inclusion selectedInclusion = ltvwInclusions.getSelectionModel().getSelectedItem();
-//        
-//        //General g = new General(selectedConjunction, selectedInclusion);
-//        
-//        Conexion conexion = appController.getConexion();
-//        conexion.establecerConexion();
-//        int result = g.saveData(conexion.getConnection());
-//        
-//        if (result == 1){
-//            listGeneral.add(g);
-//            listGeneralNotions.add(selectedConjunction);
-//            listAllNotions.remove(selectedConjunction);
-//            reselectInclusion();
-//        }
-//        conexion.cerrarConexion();
     }
     
     @FXML
     public void removeGeneral(){
         Conjunction selectedConjunction = ltvwGeneralNotions.getSelectionModel().getSelectedItem();
-        listGeneralNotions.remove(selectedConjunction);
-        listAllNotions.add(selectedConjunction);
+        
+        // if it would remain at least 1 conjunction then proceed
+        if(listGeneralNotions.size()>1){
+            listGeneralNotions.remove(selectedConjunction);
+            listAllNotions.add(selectedConjunction);
+        } else if(listGeneralNotions.size()==1){
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Remove General notion");
+            alert.setHeaderText(null);
+            alert.setContentText("Can't remove the only General notion.");
+            alert.showAndWait();
+        }
+        
     }
-    
 }

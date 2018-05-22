@@ -11,6 +11,8 @@ import java.util.logging.Logger;
 import javafx.collections.ObservableList;
 
 public class General{
+
+    
     private Conjunction conjunction;
     private Inclusion inclusion;
 
@@ -94,5 +96,25 @@ public class General{
             e.printStackTrace();
             return 0;
         }
+    }
+
+    public static int dropData(Connection connection, int idInclusion) {
+        String sql = "DELETE FROM amuyana.tbl_general " +
+                     "WHERE id_inclusion = ? ";
+        try {
+            PreparedStatement instruction = connection.prepareStatement(sql);
+            
+            instruction.setInt(1, idInclusion);
+
+            return instruction.executeUpdate();
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+     
+    public int updateData(Connection connection){
+        return saveData(connection);
     }
 }
