@@ -251,13 +251,13 @@ public class AppController {
                 }
                 case INCLUSIONS:{
                     Inclusion.loadList(this.conexion.getConnection(), 
-                            inclusionController.getListInclusion(), 
+                            inclusionController.getListInclusions(), 
                             dualitiesController.getListConjunction());
                     
                     General.loadList(this.conexion.getConnection(),
-                            inclusionController.getListGeneral(),
+                            inclusionController.getListGenerals(),
                             dualitiesController.getListConjunction(),
-                            inclusionController.getListInclusion());
+                            inclusionController.getListInclusions());
                     
                     inclusionController.fillData();
                     break;
@@ -269,7 +269,7 @@ public class AppController {
                     
                     InclusionHasSyllogism.loadList(this.conexion.getConnection(),
                             syllogismController.getListIHS(),
-                            inclusionController.getListInclusion(),
+                            inclusionController.getListInclusions(),
                             syllogismController.getListSyllogism() );
                     
                     syllogismController.fillData();

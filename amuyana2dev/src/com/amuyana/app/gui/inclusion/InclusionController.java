@@ -5,7 +5,6 @@ import com.amuyana.app.data.Conexion;
 import com.amuyana.app.data.Conjunction;
 import com.amuyana.app.data.General;
 import com.amuyana.app.data.Inclusion;
-import com.amuyana.app.data.InclusionHasSyllogism;
 import com.amuyana.app.gui.AppController;
 import java.net.URL;
 import java.util.ArrayList;
@@ -28,7 +27,6 @@ public class InclusionController implements Initializable {
     private AppController appController;
     
     @FXML Button bnSave;
-    @FXML Button bnUpdate;
     @FXML Button bnDelete;
     @FXML Button bnNew;
     
@@ -36,38 +34,49 @@ public class InclusionController implements Initializable {
     @FXML Label lbFormulaInclusion;
     @FXML ComboBox<Conjunction> cobxParticular;
     
-    @FXML ListView<Conjunction> ltvwGeneralNotions;
-    @FXML ListView<Conjunction> ltvwAllNotions;
+    @FXML ListView<Conjunction> ltvwBroads;
+    @FXML ListView<Conjunction> ltvwNotions;
     @FXML Button bnAdd;
     @FXML Button bnRemove;
     
-    private ObservableList<Inclusion> listInclusion;
-    private ObservableList<General> listGeneral;
-    private ObservableList<Conjunction> listParticularNotions;
-    private ObservableList<Conjunction> listAllNotions;
-    private ObservableList<Conjunction> listGeneralNotions;
+    private ObservableList<Inclusion> listInclusions;
+    private ObservableList<General> listGenerals;
+    //private ArrayList<General> tempListGenerals;
+    //private Inclusion tempInclusion;
+    private ObservableList<Conjunction> listParticulars;
+    private ObservableList<Conjunction> listNotions;
+    private ObservableList<Conjunction> listBroads;
     
+    private ObservableList<Conjunction> tempListBroads;
     
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        listInclusion = FXCollections.observableArrayList();
-        listGeneral = FXCollections.observableArrayList();
-        listParticularNotions = FXCollections.observableArrayList();
-        listAllNotions = FXCollections.observableArrayList();
-        listGeneralNotions = FXCollections.observableArrayList();
+        listInclusions = FXCollections.observableArrayList();
+        listGenerals = FXCollections.observableArrayList();
+        //tempInclusion = new Inclusion();
+        //tempListGenerals = new ArrayList<>();
+        listParticulars = FXCollections.observableArrayList();
+        
+        // NOTIONS
+        //listNotions = FXCollections.observableArrayList();
+        
+        
+        // BROADS
+        listBroads = FXCollections.observableArrayList();
+        
         
         manageEvents();
     }
     
-    public ObservableList<Inclusion> getListInclusion(){
-        return this.listInclusion;
+    public ObservableList<Inclusion> getListInclusions(){
+        return this.listInclusions;
     }
     
-    public ObservableList<General> getListGeneral(){
-        return this.listGeneral;
+    public ObservableList<General> getListGenerals(){
+        return this.listGenerals;
     }
     
 
@@ -76,11 +85,12 @@ public class InclusionController implements Initializable {
     }
 
     public void fillData() {
-        listParticularNotions = FXCollections.observableArrayList();
+        ltvwInclusions.setItems(listInclusions);
+        ltvwInclusions.getSelectionModel().selectFirst();
         
-        ltvwInclusions.setItems(listInclusion);
-        listParticularNotions.addAll(appController.getListConjunction());
-        cobxParticular.setItems(listParticularNotions);
+        //ltvwNotions.setItems(listNotions);
+        ltvwBroads.setItems(listBroads);
+        cobxParticular.setItems(listParticulars);
     }
     
     public void manageEvents(){
@@ -91,58 +101,54 @@ public class InclusionController implements Initializable {
                     // BUTTONS
                     bnSave.setDisable(true);
                     bnDelete.setDisable(false);
-                    bnUpdate.setDisable(false);
-                    // PARTICULAR NOTION IN COMBOBOX
+                    
+                    // PARTICULAR COMBOBOX
                     cobxParticular.getSelectionModel().select(newValue.getConjunction());
                     cobxParticular.setDisable(true);
                     
-                    // FILTER BETWEEN NOTIONS AND GENERAL NOTIONS
-                    ltvwGeneralNotions.setItems(null);
-                    ltvwAllNotions.setItems(null);
+                    // NOTIONS
+                    listNotions = FXCollections.observableArrayList();
+                    listNotions.addAll(appController.getListConjunction());
+                    ltvwNotions.setItems(listNotions);
                     
-                    listParticularNotions = FXCollections.observableArrayList();
-                    
-                    listGeneralNotions = FXCollections.observableArrayList();
-                    listAllNotions = FXCollections.observableArrayList();
-                    
-                    listAllNotions.addAll(appController.getListConjunction());
-                    
-                    for(General g:listGeneral){
-                        if(g.getInclusion().getIdInclusion()==newValue.getIdInclusion()){
-                            listAllNotions.remove(g.getConjunction());
-                            listGeneralNotions.add(g.getConjunction());
-                        }
-                    }
-                    
-                    // Remove the notions of the fcc whose conjunction is included in general
+                        // Remove the notions of the fcc whose conjunction is included in general
                     Conjunction c0 = appController.conjunctionOf(0, newValue.getConjunction().getFcc());
                     Conjunction c1 = appController.conjunctionOf(1, newValue.getConjunction().getFcc());
                     Conjunction c2 = appController.conjunctionOf(2, newValue.getConjunction().getFcc());
                     
-                    listAllNotions.remove(c0);
-                    listAllNotions.remove(c1);
-                    listAllNotions.remove(c2);
+                    listNotions.remove(c0);
+                    listNotions.remove(c1);
+                    listNotions.remove(c2);
                     
-                    ltvwGeneralNotions.setItems(listGeneralNotions);
-                    ltvwAllNotions.setItems(listAllNotions);
-
+                        
+                    // BROAD : removing those notions that are contained in the 
+                    //          general notion and putting them in listBroad
+                    
+                    listBroads = FXCollections.observableArrayList();
+                    for(General g:listGenerals){
+                        if(g.getInclusion().getIdInclusion()==newValue.getIdInclusion()){
+                            listNotions.remove(g.getConjunction());
+                            listBroads.add(g.getConjunction());
+                        }
+                    }
+                    
+                    ltvwBroads.setItems(listBroads);
+                    
                 } else if (newValue==null){
-                    //bnSave.setDisable(false);
                     bnDelete.setDisable(true);
-                    bnUpdate.setDisable(true);
                     
                     cobxParticular.getSelectionModel().clearSelection();
                     cobxParticular.setDisable(false);
                     
-                    ltvwAllNotions.setItems(null);
-                    ltvwGeneralNotions.setItems(null);
+                    ltvwNotions.setItems(null);
+                    ltvwBroads.setItems(null);
                     
-                    listGeneralNotions.clear();
+                    listNotions.clear();
                 }
             }
         });
         
-        ltvwAllNotions.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Conjunction>() {
+        ltvwNotions.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Conjunction>() {
             @Override
             public void changed(ObservableValue<? extends Conjunction> observable, Conjunction oldValue, Conjunction newValue) {
                 if(newValue!=null){
@@ -153,7 +159,7 @@ public class InclusionController implements Initializable {
             }
         });
         
-        ltvwGeneralNotions.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Conjunction>() {
+        ltvwBroads.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Conjunction>() {
             @Override
             public void changed(ObservableValue<? extends Conjunction> observable, Conjunction oldValue, Conjunction newValue) {
                 if(newValue!=null){
@@ -168,24 +174,25 @@ public class InclusionController implements Initializable {
             @Override
             public void changed(ObservableValue<? extends Conjunction> observable, Conjunction oldValue, Conjunction newValue) {
                 if(newValue!=null){
-                    listAllNotions = FXCollections.observableArrayList();
-                    listAllNotions.addAll(appController.getListConjunction());
-                   
+                    
+                    listNotions = FXCollections.observableArrayList();
+                    listNotions.addAll(appController.getListConjunction());
+                    ltvwNotions.setItems(listNotions);
+                    
                     // Remove the notions of the fcc whose conjunction is included in general
                     Conjunction c0 = appController.conjunctionOf(0, newValue.getFcc());
                     Conjunction c1 = appController.conjunctionOf(1, newValue.getFcc());
                     Conjunction c2 = appController.conjunctionOf(2, newValue.getFcc());
                     
-                    listAllNotions.remove(c0);
-                    listAllNotions.remove(c1);
-                    listAllNotions.remove(c2);
+                    listNotions.remove(c0);
+                    listNotions.remove(c1);
+                    listNotions.remove(c2);
                     
-                    ltvwGeneralNotions.setItems(listGeneralNotions);
-                    ltvwAllNotions.setItems(listAllNotions);
+                    //ltvwBroads.setItems(listBroads);
                     
                     cobxParticular.setDisable(true);
                 } else if (newValue==null){
-                    listAllNotions.clear();
+                    listNotions.clear();
                 }
             }
         });
@@ -200,7 +207,6 @@ public class InclusionController implements Initializable {
     
     @FXML
     public void save(){
-        
         // check that a Particular notion -a Conjunction- is selected
         if(cobxParticular.getSelectionModel().isEmpty()){
             Alert alert = new Alert(AlertType.INFORMATION);
@@ -212,7 +218,7 @@ public class InclusionController implements Initializable {
         }
         
         // check that there's at least one General conjunction in the listGeneralNotions
-        if(listGeneralNotions.isEmpty()){
+        if(listBroads.isEmpty()){
             Alert alert = new Alert(AlertType.INFORMATION);
             alert.setTitle("Save Inclusion");
             alert.setHeaderText(null);
@@ -221,63 +227,36 @@ public class InclusionController implements Initializable {
             return;
         }
         
-        // check that the disjunction doesn't exist yet
+        // check that the inclusion doesn't exist yet
         // TODO: this is a bit more complex
         
         Conexion conexion = appController.getConexion();
         conexion.establecerConexion();
         
-        Conjunction selectedConjunction = cobxParticular.getSelectionModel().getSelectedItem();
-        
         //INCLUSION
-        Inclusion newInclusion = new Inclusion(0, selectedConjunction);
+        Inclusion newInclusion = new Inclusion(0, cobxParticular.getSelectionModel().getSelectedItem());
         
         int result = newInclusion.saveData(conexion.getConnection());
         
         newInclusion.setIdInclusion(Inclusion.currentAutoIncrement);
         
         if (result == 1){
-            listInclusion.add(newInclusion);
+            listInclusions.add(newInclusion);
         }
         
         // GENERAL
-        for(Conjunction c:listGeneralNotions){
+        for(Conjunction c:tempListBroads){
             General newGeneral = new General(c, newInclusion);
-            
             if(newGeneral.saveData(conexion.getConnection())==1){
-                listGeneral.add(newGeneral);
+                listGenerals.add(newGeneral);
             }
-            
         }
-        
+        //cobxParticular.setItems(listAllNotions);
         ltvwInclusions.getSelectionModel().selectLast();
         
         conexion.cerrarConexion();
     }
-    
-    @FXML
-    public void update(){
-        // check listGeneralNotions is not empty
-        // TODO
-        
-        Inclusion selectedInclusion = ltvwInclusions.getSelectionModel().getSelectedItem();
-        
-        Conexion conexion = appController.getConexion();
-        conexion.establecerConexion();
-        General.dropData(conexion.getConnection(),selectedInclusion.getIdInclusion());
-        //todo
-        for(Conjunction c:listGeneralNotions){
-            for(General g:listGeneral){
-                if(g.getInclusion().equals(selectedInclusion) && g.getConjunction().equals(c)){
-                    g.updateData(conexion.getConnection());
-                }
-            }
-        }
-        
-        reselectInclusion();
-        conexion.cerrarConexion();
-    }
-    
+
     @FXML
     public void delete(){
         Conexion conexion = appController.getConexion();
@@ -289,7 +268,7 @@ public class InclusionController implements Initializable {
         
         
         // find out if it has general
-        for(General g:listGeneral){
+        for(General g:listGenerals){
             if(g.getInclusion().equals(i)){
                 if(g.deleteData(conexion.getConnection())==1){
                     generals.add(g);
@@ -297,7 +276,7 @@ public class InclusionController implements Initializable {
             }
         }
         for(General g:generals){
-            listGeneral.remove(g);
+            listGenerals.remove(g);
         }
         
         
@@ -307,75 +286,114 @@ public class InclusionController implements Initializable {
         
         // finally delete Inclusion
         if(i.deleteData(conexion.getConnection())==1){
-            listInclusion.remove(i);
+            listInclusions.remove(i);
         }
         conexion.cerrarConexion();
     }
     
     @FXML
     public void newInclusion(){
+        // temporary list of broads
+        tempListBroads = FXCollections.observableArrayList();
+        
         // Inclusion
+        //tempInclusion = new Inclusion();
         ltvwInclusions.getSelectionModel().clearSelection();
         
         // particular
-        cobxParticular.getSelectionModel().clearSelection();
+        
+        listParticulars.clear();
+        listParticulars.addAll(appController.getListConjunction());
         cobxParticular.setDisable(false);
+        cobxParticular.getSelectionModel().clearSelection();
+        // Broad
+        //tempListGenerals = new ArrayList<>();
+        //ltvwBroads.setItems(null);
+        listBroads.clear();
         
-        // general
-        ltvwGeneralNotions.setItems(null);
-        listGeneralNotions.clear();
-        
-        // All notions
-        ltvwAllNotions.setItems(null);
-        listAllNotions.clear();
+        // Notions
+        listNotions.clear();
         
         bnSave.setDisable(false);
+        
+        
     }
     
     @FXML
     public void addGeneral(){
-        Conjunction selectedConjunction = ltvwAllNotions.getSelectionModel().getSelectedItem();
-        listGeneralNotions.add(selectedConjunction);
-        listAllNotions.remove(selectedConjunction);
-//        
-//        //if the inclusion doesn't exist (check cobxParticularNotion)
-//        if(ltvwInclusions.getSelectionModel().isEmpty()){
-//            listGeneral.add(new General(selectedConjunction, cobxParticular.getSelectionModel().getSelectedItem()));
-//        }
-//        
-//        // if the inclusion already exist (there's one selected)
-//        listGeneral.add(
-//                new General(selectedConjunction, ltvwInclusions.getSelectionModel().getSelectedItem())
-//        );
-//        
-//        //update
+        Conjunction selectedConjunction = ltvwNotions.getSelectionModel().getSelectedItem();
+        
+        // if there's not an existing Inclusion, we add the selected notion to
+        // a temporary list of conjunctions that will be in the Broad list 
+        if(ltvwInclusions.getSelectionModel().isEmpty()){
+            listBroads.add(selectedConjunction);
+            ltvwBroads.setItems(listBroads);
+            listNotions.remove(selectedConjunction);
+            tempListBroads.add(selectedConjunction);
+        }
+        // if the inclusion already exist (there's one selected)
+        else if (!ltvwInclusions.getSelectionModel().isEmpty()){
+            Conexion conexion = appController.getConexion();
+            conexion.establecerConexion();
+            
+            General newGeneral = new General(selectedConjunction,
+                    ltvwInclusions.getSelectionModel().getSelectedItem());
+            
+            if(newGeneral.saveData(conexion.getConnection())==1){
+                listBroads.add(selectedConjunction);
+                listNotions.remove(selectedConjunction);
+                listGenerals.add(newGeneral);
+            }
+            
+            
+            
+            conexion.cerrarConexion();
+        }
     }
     
     @FXML
     public void removeGeneral(){
-        Conjunction selectedConjunction = ltvwGeneralNotions.getSelectionModel().getSelectedItem();
+        Conjunction selectedConjunction = ltvwBroads.getSelectionModel().getSelectedItem();
         
         // if it would remain at least 1 conjunction then proceed
-        if(listGeneralNotions.size()>1){
-            listGeneralNotions.remove(selectedConjunction);
-            listAllNotions.add(selectedConjunction);
-            listGeneral.remove(generalOf(selectedConjunction,ltvwInclusions.getSelectionModel().getSelectedItem()));
-        } else if(listGeneralNotions.size()==1){
+        if(listBroads.size()>1){
+            // If the inclusion is not created yet
+            if(ltvwInclusions.getSelectionModel().isEmpty()){
+                tempListBroads.remove(selectedConjunction);
+                listBroads.remove(selectedConjunction);
+                listNotions.add(selectedConjunction);
+            } 
+            // If the inclusion exists already
+            else if(!ltvwInclusions.getSelectionModel().isEmpty()){
+                General general = generalOf(selectedConjunction,
+                        ltvwInclusions.getSelectionModel().getSelectedItem());
+                
+                Conexion conexion = appController.getConexion();
+                conexion.establecerConexion();
+                
+                if(general.deleteData(conexion.getConnection())==1){
+                    listGenerals.remove(general);
+                    listBroads.remove(selectedConjunction);
+                    listNotions.add(selectedConjunction);
+                }
+                conexion.cerrarConexion();
+            }
+        } else if(listBroads.size()==1){
             Alert alert = new Alert(AlertType.INFORMATION);
             alert.setTitle("Remove General notion");
             alert.setHeaderText(null);
             alert.setContentText("Can't remove the only General notion.");
             alert.showAndWait();
         }
-        
     }
     
     public General generalOf(Conjunction conjunction, Inclusion inclusion){
-        for(General g:listGeneral){
+        for(General g:listGenerals){
             if(g.getConjunction().equals(conjunction) && g.getInclusion().equals(inclusion)){
                 return g;
             }
         }
         return null;
     }
+    
 }

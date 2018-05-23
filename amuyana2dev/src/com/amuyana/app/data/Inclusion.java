@@ -22,6 +22,10 @@ public class Inclusion{
     
     public static int currentAutoIncrement;
 
+    public Inclusion(){
+        
+    }
+    
     public Inclusion(int idInclusion, Conjunction conjunction) { 
         this.idInclusion = new SimpleIntegerProperty(idInclusion);
         this.conjunction = conjunction;

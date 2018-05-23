@@ -69,12 +69,18 @@ public class General{
         String sql = "INSERT INTO amuyana.tbl_general (id_conjunction, id_inclusion)"
                     + "VALUES (?,?)";
         try {            
-            PreparedStatement statement = connection.prepareStatement(sql);
+            PreparedStatement statement = connection.prepareStatement(sql, 
+                    Statement.RETURN_GENERATED_KEYS);
             
             statement.setInt(1, this.getConjunction().getIdConjunction());
             statement.setInt(2, this.getInclusion().getIdInclusion());
+            int returnInt = statement.executeUpdate();
             
-            return statement.executeUpdate();
+//            ResultSet rs = statement.getGeneratedKeys();
+//            if(rs.next()){
+//                General.currentAutoIncrement = rs.getInt(1);
+//            }
+            return returnInt;
             
         } catch (SQLException ex) {
             Logger.getLogger(Fcc.class.getName()).log(Level.SEVERE, null, ex);

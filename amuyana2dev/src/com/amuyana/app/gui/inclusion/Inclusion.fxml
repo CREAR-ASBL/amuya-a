@@ -24,7 +24,6 @@
                                        <items>
                                           <TextField prefWidth="90.0" promptText="Filter" />
                                           <Button fx:id="bnSave" mnemonicParsing="false" onAction="#save" prefWidth="90.0" styleClass="bttn_toolbar" text="Save" textAlignment="CENTER" wrapText="true" />
-                                          <Button fx:id="bnUpdate" disable="true" layoutX="10.0" layoutY="76.0" mnemonicParsing="false" onAction="#update" prefWidth="90.0" styleClass="bttn_toolbar" text="Update" textAlignment="CENTER" wrapText="true" />
                                           <Button fx:id="bnDelete" disable="true" layoutX="10.0" layoutY="76.0" mnemonicParsing="false" onAction="#delete" prefWidth="90.0" styleClass="bttn_toolbar" text="Delete" textAlignment="CENTER" wrapText="true" />
                                           <Button fx:id="bnNew" layoutX="10.0" layoutY="43.0" mnemonicParsing="false" onAction="#newInclusion" prefWidth="90.0" styleClass="bttn_toolbar" text="New" textAlignment="CENTER" wrapText="true" />
                                        </items>
@@ -49,7 +48,7 @@
                                                 <VBox HBox.hgrow="ALWAYS">
                                                    <children>
                                                       <Label text="General notions:" />
-                                                      <ListView fx:id="ltvwGeneralNotions" prefHeight="200.0" prefWidth="200.0" />
+                                                      <ListView fx:id="ltvwBroads" prefHeight="200.0" prefWidth="200.0" />
                                                    </children>
                                                 </VBox>
                                                 <VBox alignment="CENTER" HBox.hgrow="NEVER">
@@ -61,7 +60,7 @@
                                                 <VBox HBox.hgrow="ALWAYS">
                                                    <children>
                                                       <Label text="Notions:" />
-                                                      <ListView fx:id="ltvwAllNotions" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" />
+                                                      <ListView fx:id="ltvwNotions" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" />
                                                    </children>
                                                 </VBox>
                                              </children>
