@@ -13,6 +13,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -56,13 +57,7 @@ public class InclusionController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         listInclusions = FXCollections.observableArrayList();
         listGenerals = FXCollections.observableArrayList();
-        //tempInclusion = new Inclusion();
-        //tempListGenerals = new ArrayList<>();
         listParticulars = FXCollections.observableArrayList();
-        
-        // NOTIONS
-        //listNotions = FXCollections.observableArrayList();
-        
         
         // BROADS
         listBroads = FXCollections.observableArrayList();
@@ -101,7 +96,8 @@ public class InclusionController implements Initializable {
                     // BUTTONS
                     bnSave.setDisable(true);
                     bnDelete.setDisable(false);
-                    
+                    bnAdd.setDisable(true);
+                    bnRemove.setDisable(true);
                     // PARTICULAR COMBOBOX
                     cobxParticular.getSelectionModel().select(newValue.getConjunction());
                     cobxParticular.setDisable(true);
@@ -151,10 +147,12 @@ public class InclusionController implements Initializable {
         ltvwNotions.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Conjunction>() {
             @Override
             public void changed(ObservableValue<? extends Conjunction> observable, Conjunction oldValue, Conjunction newValue) {
-                if(newValue!=null){
-                    bnAdd.setDisable(false);
-                } else if (newValue==null){
-                    bnAdd.setDisable(true);
+                if(ltvwInclusions.getSelectionModel().isEmpty()){
+                    if(newValue!=null){
+                        bnAdd.setDisable(false);
+                    } else if (newValue==null){
+                        bnAdd.setDisable(true);
+                    }
                 }
             }
         });
@@ -162,11 +160,14 @@ public class InclusionController implements Initializable {
         ltvwBroads.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Conjunction>() {
             @Override
             public void changed(ObservableValue<? extends Conjunction> observable, Conjunction oldValue, Conjunction newValue) {
-                if(newValue!=null){
-                    bnRemove.setDisable(false);
-                } else if (newValue==null){
-                    bnRemove.setDisable(true);
+                if(ltvwInclusions.getSelectionModel().isEmpty()){
+                    if(newValue!=null){
+                        bnRemove.setDisable(false);
+                    } else if (newValue==null){
+                        bnRemove.setDisable(true);
+                    }
                 }
+                    
             }
         });
         
@@ -228,7 +229,14 @@ public class InclusionController implements Initializable {
         }
         
         // check that the inclusion doesn't exist yet
-        // TODO: this is a bit more complex
+        if(!isInclusionUnique()){
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Save Inclusion");
+            alert.setHeaderText(null);
+            alert.setContentText("This Inclusion already exists.");
+            alert.showAndWait();
+            return;
+        }
         
         Conexion conexion = appController.getConexion();
         conexion.establecerConexion();
@@ -301,14 +309,12 @@ public class InclusionController implements Initializable {
         ltvwInclusions.getSelectionModel().clearSelection();
         
         // particular
-        
         listParticulars.clear();
         listParticulars.addAll(appController.getListConjunction());
         cobxParticular.setDisable(false);
         cobxParticular.getSelectionModel().clearSelection();
         // Broad
-        //tempListGenerals = new ArrayList<>();
-        //ltvwBroads.setItems(null);
+
         listBroads.clear();
         
         // Notions
@@ -316,7 +322,8 @@ public class InclusionController implements Initializable {
         
         bnSave.setDisable(false);
         
-        
+        bnAdd.setDisable(true);
+        bnRemove.setDisable(true);
     }
     
     @FXML
@@ -344,9 +351,6 @@ public class InclusionController implements Initializable {
                 listNotions.remove(selectedConjunction);
                 listGenerals.add(newGeneral);
             }
-            
-            
-            
             conexion.cerrarConexion();
         }
     }
@@ -395,5 +399,28 @@ public class InclusionController implements Initializable {
         }
         return null;
     }
-    
+
+    // This method is called only at the moment of save() only
+    private boolean isInclusionUnique() {
+        Conjunction particular = cobxParticular.getSelectionModel().getSelectedItem();
+        ObservableList<Conjunction> tempConjunctions;
+
+        for(Inclusion i:listInclusions){
+            tempConjunctions = FXCollections.observableArrayList();
+            if(i.getConjunction().equals(particular)){
+                for(General g:listGenerals){
+                    if(g.getInclusion().equals(i)){
+                        tempConjunctions.add(g.getConjunction());
+                    }
+                }
+            }
+            SortedList<Conjunction> list1 = tempListBroads.sorted();
+            SortedList<Conjunction> list2 = tempConjunctions.sorted();
+
+            if(list1.equals(list2)){
+                return false;
+            }
+        }
+        return true;
+    }
 }
