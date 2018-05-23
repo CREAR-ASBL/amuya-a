@@ -264,30 +264,17 @@ public class InclusionController implements Initializable {
         
         Conexion conexion = appController.getConexion();
         conexion.establecerConexion();
-        
         General.dropData(conexion.getConnection(),selectedInclusion.getIdInclusion());
-        
-        ArrayList<General> lg = new ArrayList<>();
-        todo
+        //todo
         for(Conjunction c:listGeneralNotions){
             for(General g:listGeneral){
                 if(g.getInclusion().equals(selectedInclusion) && g.getConjunction().equals(c)){
-                    listGeneral.remove(g);
-                    General general = new General(c, selectedInclusion);
-                    if(general.updateData(conexion.getConnection())==1){
-                        lg.add(general);
-                    }
+                    g.updateData(conexion.getConnection());
                 }
             }
-            
         }
         
-        //listGeneral.clear();
-        
-        for (General g:lg){
-            listGeneral.add(g);
-            reselectInclusion();
-        }
+        reselectInclusion();
         conexion.cerrarConexion();
     }
     
@@ -350,6 +337,18 @@ public class InclusionController implements Initializable {
         Conjunction selectedConjunction = ltvwAllNotions.getSelectionModel().getSelectedItem();
         listGeneralNotions.add(selectedConjunction);
         listAllNotions.remove(selectedConjunction);
+//        
+//        //if the inclusion doesn't exist (check cobxParticularNotion)
+//        if(ltvwInclusions.getSelectionModel().isEmpty()){
+//            listGeneral.add(new General(selectedConjunction, cobxParticular.getSelectionModel().getSelectedItem()));
+//        }
+//        
+//        // if the inclusion already exist (there's one selected)
+//        listGeneral.add(
+//                new General(selectedConjunction, ltvwInclusions.getSelectionModel().getSelectedItem())
+//        );
+//        
+//        //update
     }
     
     @FXML
@@ -360,6 +359,7 @@ public class InclusionController implements Initializable {
         if(listGeneralNotions.size()>1){
             listGeneralNotions.remove(selectedConjunction);
             listAllNotions.add(selectedConjunction);
+            listGeneral.remove(generalOf(selectedConjunction,ltvwInclusions.getSelectionModel().getSelectedItem()));
         } else if(listGeneralNotions.size()==1){
             Alert alert = new Alert(AlertType.INFORMATION);
             alert.setTitle("Remove General notion");
@@ -368,5 +368,14 @@ public class InclusionController implements Initializable {
             alert.showAndWait();
         }
         
+    }
+    
+    public General generalOf(Conjunction conjunction, Inclusion inclusion){
+        for(General g:listGeneral){
+            if(g.getConjunction().equals(conjunction) && g.getInclusion().equals(inclusion)){
+                return g;
+            }
+        }
+        return null;
     }
 }
