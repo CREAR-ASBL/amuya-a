@@ -23,10 +23,9 @@
                                     <ToolBar orientation="VERTICAL" styleClass="tlbr_logicsystem">
                                        <items>
                                           <TextField prefWidth="90.0" promptText="Filter" />
-                                          <Button fx:id="bnSave" layoutX="10.0" layoutY="76.0" mnemonicParsing="false" prefWidth="90.0" styleClass="bttn_toolbar" text="Save" textAlignment="CENTER" wrapText="true" />
-                                          <Button fx:id="bnUpdate" disable="true" layoutX="10.0" layoutY="76.0" mnemonicParsing="false" prefWidth="90.0" styleClass="bttn_toolbar" text="Update" textAlignment="CENTER" wrapText="true" />
-                                          <Button fx:id="bnDelete" disable="true" layoutX="10.0" layoutY="76.0" mnemonicParsing="false" prefWidth="90.0" styleClass="bttn_toolbar" text="Delete" textAlignment="CENTER" wrapText="true" />
-                                          <Button fx:id="bnNew" layoutX="10.0" layoutY="43.0" mnemonicParsing="false" prefWidth="90.0" styleClass="bttn_toolbar" text="New" textAlignment="CENTER" wrapText="true" />
+                                          <Button fx:id="bnSave" layoutX="10.0" layoutY="76.0" mnemonicParsing="false" onAction="#save" prefWidth="90.0" styleClass="bttn_toolbar" text="Save" textAlignment="CENTER" wrapText="true" />
+                                          <Button fx:id="bnDelete" disable="true" layoutX="10.0" layoutY="76.0" mnemonicParsing="false" onAction="#delete" prefWidth="90.0" styleClass="bttn_toolbar" text="Delete" textAlignment="CENTER" wrapText="true" />
+                                          <Button fx:id="bnNew" layoutX="10.0" layoutY="43.0" mnemonicParsing="false" onAction="#newSyllogism" prefWidth="90.0" styleClass="bttn_toolbar" text="New" textAlignment="CENTER" wrapText="true" />
                                        </items>
                                     </ToolBar>
                                     <VBox layoutX="142.0" layoutY="24.0" spacing="10.0" HBox.hgrow="ALWAYS">
@@ -43,19 +42,19 @@
                                                 <VBox HBox.hgrow="ALWAYS">
                                                    <children>
                                                       <Label text="Associated Inclusions:" />
-                                                      <ListView fx:id="ltvwAssInclusions" prefHeight="200.0" prefWidth="200.0" />
+                                                      <ListView fx:id="ltvwStep" prefHeight="200.0" prefWidth="200.0" />
                                                    </children>
                                                 </VBox>
                                                 <VBox alignment="CENTER">
                                                    <children>
-                                                      <Button fx:id="bnAdd" mnemonicParsing="false" text="Add" />
-                                                      <Button fx:id="bnRemove" layoutX="210.0" layoutY="10.0" mnemonicParsing="false" text="Remove" />
+                                                      <Button fx:id="bnAdd" mnemonicParsing="false" onAction="#addInclusion" text="Add" />
+                                                      <Button fx:id="bnRemove" layoutX="210.0" layoutY="10.0" mnemonicParsing="false" onAction="#removeInclusion" text="Remove" />
                                                    </children>
                                                 </VBox>
                                                 <VBox HBox.hgrow="ALWAYS">
                                                    <children>
                                                       <Label text="Inclusions" />
-                                                      <ListView fx:id="ltvwAllInclusions" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" />
+                                                      <ListView fx:id="ltvwInclusion" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" />
                                                    </children>
                                                 </VBox>
                                              </children>

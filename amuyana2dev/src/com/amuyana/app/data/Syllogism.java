@@ -15,7 +15,7 @@ import javafx.collections.ObservableList;
 
 public class Syllogism{
 
-    private static int currentAutoIncrement;
+    public static int currentAutoIncrement;
 	private IntegerProperty idSyllogism;
 	private StringProperty label;
 

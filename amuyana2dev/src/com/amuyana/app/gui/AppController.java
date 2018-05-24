@@ -114,6 +114,13 @@ public class AppController {
         return dualitiesController.getListConjunction();
     }
     
+    
+    public ObservableList<Inclusion> getListInclusions(){
+        return inclusionController.getListInclusions();
+    }
+    
+    
+    
     public ObservableList<User> getListUser(){
         return settingsController.getListUser();
     }
@@ -265,12 +272,12 @@ public class AppController {
                 case SYLLOGISM:{
   
                     Syllogism.loadList(this.conexion.getConnection(), 
-                            syllogismController.getListSyllogism());
+                            syllogismController.getListSyllogisms());
                     
                     InclusionHasSyllogism.loadList(this.conexion.getConnection(),
                             syllogismController.getListIHS(),
                             inclusionController.getListInclusions(),
-                            syllogismController.getListSyllogism() );
+                            syllogismController.getListSyllogisms() );
                     
                     syllogismController.fillData();
                     break;
