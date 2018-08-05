@@ -1,9 +1,7 @@
 /*
  * This is newStructure
- *
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * And this should be a last modification before merging the newStructure to
+ * master. I also delete rows below...
  */
 package com.amuyana.app.gui;
 
