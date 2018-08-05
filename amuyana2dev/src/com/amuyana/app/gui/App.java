@@ -1,8 +1,3 @@
-/*
- * This is newStructure
- * And this should be a last modification before merging the newStructure to
- * master. I also delete rows below...
- */
 package com.amuyana.app.gui;
 
 import javafx.application.Application;
@@ -13,8 +8,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
- *
- * @author Ayar Portugal <ayar.portugal@amuyaña.com>
+ * 
+ * @author Ayar Portugal <ayarportugal@gmail.com>
  */
 public class App extends Application {
     
