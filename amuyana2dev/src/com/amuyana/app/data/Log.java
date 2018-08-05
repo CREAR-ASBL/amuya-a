@@ -1,6 +1,6 @@
 package com.amuyana.app.data;
 
-import com.amuyana.app.gui.AppController;
+import com.amuyana.app.controllers.AppController;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
