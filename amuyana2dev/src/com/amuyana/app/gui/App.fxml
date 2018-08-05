@@ -33,6 +33,7 @@
                 <Tab fx:id="tbLogicSystem" text="Logic System" />
                   <Tab fx:id="tbDualities" text="Dualities" />
                   <Tab fx:id="tbInclusions" text="Inclusions" />
+                  <Tab fx:id="tbClasses" text="Classes" />
                   <Tab fx:id="tbSyllogism" text="Syllogisms" />
                 <Tab fx:id="tbTod" text="Table of Deductions" />
                   <Tab fx:id="tbStc" text="Space-Time Configurations" />

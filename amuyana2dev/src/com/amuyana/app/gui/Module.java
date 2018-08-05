@@ -17,6 +17,7 @@ public enum Module {
     INCLUSIONS("inclusion/Inclusion.fxml"),
     TOD("tod/Tod.fxml"),
     DIALECTIC("dialectic/Dialectic.fxml"),
+    CLASSES("cclass/CClass.fxml"),
     STC("stc/Stc.fxml"),
     SYLLOGISM("syllogism/Syllogism.fxml"),
     STATS("stats/Stats.fxml"),

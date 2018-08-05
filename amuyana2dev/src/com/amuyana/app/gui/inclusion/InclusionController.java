@@ -104,7 +104,7 @@ public class InclusionController implements Initializable {
                     
                     // NOTIONS
                     listNotions = FXCollections.observableArrayList();
-                    listNotions.addAll(appController.getListConjunction());
+                    listNotions.addAll(appController.getListConjunctions());
                     ltvwNotions.setItems(listNotions);
                     
                         // Remove the notions of the fcc whose conjunction is included in general
@@ -177,7 +177,7 @@ public class InclusionController implements Initializable {
                 if(newValue!=null){
                     
                     listNotions = FXCollections.observableArrayList();
-                    listNotions.addAll(appController.getListConjunction());
+                    listNotions.addAll(appController.getListConjunctions());
                     ltvwNotions.setItems(listNotions);
                     
                     // Remove the notions of the fcc whose conjunction is included in general
@@ -310,7 +310,7 @@ public class InclusionController implements Initializable {
         
         // particular
         listParticulars.clear();
-        listParticulars.addAll(appController.getListConjunction());
+        listParticulars.addAll(appController.getListConjunctions());
         cobxParticular.setDisable(false);
         cobxParticular.getSelectionModel().clearSelection();
         // Broad

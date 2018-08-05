@@ -1,5 +1,7 @@
 package com.amuyana.app.gui;
 
+import com.amuyana.app.data.CClass;
+import com.amuyana.app.data.CClassHasFcc;
 import com.amuyana.app.data.Conexion;
 import com.amuyana.app.data.Conjunction;
 import com.amuyana.app.data.Element;
@@ -12,6 +14,7 @@ import com.amuyana.app.data.Syllogism;
 import com.amuyana.app.data.Log;
 import com.amuyana.app.data.LogicSystem;
 import com.amuyana.app.data.User;
+import com.amuyana.app.gui.cclass.CClassController;
 import com.amuyana.app.gui.dialectic.DialecticController;
 import com.amuyana.app.gui.dualities.DualitiesController;
 import com.amuyana.app.gui.inclusion.InclusionController;
@@ -20,12 +23,11 @@ import com.amuyana.app.gui.settings.SettingsController;
 import com.amuyana.app.gui.stats.StatsController;
 import com.amuyana.app.gui.stc.StcController;
 import com.amuyana.app.gui.syllogism.SyllogismController;
-
 import com.amuyana.app.gui.tod.TodController;
-
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -49,6 +51,7 @@ public class AppController {
     @FXML private LogicSystemController logicSystemController;
     @FXML private DualitiesController dualitiesController;
     @FXML private InclusionController inclusionController;
+    @FXML private CClassController cClassController;
     @FXML private TodController todController;
     @FXML private DialecticController dialecticController;
     @FXML private StcController stcController;
@@ -58,8 +61,9 @@ public class AppController {
     
     // MAIN TABS
     @FXML Tab tbLogicSystem;
-    @FXML Tab tbDualities; 
-    @FXML Tab tbInclusions; 
+    @FXML Tab tbDualities;
+    @FXML Tab tbInclusions;
+    @FXML Tab tbClasses;
     @FXML Tab tbSyllogism;
     @FXML Tab tbTod;
     @FXML Tab tbDialectic;
@@ -80,6 +84,7 @@ public class AppController {
     TableColumn<Log, String> tecnType;
     TableColumn<Log, String> tecnMessage;
 
+
         
     
     public void initialize() throws IOException {
@@ -89,9 +94,8 @@ public class AppController {
         
         loadModules();
         
-        addLog("System", "Welcome to Amuyaña!");
         settingsController.autoClicks();
-        
+        addLog("System", "Welcome to Amuyaña! Waiting for user actions.");
     }
     
     public ObservableList<LogicSystem> getListLogicSystem(){
@@ -106,52 +110,38 @@ public class AppController {
         return dualitiesController.getListFccHasLogicSystem();
     }
     
-    public ObservableList<Element> getListElement(){
+    public ObservableList<Element> getListElements(){
         return dualitiesController.getListElement();
     }
     
-    public ObservableList<Conjunction> getListConjunction(){
+    public ObservableList<Conjunction> getListConjunctions(){
         return dualitiesController.getListConjunction();
     }
     
+    public ObservableList<CClassHasFcc> getListCClassHasFcc() {
+        return cClassController.getListCClassHasFcc();
+    }
     
     public ObservableList<Inclusion> getListInclusions(){
         return inclusionController.getListInclusions();
     }
     
-    
+    public ObservableList<General> getListGenerals(){
+        return inclusionController.getListGenerals();
+    }
     
     public ObservableList<User> getListUser(){
         return settingsController.getListUser();
-    }
-    
-    @FXML public void showHideLog(){
-        System.out.println("muimShowHideLog.toString(): " + muimShowHideLog.toString());
-        System.out.println("muimShowHideLog.getText(): " + muimShowHideLog.getText());
-        if("Show Log panel".equals(muimShowHideLog.getText())) {
-            stpeContents.getItems().add(slpeLog);
-            muimShowHideLog.setText("Hide Log panel");
-            
-        } else if ("Hide Log panel".equals(muimShowHideLog.getText())){
-            stpeContents.getItems().remove(stpeContents.getItems().size()-1);
-            muimShowHideLog.setText("Show Log panel");
-        }
     }
     
     public Conexion getConexion(){
         return this.conexion;
     }
     
-    public void clearLists(){
-        logicSystemController.getListLogicSystem().clear();
-        
-    }
-    
-
     public ObservableList<Log> getListLog() {
         return listLog;
     }
-
+    
     private void loadModules() throws IOException {
         for(Module m:Module.values()){
             
@@ -177,6 +167,12 @@ public class AppController {
                     this.inclusionController = loader.getController();
                     this.inclusionController.setAppController(this);
                     this.tbInclusions.setContent(m.getNode());
+                    break;
+                }
+                case CLASSES:{
+                    this.cClassController = loader.getController();
+                    this.cClassController.setAppController(this);
+                    this.tbClasses.setContent(m.getNode());
                     break;
                 }
                 case SYLLOGISM:{
@@ -269,6 +265,18 @@ public class AppController {
                     inclusionController.fillData();
                     break;
                 }
+                case CLASSES:{
+                    CClass.loadList(this.conexion.getConnection(), 
+                            cClassController.getListCClass());
+                    
+                    CClassHasFcc.loadList(this.conexion.getConnection(),
+                            cClassController.getListCClassHasFcc(),
+                            cClassController.getListCClass(),
+                            dualitiesController.getListFcc());
+                    
+                    cClassController.fillData();
+                    break;
+                }
                 case SYLLOGISM:{
   
                     Syllogism.loadList(this.conexion.getConnection(), 
@@ -316,7 +324,23 @@ public class AppController {
         conexion.cerrarConexion();
     }
     
+    @FXML public void showHideLog(){
+        System.out.println("muimShowHideLog.toString(): " + muimShowHideLog.toString());
+        System.out.println("muimShowHideLog.getText(): " + muimShowHideLog.getText());
+        if("Show Log panel".equals(muimShowHideLog.getText())) {
+            stpeContents.getItems().add(slpeLog);
+            muimShowHideLog.setText("Hide Log panel");
+            
+        } else if ("Hide Log panel".equals(muimShowHideLog.getText())){
+            stpeContents.getItems().remove(stpeContents.getItems().size()-1);
+            muimShowHideLog.setText("Show Log panel");
+        }
+    }
     
+    public void clearLists(){
+        logicSystemController.getListLogicSystem().clear();
+        
+    }
     
     public void initLog(){
         
@@ -358,7 +382,7 @@ public class AppController {
     }
     
     public Element elementOf(int polarity, Fcc fcc){
-        for(Element e:getListElement()){
+        for(Element e:getListElements()){
             if(e.getFcc().equals(fcc)){
                 if(e.getPolarity()==polarity){
                     return e;
@@ -369,7 +393,7 @@ public class AppController {
     }
     
     public Conjunction conjunctionOf(int orientation, Fcc fcc){
-        for(Conjunction c:getListConjunction()){
+        for(Conjunction c:getListConjunctions()){
             if(c.getFcc().equals(fcc)){
                 if(c.getOrientation()==orientation){
                     return c;
@@ -379,4 +403,37 @@ public class AppController {
         return null;
     }
     
+    //Called from LogicSystemController
+    public ArrayList<Fcc> fccOf(LogicSystem ls){
+        ArrayList<Fcc> list = new ArrayList<>();
+        
+        for(FccHasLogicSystem fhls:getListFccHasLogicSystem()){
+            if(fhls.getLogicSystem().equals(ls)){
+                list.add(fhls.getFcc());
+            }
+        }
+        return list;
+    }
+    
+    public ArrayList<Fcc> fccOf(CClass cClass){
+        ArrayList<Fcc> list = new ArrayList<>();
+        
+        for(CClassHasFcc chf:getListCClassHasFcc()){
+            if(cClass.getIdCClass()==chf.getCClass().getIdCClass()){
+                list.add(chf.getFcc());
+            }
+        }
+        return list;
+    }
+
+    public ArrayList<Conjunction> generalsOf(Fcc f) {
+        for(Inclusion i:getListInclusions()){
+            if(i.getConjunction().equals(i)){
+                for(General g:getListGenerals()){
+                    //i.getIdInclusion()
+                }
+            }
+        }
+        return null;
+    }
 }

@@ -73,7 +73,7 @@ public class SyllogismController implements Initializable {
     public void fillData() {
         ltvwSyllogism.setItems(listSyllogisms);
         ltvwSyllogism.getSelectionModel().selectFirst();
-        ttfdLabel.setText(ltvwSyllogism.getSelectionModel().getSelectedItem().toString());
+        //ttfdLabel.setText(ltvwSyllogism.getSelectionModel().getSelectedItem().toString());
     }
     
     public ArrayList<Inclusion> inclusionsOf(Syllogism syllogism){
