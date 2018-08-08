@@ -65,23 +65,41 @@ public class CClass{
     }
     
     public int saveData(Connection connection){
-        String sql="INSERT INTO amuyana.tbl_c_class (id_c_class) "
-                    + "VALUES (?)";
+        String sql="INSERT INTO amuyana.tbl_c_class (id_c_class, label) "
+                    + "VALUES (?,?)";
         try {
             PreparedStatement instruction = connection.prepareStatement(sql, 
                     Statement.RETURN_GENERATED_KEYS);
             
             instruction.setInt(1,this.idCClass.get());
+            instruction.setString(2,this.label.get());
             
             int returnInt = instruction.executeUpdate();
             ResultSet rs = instruction.getGeneratedKeys();
             if(rs.next()){
-                Inclusion.currentAutoIncrement = rs.getInt(1);
+                CClass.currentAutoIncrement = rs.getInt(1);
             }
             return returnInt;
             
         } catch (SQLException ex) {
             Logger.getLogger(FccHasLogicSystem.class.getName()).log(Level.SEVERE, null, ex);
+            return 0;
+        }
+    }
+    
+    public int updateData(Connection connection){
+        String sql = "UPDATE amuyana.tbl_c_class SET label = ? "
+                + "WHERE id_c_class = ?";
+        try {
+            PreparedStatement instruccion =
+                            connection.prepareStatement(sql);
+            instruccion.setString(1, label.get());
+            instruccion.setInt(2, idCClass.get());
+            
+            return instruccion.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
             return 0;
         }
     }
@@ -94,7 +112,7 @@ public class CClass{
             instruction.setInt(1, this.idCClass.get());
             return instruction.executeUpdate();
         } catch (SQLException ex) {
-            Logger.getLogger(Inclusion.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CClass.class.getName()).log(Level.SEVERE, null, ex);
             return 0;
         }
         

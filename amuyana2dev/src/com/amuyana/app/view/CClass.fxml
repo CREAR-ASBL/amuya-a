@@ -42,7 +42,7 @@
                                              <children>
                                                 <VBox HBox.hgrow="ALWAYS">
                                                    <children>
-                                                      <Label text="Collection:" />
+                                                      <Label text="FCCs of the class:" />
                                                       <ListView fx:id="ltvwCollection" prefHeight="200.0" prefWidth="200.0" />
                                                    </children>
                                                 </VBox>
@@ -54,8 +54,8 @@
                                                 </VBox>
                                                 <VBox HBox.hgrow="ALWAYS">
                                                    <children>
-                                                      <Label text="FCCs:" />
-                                                      <ListView fx:id="ltvwFcc" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" />
+                                                      <Label text="Selectable FCCs:" />
+                                                      <ListView fx:id="ltvwSelectableFccs" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" />
                                                    </children>
                                                 </VBox>
                                              </children>

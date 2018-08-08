@@ -7,17 +7,32 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.ObservableList;
 
 public class CClassHasFcc{
+
+    public static int currentAutoIncrement;
+    private IntegerProperty idCClassHasFcc;
     private CClass cClass;
     private Fcc fcc;
 
-    public CClassHasFcc(CClass cClass, Fcc fcc) { 
-            this.cClass = cClass;
-            this.fcc = fcc;
+    public CClassHasFcc(int idCClassHasFcc, CClass cClass, Fcc fcc) { 
+        this.idCClassHasFcc = new SimpleIntegerProperty(idCClassHasFcc);
+        this.cClass = cClass;
+        this.fcc = fcc;
     }
-
+    //Metodos atributo: idCClassHasFcc
+    public int getIdCClassHasFcc() {
+        return idCClassHasFcc.get();
+    }
+    public void setIdCClassHasFcc(int idCClassHasFcc) {
+        this.idCClassHasFcc = new SimpleIntegerProperty(idCClassHasFcc);
+    }
+    public IntegerProperty IdCClassHasFccProperty() {
+        return idCClassHasFcc;
+    }
     //Metodos atributo: cClass
     public CClass getCClass() {
             return cClass;
@@ -37,7 +52,7 @@ public class CClassHasFcc{
             ObservableList<CClassHasFcc> listCClassHasFcc,
             ObservableList<CClass> listCClass,
             ObservableList<Fcc> listFcc){
-        String sql = "SELECT id_c_class, id_fcc "
+        String sql = "SELECT id_c_class_has_fcc, id_c_class, id_fcc "
                 + "FROM amuyana.tbl_c_class_has_tbl_fcc";
         
         try {
@@ -45,36 +60,45 @@ public class CClassHasFcc{
             ResultSet result = instruction.executeQuery(sql);
             
             while(result.next()){
+                Integer i = result.getInt("id_c_class_has_fcc");
                 for(CClass c:listCClass){
                     if(c.getIdCClass()==result.getInt("id_c_class")){
                         for(Fcc f : listFcc){
                             if(f.getIdFcc()==result.getInt("id_fcc")){
-                                listCClassHasFcc.add(new CClassHasFcc(c, f));
+                                listCClassHasFcc.add(new CClassHasFcc(i, c, f));
                             }
                         }
                     }
                 }
             }
+            
         } catch (SQLException ex) {
-            Logger.getLogger(FccHasLogicSystem.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CClassHasFcc.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }
     
     public int saveData(Connection connection){
-        String sql="INSERT INTO amuyana.tbl_c_class_has_tbl_fcc (id_c_class, id_fcc) "
-                    + "VALUES (?,?)";
+        String sql="INSERT INTO amuyana.tbl_c_class_has_tbl_fcc (id_c_class_has_fcc, id_c_class, id_fcc) "
+                    + "VALUES (?,?,?)";
         try {
-            PreparedStatement instruction = connection.prepareStatement(sql);
+            PreparedStatement instruction = connection.prepareStatement(sql,
+                    Statement.RETURN_GENERATED_KEYS);
             
-            instruction.setInt(1,this.cClass.getIdCClass());
-            instruction.setInt(2,this.fcc.getIdFcc());
+            instruction.setInt(1,this.idCClassHasFcc.get());
+            instruction.setInt(2,this.cClass.getIdCClass());
+            instruction.setInt(3,this.fcc.getIdFcc());
             
             int returnInt = instruction.executeUpdate();
+            
+            ResultSet rs = instruction.getGeneratedKeys();
+            if(rs.next()){
+                CClassHasFcc.currentAutoIncrement = rs.getInt(1);
+            }
             return returnInt;
             
         } catch (SQLException ex) {
-            Logger.getLogger(FccHasLogicSystem.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CClassHasFcc.class.getName()).log(Level.SEVERE, null, ex);
             return 0;
         }
     }
@@ -83,10 +107,10 @@ public class CClassHasFcc{
         try {
             PreparedStatement instruccion = connection.prepareStatement(
                                             "DELETE FROM amuyana.tbl_c_class_has_tbl_fcc "+
-                                            "WHERE id_c_class = ? and id_fcc = ?"
+                                            "WHERE id_c_class_has_fcc = ? "
             );
-            instruccion.setInt(1, this.cClass.getIdCClass());
-            instruccion.setInt(2, this.fcc.getIdFcc());
+            instruccion.setInt(1, getIdCClassHasFcc());
+            
             return instruccion.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

@@ -82,8 +82,9 @@ public class InclusionController implements Initializable {
         ltvwInclusions.setItems(listInclusions);
         ltvwInclusions.getSelectionModel().selectFirst();
         
-        //ltvwNotions.setItems(listNotions);
+        ltvwNotions.setItems(listNotions);
         ltvwBroads.setItems(listBroads);
+        listParticulars.addAll(appController.getListConjunctions());
         cobxParticular.setItems(listParticulars);
     }
     
@@ -317,7 +318,7 @@ public class InclusionController implements Initializable {
         listBroads.clear();
         
         // Notions
-        listNotions.clear();
+        ltvwNotions.getSelectionModel().clearSelection();
         
         bnSave.setDisable(false);
         

@@ -427,14 +427,19 @@ public class AppController {
         return list;
     }
 
-    public ArrayList<Conjunction> generalsOf(Fcc f) {
+    public ArrayList<Conjunction> generalsOf(Fcc fcc) {
+        ArrayList<Conjunction> listGeneralsOf = new ArrayList<>();
         for(Inclusion i:getListInclusions()){
-            if(i.getConjunction().equals(i)){
+            if(i.getConjunction().equals(conjunctionOf(0, fcc))||
+                    i.getConjunction().equals(conjunctionOf(1, fcc))||
+                    i.getConjunction().equals(conjunctionOf(2, fcc))){
                 for(General g:getListGenerals()){
-                    //i.getIdInclusion()
+                    if(g.getInclusion().equals(i)){
+                        listGeneralsOf.add(g.getConjunction());
+                    }
                 }
             }
         }
-        return null;
+        return listGeneralsOf;
     }
 }

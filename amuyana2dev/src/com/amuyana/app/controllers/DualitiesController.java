@@ -35,6 +35,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.web.HTMLEditor;
 
 /**
  * FXML Controller class
@@ -51,6 +52,7 @@ public class DualitiesController implements Initializable {
     @FXML private Button bnSaveFcc;
     @FXML private Button bnUpdateFcc;
     @FXML private Button bnDeleteFcc;
+    @FXML private Button bnDuplicateFcc;
     @FXML private Button bnNewFcc;
     
     @FXML private TableView tevwFcc;
@@ -59,7 +61,7 @@ public class DualitiesController implements Initializable {
     
     @FXML private TextField ttfdFccId;
     @FXML private TextField ttfdFccLabel;
-    @FXML private TextArea ttaaFccDescription;
+    @FXML private HTMLEditor hmerFccDescription;
     
     @FXML private ComboBox<LogicSystem> cobxLogicSystem;
     @FXML private Button bnAddLogicSystem;
@@ -155,10 +157,12 @@ public class DualitiesController implements Initializable {
                         bnSaveFcc.setDisable(true);
                         bnUpdateFcc.setDisable(false);
                         bnDeleteFcc.setDisable(false);
+                        bnDuplicateFcc.setDisable(false);
+                        
                         // FCC section
                         ttfdFccId.setText(String.valueOf(newValue.getIdFcc()));
                         ttfdFccLabel.setText(newValue.getLabel());
-                        ttaaFccDescription.setText(newValue.getDescription());
+                        hmerFccDescription.setHtmlText(newValue.getDescription());
 
                         // FCC HAS LOGIC SYSTEM section
                         ObservableList<LogicSystem> ls1 = FXCollections.observableArrayList();
@@ -245,7 +249,7 @@ public class DualitiesController implements Initializable {
         conexion.establecerConexion();
         
         //FCC
-        Fcc fcc = new Fcc(0, ttfdFccLabel.getText(), ttaaFccDescription.getText());
+        Fcc fcc = new Fcc(0, ttfdFccLabel.getText(), hmerFccDescription.getHtmlText());
         
         int resultFcc = fcc.saveData(conexion.getConnection());
         fcc.setIdFcc(Fcc.currentAutoIncrement);
@@ -292,7 +296,7 @@ public class DualitiesController implements Initializable {
         conexion.establecerConexion();
         
         String newFccLabel = ttfdFccLabel.getText();
-        String newFccDescription = ttaaFccDescription.getText();
+        String newFccDescription = hmerFccDescription.getHtmlText();
         
         String newESymbol = ttfdElementSymbol.getText();
         String newAESymbol = ttfdAElementSymbol.getText();
@@ -433,6 +437,61 @@ public class DualitiesController implements Initializable {
     }
     
     @FXML
+    public void duplicateFcc(){
+        Conexion conexion = appController.getConexion();
+        //Timestamp timestamp = Timestamp.valueOf(LocalDateTime.now());
+        
+        conexion.establecerConexion();
+        
+        //current id of selected fcc
+        Fcc selectedFcc = (Fcc)tevwFcc.getSelectionModel().getSelectedItem();
+        String copy = "(Copy of FCC " + 
+                String.valueOf(selectedFcc.getIdFcc()) + ") ";
+        //FCC
+        Fcc fcc = new Fcc(0, copy + ttfdFccLabel.getText(), hmerFccDescription.getHtmlText());
+        
+        int resultFcc = fcc.saveData(conexion.getConnection());
+        fcc.setIdFcc(Fcc.currentAutoIncrement);
+        
+        if (resultFcc == 1){
+            listFcc.add(fcc);
+        }
+
+        // Element
+        Element e0 = new Element(0, ttfdElementSymbol.getText(), 0, fcc);
+        Element e1 = new Element(0, ttfdAElementSymbol.getText(), 1, fcc);
+        
+        int resultE0 = e0.saveData(conexion.getConnection());
+        e0.setIdElement(Element.currentAutoIncrement);
+        int resultE1 = e1.saveData(conexion.getConnection());
+        e1.setIdElement(Element.currentAutoIncrement);
+        
+        if (resultE0 == 1 && resultE1 == 1){
+            listElement.addAll(e0,e1);
+        }
+        
+        // Conjunction
+        Conjunction c0 = new Conjunction(0, 0, copy + ttfdPositiveFormulation.getText(), ttaaPositiveDescription.getText(), fcc);
+        int resultC0 = c0.saveData(conexion.getConnection());
+        c0.setIdConjunction(Conjunction.currentAutoIncrement);
+        
+        Conjunction c1 = new Conjunction(0, 1, copy + ttfdNegativeFormulation.getText(), ttaaNegativeDescription.getText(), fcc);
+        int resultC1 = c1.saveData(conexion.getConnection());
+        c1.setIdConjunction(Conjunction.currentAutoIncrement);
+        
+        Conjunction c2 = new Conjunction(0, 2, copy + ttfdSymmetricFormulation.getText(), ttaaSymmetricDescription.getText(), fcc);
+        int resultC2 = c2.saveData(conexion.getConnection());
+        c2.setIdConjunction(Conjunction.currentAutoIncrement);
+        
+        if(resultC0==1 && resultC1 == 1 && resultC2 == 1){
+            listConjunction.addAll(c0,c1,c2);
+        }
+        conexion.cerrarConexion();
+        
+        tevwFcc.getSelectionModel().selectLast();
+    }
+    
+    @FXML
     public void newFcc(){
         // take into account that this might be called when selection is already clear
         if(!tevwFcc.getSelectionModel().isEmpty()){
@@ -448,7 +507,7 @@ public class DualitiesController implements Initializable {
         lblPositiveFormulation.setText(null);
         lblNegativeFormulation.setText(null);
         lblSymmetricFormulation.setText(null);
-        ttaaFccDescription.setText(null);
+        hmerFccDescription.setHtmlText(null);
         ttaaNegativeDescription.setText(null);
         ttaaPositiveDescription.setText(null);
         ttaaSymmetricDescription.setText(null);
@@ -463,6 +522,7 @@ public class DualitiesController implements Initializable {
         bnSaveFcc.setDisable(false);
         bnUpdateFcc.setDisable(true);
         bnDeleteFcc.setDisable(true);
+        bnDuplicateFcc.setDisable(true);
 
     }
     

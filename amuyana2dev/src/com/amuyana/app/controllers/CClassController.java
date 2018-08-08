@@ -33,7 +33,7 @@ public class CClassController implements Initializable {
     @FXML ListView<CClass> ltvwCClass;
     @FXML TextField ttfdLabel;
     
-    @FXML ListView<Fcc> ltvwFcc;
+    @FXML ListView<Fcc> ltvwSelectableFccs;
     @FXML ListView<Fcc> ltvwCollection;
     @FXML Button bnAddToCollection;
     @FXML Button bnRemoveFromCollection;
@@ -41,7 +41,7 @@ public class CClassController implements Initializable {
     private ObservableList<CClass> listCClass;
     private ObservableList<CClassHasFcc> listCClassHasFcc;
     private ObservableList<Fcc> listCollection;
-    private ObservableList<Fcc> listFcc;    
+    private ObservableList<Fcc> listSelectableFccs;    
     
     /**
      * Initializes the controller class.
@@ -50,8 +50,13 @@ public class CClassController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         listCClass = FXCollections.observableArrayList();
         listCClassHasFcc = FXCollections.observableArrayList();
+        
         listCollection = FXCollections.observableArrayList();
-        listFcc = FXCollections.observableArrayList();
+        ltvwCollection.setItems(listCollection);
+        
+        listSelectableFccs = FXCollections.observableArrayList();
+        
+        ltvwSelectableFccs.setItems(listSelectableFccs);
         
         manageEvents();
     }
@@ -68,8 +73,10 @@ public class CClassController implements Initializable {
         this.appController=aThis;
     }
 
+    // this one is only called at startup, avoid modifying it
     public void fillData() {
         ltvwCClass.setItems(listCClass);
+        listSelectableFccs.addAll(appController.getListFcc());
     }
     
     public void manageEvents(){
@@ -85,43 +92,27 @@ public class CClassController implements Initializable {
                     // TextField
                     ttfdLabel.setText(newValue.getLabel());
                     
-                    /* FCC and COLLECTION ListViews.
-                    * Steps
-                    * 1: Write all the Fccs of the collection
-                    * 2: Write the remaining fccs in the listFcc. To do that:
-                    * 3: find out what other candidates* exist and are not in the 
-                    * listCollection already. Fcc candidates belong to 
-                    * the same classes only if the fccs in the listCollection 
-                    * belong all to those classes. As soon as the user picks 
-                    * a fcc that does not belong to other classes, the fccs 
-                    * in the listCollection are said to define a unique class. 
-                    * So candidates belong at minimum to the same classes 
-                    * existing in the listCollection but can belong to other 
-                    * classes as well. 
-                    * 
-                    * *Candidates: these are fccs that share a same general 
-                    * notions, that is they have the same @code Inclusion
-                    **/
-                    
-                    
                     listCollection.clear();
+                    
                     listCollection.addAll(appController.fccOf(newValue));
-                    ltvwCollection.setItems(listCollection);
                     
-                    listFcc.clear();
-                    ltvwFcc.setItems(getListCandidates(newValue));
+                    listSelectableFccs.clear();
+                    listSelectableFccs.addAll(getListCandidates());
                     
-
                 } else if (newValue==null){
-                    //bnSave.setDisable(false);
+                    bnSave.setDisable(true);
                     bnDelete.setDisable(true);
                     bnUpdate.setDisable(true);
                     
+                    //ttfdLabel.setText(null);
+                    
+                    //listCollection.clear();
+                    //listSelectableFccs.clear();
                 }
             }
         });
         
-        ltvwFcc.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Fcc>() {
+        ltvwSelectableFccs.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Fcc>() {
             @Override
             public void changed(ObservableValue<? extends Fcc> observable, Fcc oldValue, Fcc newValue) {
                 if(newValue!=null){
@@ -145,73 +136,60 @@ public class CClassController implements Initializable {
         
     }
     
-    /** STEPS.
-     * 1. Find all common generals (which can be unique or a conjunction) 
-     * of the Fcc's in the collection list, and print it in the UI (in 
-     * common generals textField)
-     * 2. From that list of common generals, one by one examine if there's 
-     * another inclusion with the same generals but different particular which 
-     * is not the same fcc already in the collection list, if there is add it to 
-     * the listCandidates.
-    */
-    private ObservableList<Fcc> getListCandidates(CClass selectedCClass){
-        ObservableList<Fcc> listCollection = ltvwCollection.getItems();
+    private ObservableList<Fcc> getListCandidates(){
         
-        // 1
-        ArrayList<Conjunction> commonGenerals = new ArrayList<>();
+        // this list is based on the listCollection, which is updated even as
+        // the user starts modifying the elements of the class -the collection-
+        // (adding or removing them from the selectable Fcc list and the 
+        // collection list
+        ObservableList<Fcc> listCandidates = FXCollections.observableArrayList();
         
-        //ObservableList<Fcc> listFcc = FXCollections.observableArrayList();
+        // for each item in listCollection I create an arrayList containing 
+        // its "general" conjunctions, 
+        ArrayList<ArrayList<Conjunction>> listGeneralsOfCollection = new ArrayList<>();
+        ArrayList<Conjunction> listCommonGenerals = new ArrayList<>();
         
-        this.listFcc.addAll(appController.getListFcc());
-        
-        // for each inclusion 
-        for(Fcc f1:listCollection){
-            for(Conjunction c1:appController.generalsOf(f1)){
-                for(Fcc f2:listCollection){
-                    if(f1!=f2){
-                        for(Conjunction c2:appController.generalsOf(f2)){
-                            if(c1==c2){
-                                if(!commonGenerals.contains(c1)){
-                                    commonGenerals.add(c1);
-                                }
-                                
-                            }
-                        }
-                    }
-                    
-                }
-                
-            }
+        for(Fcc f:listCollection){
+            listGeneralsOfCollection.add(appController.generalsOf(f));
         }
+        
+        // then I compare all arrayLists and create one containing only elements in 
+        // common, which is done by retaining common elements in a list wich 
+        // initially has all conjunctions (listCommonGenerals)
+        listCommonGenerals.addAll(appController.getListConjunctions());
+        for(ArrayList<Conjunction> alc:listGeneralsOfCollection){
+            listCommonGenerals.retainAll(alc);
+        }
+        
+        // Then I find those Fccs whose listOfGenerals has at least one common
+        // fcc with the listCommonGenerals
         
         for(Fcc f:appController.getListFcc()){
-            for(Conjunction cg:commonGenerals){
-                if(!appController.generalsOf(f).contains(cg)){
-                    this.listFcc.remove(f);
+            ArrayList<Conjunction> tempList = new ArrayList<>();
+            
+            tempList.addAll(appController.generalsOf(f));
+            
+            tempList.retainAll(listCommonGenerals);
+            if(!tempList.isEmpty()){
+                if(!listCollection.contains(f)){
+                    listCandidates.add(f);
                 }
             }
         }
-        ArrayList<Fcc> tempCandidates = new ArrayList<>();
-        for(Fcc f1:this.listFcc){
-            if(listCollection.contains(f1)){
-                tempCandidates.add(f1);
-            }
-        }
-        
-        this.listFcc.removeAll(tempCandidates);
-        
-        return this.listFcc;
+        return listCandidates;
     }
     
     public void reselectCClass(){
         CClass c = (CClass)ltvwCClass.getSelectionModel().getSelectedItem();
         ltvwCClass.getSelectionModel().clearSelection();
         ltvwCClass.getSelectionModel().select(c);
+        System.out.println("i print, class: "+c);
     }
     
     
     @FXML
     public void save(){
+        System.out.println("listCClassHasFcc before saving" + listCClassHasFcc);
         // check that a Label is given
         if(ttfdLabel.getText().isEmpty()){
             Alert alert = new Alert(AlertType.INFORMATION);
@@ -247,6 +225,18 @@ public class CClassController implements Initializable {
             listCClass.add(newCClass);
         }
         
+        // CClass has Fcc
+        // for each fcc of the collection list create an instance of CClassHasFcc
+        for(Fcc f:this.listCollection){
+            CClassHasFcc newCClassHasFcc = new CClassHasFcc(0, newCClass, f);
+            newCClassHasFcc.setIdCClassHasFcc(CClassHasFcc.currentAutoIncrement);
+            
+            int result2 = newCClassHasFcc.saveData(conexion.getConnection());
+            
+            if(result2==1){
+                listCClassHasFcc.add(newCClassHasFcc);
+            }
+        }
         
         ltvwCClass.getSelectionModel().selectLast();
         
@@ -259,13 +249,131 @@ public class CClassController implements Initializable {
         
         Conexion conexion = appController.getConexion();
         conexion.establecerConexion();
-
-        for(CClassHasFcc chf:listCClassHasFcc){
-            
+        
+        //LABEL
+        selectedCClass.setLabel(ttfdLabel.getText());
+        selectedCClass.updateData(conexion.getConnection());
+        
+        // CClassHasFcc -> listCollection
+        ArrayList<CClassHasFcc> tempToRemove = new ArrayList<>();
+        
+        for(CClassHasFcc cchf:listCClassHasFcc){
+            if(cchf.getCClass().equals(selectedCClass)&&
+                    !listCollection.contains(cchf.getFcc())){
+                //the problem is around here!
+                if(cchf.deleteData(conexion.getConnection())==1){
+                    tempToRemove.add(cchf);
+                }
+            }
         }
         
-        reselectCClass();
+        for(CClassHasFcc cchf:tempToRemove){
+            listCClassHasFcc.remove(cchf);
+        }
+        
+        // listCollection -> CClassHasFcc
+        ArrayList<CClassHasFcc> tempToAdd = new ArrayList<>();
+        
+        for(Fcc f:listCollection){
+            for(CClassHasFcc cchf:listCClassHasFcc){
+                if(cchf.getCClass().equals(selectedCClass)&&
+                        cchf.getFcc().equals(f)){
+                    break;
+                }
+            }
+            if(!appController.fccOf(selectedCClass).contains(f)){
+                CClassHasFcc newCClassHasFcc = new CClassHasFcc(0, selectedCClass, f);
+                int result = newCClassHasFcc.saveData(conexion.getConnection());
+
+                newCClassHasFcc.setIdCClassHasFcc(CClassHasFcc.currentAutoIncrement);
+
+                if(result==1){
+                    tempToAdd.add(newCClassHasFcc);
+                }
+            }
+        }
+        
+        for(CClassHasFcc cchf:tempToAdd){
+            listCClassHasFcc.add(cchf);
+        }
+        
+        ltvwCClass.refresh();
+//        CClass.loadList(conexion.getConnection(), listCClass);
+//        
+//        // LISTCOLLECTION
+//        // Delete all references to the elements (fccs) of the cclass
+    
+//        
+//            // listCClassHasFcc is the list that needs to be updated
+//        for(CClassHasFcc cchf:listCClassHasFcc){
+//            // if this cClassHasFcc cchf refers to the cClass selected by 
+//            // the user
+//            if(cchf.getCClass().equals(selectedCClass)){
+//                // if it is in listCollection ignore, if it is not that means
+//                // the user removed it
+//                
+//            }
+//        }
+//            
+//        
+//        
+//        ArrayList<CClassHasFcc> tempList = new ArrayList<>();
+//        
+//        for(CClassHasFcc cchf:listCClassHasFcc){
+//            
+//            if(cchf.getCClass().equals(selectedCClass)){
+//                tempList.add(cchf);
+//            }
+//        }
+//        
+//        for(CClassHasFcc cchf:tempList){
+//            if(cchf.deleteData(conexion.getConnection())==1){
+//                    listCClassHasFcc.remove(cchf);
+//                }
+//        }
+//        
+//        // compare listCollection (the new list) and appController.fccOf(selectedCClass)
+//        
+//        for(CClassHasFcc cchf:listCClassHasFcc){
+//            if(cchf.getCClass().equals(selectedCClass)){
+//                
+//            }
+//        }
+//        
+//        for(Fcc f:listCollection){
+//            if(appController.fccOf(selectedCClass).contains(f)){
+//                
+//            } else if(!appController.fccOf(selectedCClass).contains(f)){
+//                CClassHasFcc newCClassHasFcc = new CClassHasFcc(0, selectedCClass, f);
+//                newCClassHasFcc.setIdCClassHasFcc(CClassHasFcc.currentAutoIncrement);
+//
+//                int result = newCClassHasFcc.saveData(conexion.getConnection());
+//
+//                if(result==1){
+//                    listCClassHasFcc.add(newCClassHasFcc);
+//                }
+//            }
+//        }
+//        
+//        for(Fcc f:listCollection){
+//            
+//        }
+        //listCollection = FXCollections.observableArrayList();
+        //listCollection.clear();
+        
+        //listCollection.setAll(appController.fccOf(selectedCClass));
+        
+        //ltvwCollection.refresh();
+        
+        //ltvwCClass.getSelectionModel().select(selectedCClass);
+        
+        // LIST POSSIBLE FCCS
+        //listSelectableFccs = FXCollections.observableArrayList();
+        //listSelectableFccs.addAll(getListCandidates());
+        
         conexion.cerrarConexion();
+        //ltvwCClass.getSelectionModel().select(selectedCClass);
+        //reselectCClass();
     }
     
     @FXML
@@ -275,30 +383,25 @@ public class CClassController implements Initializable {
         
         CClass selectedCClass = ltvwCClass.getSelectionModel().getSelectedItem();
         
-//        ArrayList<General> generals = new ArrayList<>();
-//        
-//        
-//        // find out if it has general
-//        for(General g:listGeneral){
-//            if(g.getInclusion().equals(i)){
-//                if(g.deleteData(conexion.getConnection())==1){
-//                    generals.add(g);
-//                }
-//            }
-//        }
-//        for(General g:generals){
-//            listGeneral.remove(g);
-//        }
-//        
-//        
-//        // Find out if it has syllogism
-//        // TODO
-//        
-//        
-//        // finally delete Inclusion
-//        if(i.deleteData(conexion.getConnection())==1){
-//            listInclusion.remove(i);
-//        }
+        // first delete all references to the CClass in CClassHasFcc
+        ArrayList<CClassHasFcc> tempList = new ArrayList<>();
+        
+        for(CClassHasFcc cchf:listCClassHasFcc){
+            
+            if(cchf.getCClass().equals(selectedCClass)){
+                tempList.add(cchf);
+            }
+        }
+        
+        for(CClassHasFcc cchf:tempList){
+            if(cchf.deleteData(conexion.getConnection())==1){
+                    listCClassHasFcc.remove(cchf);
+                }
+        }
+        System.out.println("listCClassHasFcc before deleting CClass" + listCClassHasFcc);
+        if(selectedCClass.deleteData(conexion.getConnection())==1){
+            listCClass.remove(selectedCClass);
+        }
         conexion.cerrarConexion();
     }
     
@@ -309,21 +412,22 @@ public class CClassController implements Initializable {
         ttfdLabel.setText(null);
         
         // collection
-        ltvwCollection.setItems(null);
         listCollection.clear();
         
-        // All 
-        //ltvwAllFcc.setItems();
+        // Selectable FCCs
+        listSelectableFccs.clear();
+        listSelectableFccs.addAll(appController.getListFcc());
+        ltvwSelectableFccs.setItems(listSelectableFccs);
         
         bnSave.setDisable(false);
     }
     
     @FXML
     public void addToCollection(){
-        Fcc selectedFcc = ltvwFcc.getSelectionModel().getSelectedItem();
+        Fcc selectedFcc = ltvwSelectableFccs.getSelectionModel().getSelectedItem();
         
-        listFcc.remove(selectedFcc);
         listCollection.add(selectedFcc);
+        listSelectableFccs.setAll(getListCandidates());
     }
     
     @FXML
@@ -338,7 +442,7 @@ public class CClassController implements Initializable {
             alert.showAndWait();
             return;
         }
-        listFcc.add(selectedFcc);
+        listSelectableFccs.add(selectedFcc);
         listCollection.remove(selectedFcc);
     }
     

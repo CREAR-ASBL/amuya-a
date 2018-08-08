@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.web.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.layout.*?>
@@ -24,10 +25,11 @@
                                           <Button fx:id="bnSaveFcc" minWidth="-Infinity" mnemonicParsing="false" onAction="#saveFcc" styleClass="bttn_toolbar" text="Save" />
                                           <Button fx:id="bnUpdateFcc" disable="true" minWidth="-Infinity" mnemonicParsing="false" onAction="#updateFcc" styleClass="bttn_toolbar" text="Update" />
                                           <Button fx:id="bnDeleteFcc" disable="true" minWidth="-Infinity" mnemonicParsing="false" onAction="#deleteFcc" styleClass="bttn_toolbar" text="Delete" />
+                                          <Button fx:id="bnDuplicateFcc" disable="true" layoutX="10.0" layoutY="118.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#duplicateFcc" styleClass="bttn_toolbar" text="Duplicate" />
                                           <Button fx:id="bnNewFcc" layoutX="10.0" layoutY="178.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#newFcc" styleClass="bttn_toolbar" text="New" />
                                        </items>
                                     </ToolBar>
-                                    <VBox alignment="CENTER" prefWidth="400.0" spacing="10.0" HBox.hgrow="ALWAYS">
+                                    <VBox prefWidth="400.0" spacing="10.0" HBox.hgrow="ALWAYS">
                                        <children>
                                           <TableView fx:id="tevwFcc" maxWidth="1.7976931348623157E308" prefHeight="300.0" styleClass="tblvw" tableMenuButtonVisible="true">
                                              <columns>
@@ -47,12 +49,8 @@
                                                 <TextField fx:id="ttfdFccLabel" text="test" HBox.hgrow="ALWAYS" />
                                              </children>
                                           </HBox>
-                                          <HBox>
-                                             <children>
-                                                <Label text="Description:" />
-                                                <TextArea fx:id="ttaaFccDescription" prefHeight="100.0" text="test" wrapText="true" HBox.hgrow="ALWAYS" />
-                                             </children>
-                                          </HBox>
+                                          <Label text="Description:" />
+                                          <HTMLEditor fx:id="hmerFccDescription" htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" maxWidth="-Infinity" prefHeight="300.0" />
                                           <VBox>
                                              <children>
                                                 <Label text="Belongs to Logic System: " wrapText="true" />
