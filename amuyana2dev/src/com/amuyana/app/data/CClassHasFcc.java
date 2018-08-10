@@ -94,6 +94,7 @@ public class CClassHasFcc{
             ResultSet rs = instruction.getGeneratedKeys();
             if(rs.next()){
                 CClassHasFcc.currentAutoIncrement = rs.getInt(1);
+                
             }
             return returnInt;
             

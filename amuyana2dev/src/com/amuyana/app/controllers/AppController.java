@@ -15,16 +15,6 @@ import com.amuyana.app.data.Syllogism;
 import com.amuyana.app.data.Log;
 import com.amuyana.app.data.LogicSystem;
 import com.amuyana.app.data.User;
-import com.amuyana.app.controllers.CClassController;
-import com.amuyana.app.controllers.DialecticController;
-import com.amuyana.app.controllers.DualitiesController;
-import com.amuyana.app.controllers.InclusionController;
-import com.amuyana.app.controllers.LogicSystemController;
-import com.amuyana.app.controllers.SettingsController;
-import com.amuyana.app.controllers.StatsController;
-import com.amuyana.app.controllers.StcController;
-import com.amuyana.app.controllers.SyllogismController;
-import com.amuyana.app.controllers.TodController;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -141,6 +131,10 @@ public class AppController {
     
     public ObservableList<Log> getListLog() {
         return listLog;
+    }
+    
+    public AppController getAppController(){
+        return this;
     }
     
     private void loadModules() throws IOException {
@@ -420,7 +414,7 @@ public class AppController {
         ArrayList<Fcc> list = new ArrayList<>();
         
         for(CClassHasFcc chf:getListCClassHasFcc()){
-            if(cClass.getIdCClass()==chf.getCClass().getIdCClass()){
+            if(cClass.equals(chf.getCClass())){
                 list.add(chf.getFcc());
             }
         }
@@ -441,5 +435,17 @@ public class AppController {
             }
         }
         return listGeneralsOf;
+    }
+    
+    public ArrayList<CClass> cClassOf(Fcc fcc){
+        ArrayList<CClass> listCClassOf = new ArrayList<>();
+        
+        for(CClassHasFcc cchf:cClassController.getListCClassHasFcc()){
+            if(cchf.getFcc()==fcc){
+                listCClassOf.add(cchf.getCClass());
+            }
+        }
+        
+        return listCClassOf;
     }
 }

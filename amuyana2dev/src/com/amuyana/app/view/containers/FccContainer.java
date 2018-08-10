@@ -1,6 +1,7 @@
 
 package com.amuyana.app.view.containers;
 
+import com.amuyana.app.controllers.AppController;
 import com.amuyana.app.data.Fcc;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
@@ -11,6 +12,7 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
 
+
 /**
  *
  * @author ayar
@@ -19,21 +21,20 @@ public class FccContainer extends TitledPane {
     
     Fcc fcc;
     
-    public FccContainer(Fcc fcc){
-        Label f1 = new Label("Formula 1");
-        Label f2 = new Label("Formula 2");
+    public FccContainer(AppController appController, Fcc fcc){
+        this.fcc=fcc;
+        
+        Label f1 = new Label();
+        Label f2 = new Label();
         Label f3 = new Label("Formula 3");
         
-        VBox formulasContainer = new VBox(f1,f2,f3);
+        VBox formulasContainer = new VBox();
         super.setContent(formulasContainer);
         
-        super.setText("TitledPane");
+        super.setText(fcc.getLabel());
         
-        super.getChildren().add(formulasContainer);
         
         format();
-        
-        // debug area
         
     }
     

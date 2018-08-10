@@ -183,13 +183,11 @@ public class CClassController implements Initializable {
         CClass c = (CClass)ltvwCClass.getSelectionModel().getSelectedItem();
         ltvwCClass.getSelectionModel().clearSelection();
         ltvwCClass.getSelectionModel().select(c);
-        System.out.println("i print, class: "+c);
     }
     
     
     @FXML
     public void save(){
-        System.out.println("listCClassHasFcc before saving" + listCClassHasFcc);
         // check that a Label is given
         if(ttfdLabel.getText().isEmpty()){
             Alert alert = new Alert(AlertType.INFORMATION);
@@ -205,7 +203,7 @@ public class CClassController implements Initializable {
             Alert alert = new Alert(AlertType.INFORMATION);
             alert.setTitle("Save Inclusion");
             alert.setHeaderText(null);
-            alert.setContentText("Please select at least one general notion.");
+            alert.setContentText("Please select at least one FCC.");
             alert.showAndWait();
             return;
         }
@@ -229,9 +227,10 @@ public class CClassController implements Initializable {
         // for each fcc of the collection list create an instance of CClassHasFcc
         for(Fcc f:this.listCollection){
             CClassHasFcc newCClassHasFcc = new CClassHasFcc(0, newCClass, f);
-            newCClassHasFcc.setIdCClassHasFcc(CClassHasFcc.currentAutoIncrement);
+            
             
             int result2 = newCClassHasFcc.saveData(conexion.getConnection());
+            newCClassHasFcc.setIdCClassHasFcc(CClassHasFcc.currentAutoIncrement);
             
             if(result2==1){
                 listCClassHasFcc.add(newCClassHasFcc);
@@ -254,126 +253,56 @@ public class CClassController implements Initializable {
         selectedCClass.setLabel(ttfdLabel.getText());
         selectedCClass.updateData(conexion.getConnection());
         
-        // CClassHasFcc -> listCollection
-        ArrayList<CClassHasFcc> tempToRemove = new ArrayList<>();
-        
-        for(CClassHasFcc cchf:listCClassHasFcc){
-            if(cchf.getCClass().equals(selectedCClass)&&
-                    !listCollection.contains(cchf.getFcc())){
-                //the problem is around here!
-                if(cchf.deleteData(conexion.getConnection())==1){
-                    tempToRemove.add(cchf);
-                }
-            }
-        }
-        
-        for(CClassHasFcc cchf:tempToRemove){
-            listCClassHasFcc.remove(cchf);
-        }
-        
-        // listCollection -> CClassHasFcc
-        ArrayList<CClassHasFcc> tempToAdd = new ArrayList<>();
+        // COLLECTION
+        ArrayList<Fcc> tempToAdd = new ArrayList<>();
+        ArrayList<Fcc> tempToRemove = new ArrayList<>();
         
         for(Fcc f:listCollection){
-            for(CClassHasFcc cchf:listCClassHasFcc){
-                if(cchf.getCClass().equals(selectedCClass)&&
-                        cchf.getFcc().equals(f)){
-                    break;
-                }
-            }
-            if(!appController.fccOf(selectedCClass).contains(f)){
-                CClassHasFcc newCClassHasFcc = new CClassHasFcc(0, selectedCClass, f);
-                int result = newCClassHasFcc.saveData(conexion.getConnection());
-
-                newCClassHasFcc.setIdCClassHasFcc(CClassHasFcc.currentAutoIncrement);
-
-                if(result==1){
-                    tempToAdd.add(newCClassHasFcc);
-                }
+            if(appController.fccOf(selectedCClass).contains(f)){
+                // the fcc remains there
+            } else if(!appController.fccOf(selectedCClass).contains(f)){
+                tempToAdd.add(f);
+            } 
+        }
+            
+        for(Fcc f:appController.fccOf(selectedCClass)){
+            if(listCollection.contains(f)){
+                // the fcc remains
+            } else if (!listCollection.contains(f)){
+                tempToRemove.add(f);
             }
         }
         
-        for(CClassHasFcc cchf:tempToAdd){
-            listCClassHasFcc.add(cchf);
+        for(Fcc f: tempToAdd){
+            CClassHasFcc newCClassHasFcc = new CClassHasFcc(0, selectedCClass, f);
+            int result = newCClassHasFcc.saveData(conexion.getConnection());
+
+            newCClassHasFcc.setIdCClassHasFcc(CClassHasFcc.currentAutoIncrement);
+            //System.out.println(CClassHasFcc.currentAutoIncrement);
+            if(result==1){
+                listCClassHasFcc.add(newCClassHasFcc);
+            }
         }
+        
+        CClassHasFcc temp=null;
+        
+        for(Fcc f:tempToRemove){
+            // find that cClassHasFcc that has the f
+            for(CClassHasFcc cchf:listCClassHasFcc){
+                if(cchf.getCClass().equals(selectedCClass)&&cchf.getFcc().equals(f)){
+                    if(cchf.deleteData(conexion.getConnection())==1){
+                        temp=cchf;
+                    }
+                }
+            }
+            
+            listCClassHasFcc.remove(temp);
+        }
+        
         
         ltvwCClass.refresh();
-//        CClass.loadList(conexion.getConnection(), listCClass);
-//        
-//        // LISTCOLLECTION
-//        // Delete all references to the elements (fccs) of the cclass
-    
-//        
-//            // listCClassHasFcc is the list that needs to be updated
-//        for(CClassHasFcc cchf:listCClassHasFcc){
-//            // if this cClassHasFcc cchf refers to the cClass selected by 
-//            // the user
-//            if(cchf.getCClass().equals(selectedCClass)){
-//                // if it is in listCollection ignore, if it is not that means
-//                // the user removed it
-//                
-//            }
-//        }
-//            
-//        
-//        
-//        ArrayList<CClassHasFcc> tempList = new ArrayList<>();
-//        
-//        for(CClassHasFcc cchf:listCClassHasFcc){
-//            
-//            if(cchf.getCClass().equals(selectedCClass)){
-//                tempList.add(cchf);
-//            }
-//        }
-//        
-//        for(CClassHasFcc cchf:tempList){
-//            if(cchf.deleteData(conexion.getConnection())==1){
-//                    listCClassHasFcc.remove(cchf);
-//                }
-//        }
-//        
-//        // compare listCollection (the new list) and appController.fccOf(selectedCClass)
-//        
-//        for(CClassHasFcc cchf:listCClassHasFcc){
-//            if(cchf.getCClass().equals(selectedCClass)){
-//                
-//            }
-//        }
-//        
-//        for(Fcc f:listCollection){
-//            if(appController.fccOf(selectedCClass).contains(f)){
-//                
-//            } else if(!appController.fccOf(selectedCClass).contains(f)){
-//                CClassHasFcc newCClassHasFcc = new CClassHasFcc(0, selectedCClass, f);
-//                newCClassHasFcc.setIdCClassHasFcc(CClassHasFcc.currentAutoIncrement);
-//
-//                int result = newCClassHasFcc.saveData(conexion.getConnection());
-//
-//                if(result==1){
-//                    listCClassHasFcc.add(newCClassHasFcc);
-//                }
-//            }
-//        }
-//        
-//        for(Fcc f:listCollection){
-//            
-//        }
-        //listCollection = FXCollections.observableArrayList();
-        //listCollection.clear();
-        
-        //listCollection.setAll(appController.fccOf(selectedCClass));
-        
-        //ltvwCollection.refresh();
-        
-        //ltvwCClass.getSelectionModel().select(selectedCClass);
-        
-        // LIST POSSIBLE FCCS
-        //listSelectableFccs = FXCollections.observableArrayList();
-        //listSelectableFccs.addAll(getListCandidates());
-        
+
         conexion.cerrarConexion();
-        //ltvwCClass.getSelectionModel().select(selectedCClass);
-        //reselectCClass();
     }
     
     @FXML
@@ -398,7 +327,7 @@ public class CClassController implements Initializable {
                     listCClassHasFcc.remove(cchf);
                 }
         }
-        System.out.println("listCClassHasFcc before deleting CClass" + listCClassHasFcc);
+
         if(selectedCClass.deleteData(conexion.getConnection())==1){
             listCClass.remove(selectedCClass);
         }
@@ -424,6 +353,8 @@ public class CClassController implements Initializable {
     
     @FXML
     public void addToCollection(){
+        // Only those that can be selected appear in the list, ie. we filtered
+        // them before
         Fcc selectedFcc = ltvwSelectableFccs.getSelectionModel().getSelectedItem();
         
         listCollection.add(selectedFcc);

@@ -5,15 +5,16 @@
  */
 package com.amuyana.app.view.containers;
 
-import javafx.scene.layout.VBox;
+import com.amuyana.app.controllers.AppController;
+import javafx.scene.layout.HBox;
 
 /**
  *
  * @author ayar
  */
-public class NotionsContainer extends VBox {
+public class FormulaContainer extends HBox {
 
-    public NotionsContainer() {
+    public FormulaContainer(AppController appController) {
         
     }
     

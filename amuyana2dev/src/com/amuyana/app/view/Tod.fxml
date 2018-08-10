@@ -9,34 +9,44 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<ScrollPane fitToHeight="true" fitToWidth="true" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.amuyana.app.controllers.TodController">
-   <content>
-      <StackPane>
-         <children>
-            <VBox alignment="CENTER" fillWidth="false">
-               <children>
-                  <HBox alignment="CENTER" fillHeight="false" VBox.vgrow="NEVER">
+
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.amuyana.app.controllers.TodController">
+   <left>
+      <ScrollPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <content>
+            <TitledPane fx:id="tdpeMenu" prefHeight="200.0" prefWidth="200.0" text="Menu">
+               <content>
+                  <GridPane gridLinesVisible="true">
+                    <columnConstraints>
+                      <ColumnConstraints halignment="LEFT" minWidth="10.0" prefWidth="50.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
+                    </rowConstraints>
                      <children>
-                        <Pane fx:id="todContent" minHeight="-Infinity" minWidth="-Infinity" styleClass="base" HBox.hgrow="NEVER" />
+                        <Label text="Initial notion" />
+                        <ComboBox fx:id="cobxFcc" prefWidth="150.0" GridPane.columnIndex="1" />
                      </children>
-                  </HBox>
-               </children>
-            </VBox>
-            <Pane>
-               <children>
-                  <TitledPane alignment="CENTER" collapsible="false" layoutX="14.0" layoutY="14.0" maxHeight="-Infinity" maxWidth="-Infinity" text="Menu">
-                     <content>
-                        <VBox alignment="TOP_CENTER" fillWidth="false" spacing="10.0">
-                           <children>
-                              <ComboBox fx:id="cobxFcc" promptText="FCC" />
-                              <Button mnemonicParsing="false" onAction="#d" text="Button" />
-                           </children>
-                        </VBox>
-                     </content>
-                  </TitledPane>
-               </children>
-            </Pane>
+                  </GridPane>
+               </content>
+            </TitledPane>
+         </content>
+      </ScrollPane>
+   </left>
+   <center>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <ScrollPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <content>
+                  <VBox alignment="CENTER" fillWidth="false">
+                     <children>
+                        <HBox fx:id="todContent" alignment="CENTER" fillHeight="false" VBox.vgrow="NEVER" />
+                     </children>
+                  </VBox>
+               </content>
+            </ScrollPane>
          </children>
-      </StackPane>
-   </content>
-</ScrollPane>
+      </AnchorPane>
+   </center>
+</BorderPane>
