@@ -4,7 +4,7 @@ package com.amuyana.app.controllers;
 import com.amuyana.app.data.CClass;
 import com.amuyana.app.data.CClassHasFcc;
 import com.amuyana.app.data.Conexion;
-import com.amuyana.app.data.Conjunction;
+import com.amuyana.app.data.Dynamism;
 import com.amuyana.app.data.Fcc;
 import java.net.URL;
 import java.util.ArrayList;
@@ -43,9 +43,6 @@ public class CClassController implements Initializable {
     private ObservableList<Fcc> listCollection;
     private ObservableList<Fcc> listSelectableFccs;    
     
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         listCClass = FXCollections.observableArrayList();
@@ -76,6 +73,12 @@ public class CClassController implements Initializable {
     // this one is only called at startup, avoid modifying it
     public void fillData() {
         ltvwCClass.setItems(listCClass);
+        listSelectableFccs.addAll(appController.getListFcc());
+    }
+    public void refreshData() {
+        ltvwCClass.setItems(null);
+        ltvwCClass.setItems(listCClass);
+        listSelectableFccs.clear();
         listSelectableFccs.addAll(appController.getListFcc());
     }
     
@@ -146,8 +149,8 @@ public class CClassController implements Initializable {
         
         // for each item in listCollection I create an arrayList containing 
         // its "general" conjunctions, 
-        ArrayList<ArrayList<Conjunction>> listGeneralsOfCollection = new ArrayList<>();
-        ArrayList<Conjunction> listCommonGenerals = new ArrayList<>();
+        ArrayList<ArrayList<Dynamism>> listGeneralsOfCollection = new ArrayList<>();
+        ArrayList<Dynamism> listCommonGenerals = new ArrayList<>();
         
         for(Fcc f:listCollection){
             listGeneralsOfCollection.add(appController.generalsOf(f));
@@ -156,8 +159,8 @@ public class CClassController implements Initializable {
         // then I compare all arrayLists and create one containing only elements in 
         // common, which is done by retaining common elements in a list wich 
         // initially has all conjunctions (listCommonGenerals)
-        listCommonGenerals.addAll(appController.getListConjunctions());
-        for(ArrayList<Conjunction> alc:listGeneralsOfCollection){
+        listCommonGenerals.addAll(appController.getListDynamisms());
+        for(ArrayList<Dynamism> alc:listGeneralsOfCollection){
             listCommonGenerals.retainAll(alc);
         }
         
@@ -165,7 +168,7 @@ public class CClassController implements Initializable {
         // fcc with the listCommonGenerals
         
         for(Fcc f:appController.getListFcc()){
-            ArrayList<Conjunction> tempList = new ArrayList<>();
+            ArrayList<Dynamism> tempList = new ArrayList<>();
             
             tempList.addAll(appController.generalsOf(f));
             

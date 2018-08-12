@@ -161,7 +161,7 @@ int polarity, Fcc fcc) {
             instruccion.setInt(1, this.getIdElement());
             return instruccion.executeUpdate();
         } catch (SQLException ex) {
-            Logger.getLogger(Conjunction.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Dynamism.class.getName()).log(Level.SEVERE, null, ex);
         }
         return 0;
     }

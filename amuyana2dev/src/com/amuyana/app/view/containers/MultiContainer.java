@@ -11,15 +11,19 @@ import javafx.scene.layout.VBox;
 
 public class MultiContainer extends HBox {
 
-    public Fcc mainFcc;
-    public VBox position0;
-    public VBox position1;
-    public VBox position2;
-    public VBox position3;
-    public VBox position4;
-    public VBox leftPositions;
+    private static AppController appController;
     
-    private final AppController appController;
+    public Fcc fcc;
+    
+    public VBox positionLeft;
+    public VBox positionCenter;
+    
+    public VBox positionRight;
+    public VBox positionTop;
+    public VBox positionMiddle;
+    public VBox positionBottom;
+    
+    
     
     /** This is the central container.
      * It has 3 columns. 1st is for all the
@@ -35,32 +39,49 @@ public class MultiContainer extends HBox {
      * 
     */
             
-    public MultiContainer(AppController appController, Fcc mainFcc) {
-        this.appController=appController;
-        this.mainFcc = mainFcc;
-        TodController.drawnFccs.add(this.mainFcc);
+    public MultiContainer(Fcc fcc) {
         
-        position0 = new VBox();
-        position1 = new VBox();
-        position2 = new VBox();
-        position3 = new VBox();
-        position4 = new VBox();
-        leftPositions = new VBox();
+        this.fcc = fcc;
         
-        leftPositions.getChildren().addAll(position2,position3,position4);
+        //TodController.drawnFccs.add(this.mainFcc);
         
-        super.getChildren().addAll(position0,position1,leftPositions);
+        positionLeft = new VBox();
+        positionCenter = new VBox();
+        positionTop = new VBox();
+        positionMiddle = new VBox();
+        positionBottom=  new VBox();
+        positionRight = new VBox();
         
-        deploy0();
+        //FccContainer fccContainer = new FccContainer(fcc, listDynamisms);
+        
+        positionRight.getChildren().addAll(positionTop,positionMiddle,positionBottom);
+        
+        super.getChildren().addAll(positionLeft,positionCenter,positionRight);
+        
+        //deploy0();
          
     }
+    
+    public static void setAppController(AppController appController) {
+        MultiContainer.appController = appController;
+    }
+
+    public Fcc getFcc() {
+        return fcc;
+    }
+
+    public void setFcc(Fcc fcc) {
+        this.fcc = fcc;
+    }
+
+    
     
     public void deploy0(){
         // First find all Fcc that include the mainFcc,w
         for(Inclusion i:appController.getListInclusions()){
-            if(i.getConjunction().equals(appController.conjunctionOf(0, mainFcc))||
-            i.getConjunction().equals(appController.conjunctionOf(0, mainFcc))||
-            i.getConjunction().equals(appController.conjunctionOf(0, mainFcc))){
+            if(i.getDynamism().equals(appController.dynamismOf(0, fcc))||
+            i.getDynamism().equals(appController.dynamismOf(0, fcc))||
+            i.getDynamism().equals(appController.dynamismOf(0, fcc))){
                // now grab the general (containing one or more conjunctions) that
                // has this inclusion (for now doesn't matter, we will not draw 
                // them specially like class)
@@ -77,7 +98,7 @@ public class MultiContainer extends HBox {
         // Classify them in classes and put them in Zcontainer
         
         // one by one zContainer add it to the position0
-        position0.getChildren().add(null);
+        
         
     }
     

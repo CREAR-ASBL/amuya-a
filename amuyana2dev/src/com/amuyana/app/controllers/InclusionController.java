@@ -2,7 +2,7 @@
 package com.amuyana.app.controllers;
 
 import com.amuyana.app.data.Conexion;
-import com.amuyana.app.data.Conjunction;
+import com.amuyana.app.data.Dynamism;
 import com.amuyana.app.data.General;
 import com.amuyana.app.data.Inclusion;
 import java.net.URL;
@@ -32,10 +32,10 @@ public class InclusionController implements Initializable {
     
     @FXML ListView<Inclusion> ltvwInclusions;
     @FXML Label lbFormulaInclusion;
-    @FXML ComboBox<Conjunction> cobxParticular;
+    @FXML ComboBox<Dynamism> cobxParticular;
     
-    @FXML ListView<Conjunction> ltvwBroads;
-    @FXML ListView<Conjunction> ltvwNotions;
+    @FXML ListView<Dynamism> ltvwBroads;
+    @FXML ListView<Dynamism> ltvwNotions;
     @FXML Button bnAdd;
     @FXML Button bnRemove;
     
@@ -43,11 +43,11 @@ public class InclusionController implements Initializable {
     private ObservableList<General> listGenerals;
     //private ArrayList<General> tempListGenerals;
     //private Inclusion tempInclusion;
-    private ObservableList<Conjunction> listParticulars;
-    private ObservableList<Conjunction> listNotions;
-    private ObservableList<Conjunction> listBroads;
+    private ObservableList<Dynamism> listParticulars;
+    private ObservableList<Dynamism> listNotions;
+    private ObservableList<Dynamism> listBroads;
     
-    private ObservableList<Conjunction> tempListBroads;
+    private ObservableList<Dynamism> tempListBroads;
     
     /**
      * Initializes the controller class.
@@ -60,7 +60,7 @@ public class InclusionController implements Initializable {
         
         // BROADS
         listBroads = FXCollections.observableArrayList();
-        
+        tempListBroads = FXCollections.observableArrayList();
         
         manageEvents();
     }
@@ -78,13 +78,26 @@ public class InclusionController implements Initializable {
         this.appController=aThis;
     }
 
+    public void refreshData(){
+        ltvwInclusions.refresh();
+        ltvwNotions.refresh();
+        ltvwBroads.refresh();
+        
+        cobxParticular.setItems(null);
+        listParticulars.clear();
+        listParticulars.addAll(appController.getListDynamisms());
+        
+        cobxParticular.setItems(listParticulars);
+    }
+    
     public void fillData() {
+        
         ltvwInclusions.setItems(listInclusions);
         ltvwInclusions.getSelectionModel().selectFirst();
         
         ltvwNotions.setItems(listNotions);
         ltvwBroads.setItems(listBroads);
-        listParticulars.addAll(appController.getListConjunctions());
+        listParticulars.addAll(appController.getListDynamisms());
         cobxParticular.setItems(listParticulars);
     }
     
@@ -99,18 +112,18 @@ public class InclusionController implements Initializable {
                     bnAdd.setDisable(true);
                     bnRemove.setDisable(true);
                     // PARTICULAR COMBOBOX
-                    cobxParticular.getSelectionModel().select(newValue.getConjunction());
+                    cobxParticular.getSelectionModel().select(newValue.getDynamism());
                     cobxParticular.setDisable(true);
                     
                     // NOTIONS
                     listNotions = FXCollections.observableArrayList();
-                    listNotions.addAll(appController.getListConjunctions());
+                    listNotions.addAll(appController.getListDynamisms());
                     ltvwNotions.setItems(listNotions);
                     
                         // Remove the notions of the fcc whose conjunction is included in general
-                    Conjunction c0 = appController.conjunctionOf(0, newValue.getConjunction().getFcc());
-                    Conjunction c1 = appController.conjunctionOf(1, newValue.getConjunction().getFcc());
-                    Conjunction c2 = appController.conjunctionOf(2, newValue.getConjunction().getFcc());
+                    Dynamism c0 = appController.dynamismOf(0, newValue.getDynamism().getFcc());
+                    Dynamism c1 = appController.dynamismOf(1, newValue.getDynamism().getFcc());
+                    Dynamism c2 = appController.dynamismOf(2, newValue.getDynamism().getFcc());
                     
                     listNotions.remove(c0);
                     listNotions.remove(c1);
@@ -123,8 +136,8 @@ public class InclusionController implements Initializable {
                     listBroads = FXCollections.observableArrayList();
                     for(General g:listGenerals){
                         if(g.getInclusion().getIdInclusion()==newValue.getIdInclusion()){
-                            listNotions.remove(g.getConjunction());
-                            listBroads.add(g.getConjunction());
+                            listNotions.remove(g.getDynamism());
+                            listBroads.add(g.getDynamism());
                         }
                     }
                     
@@ -144,46 +157,46 @@ public class InclusionController implements Initializable {
             }
         });
         
-        ltvwNotions.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Conjunction>() {
+        ltvwNotions.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Dynamism>() {
             @Override
-            public void changed(ObservableValue<? extends Conjunction> observable, Conjunction oldValue, Conjunction newValue) {
-                if(ltvwInclusions.getSelectionModel().isEmpty()){
+            public void changed(ObservableValue<? extends Dynamism> observable, Dynamism oldValue, Dynamism newValue) {
+                //if(ltvwInclusions.getSelectionModel().isEmpty()){
                     if(newValue!=null){
                         bnAdd.setDisable(false);
                     } else if (newValue==null){
                         bnAdd.setDisable(true);
                     }
-                }
+                //}
             }
         });
         
-        ltvwBroads.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Conjunction>() {
+        ltvwBroads.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Dynamism>() {
             @Override
-            public void changed(ObservableValue<? extends Conjunction> observable, Conjunction oldValue, Conjunction newValue) {
-                if(ltvwInclusions.getSelectionModel().isEmpty()){
+            public void changed(ObservableValue<? extends Dynamism> observable, Dynamism oldValue, Dynamism newValue) {
+                //if(ltvwInclusions.getSelectionModel().isEmpty()){
                     if(newValue!=null){
                         bnRemove.setDisable(false);
                     } else if (newValue==null){
                         bnRemove.setDisable(true);
                     }
-                }
+                //}
                     
             }
         });
         
-        cobxParticular.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Conjunction>() {
+        cobxParticular.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Dynamism>() {
             @Override
-            public void changed(ObservableValue<? extends Conjunction> observable, Conjunction oldValue, Conjunction newValue) {
+            public void changed(ObservableValue<? extends Dynamism> observable, Dynamism oldValue, Dynamism newValue) {
                 if(newValue!=null){
                     
                     listNotions = FXCollections.observableArrayList();
-                    listNotions.addAll(appController.getListConjunctions());
+                    listNotions.addAll(appController.getListDynamisms());
                     ltvwNotions.setItems(listNotions);
                     
                     // Remove the notions of the fcc whose conjunction is included in general
-                    Conjunction c0 = appController.conjunctionOf(0, newValue.getFcc());
-                    Conjunction c1 = appController.conjunctionOf(1, newValue.getFcc());
-                    Conjunction c2 = appController.conjunctionOf(2, newValue.getFcc());
+                    Dynamism c0 = appController.dynamismOf(0, newValue.getFcc());
+                    Dynamism c1 = appController.dynamismOf(1, newValue.getFcc());
+                    Dynamism c2 = appController.dynamismOf(2, newValue.getFcc());
                     
                     listNotions.remove(c0);
                     listNotions.remove(c1);
@@ -253,7 +266,7 @@ public class InclusionController implements Initializable {
         }
         
         // GENERAL
-        for(Conjunction c:tempListBroads){
+        for(Dynamism c:tempListBroads){
             General newGeneral = new General(c, newInclusion);
             if(newGeneral.saveData(conexion.getConnection())==1){
                 listGenerals.add(newGeneral);
@@ -310,7 +323,7 @@ public class InclusionController implements Initializable {
         
         // particular
         listParticulars.clear();
-        listParticulars.addAll(appController.getListConjunctions());
+        listParticulars.addAll(appController.getListDynamisms());
         cobxParticular.setDisable(false);
         cobxParticular.getSelectionModel().clearSelection();
         // Broad
@@ -328,27 +341,27 @@ public class InclusionController implements Initializable {
     
     @FXML
     public void addGeneral(){
-        Conjunction selectedConjunction = ltvwNotions.getSelectionModel().getSelectedItem();
+        Dynamism selectedDynamism = ltvwNotions.getSelectionModel().getSelectedItem();
         
         // if there's not an existing Inclusion, we add the selected notion to
         // a temporary list of conjunctions that will be in the Broad list 
         if(ltvwInclusions.getSelectionModel().isEmpty()){
-            listBroads.add(selectedConjunction);
+            listBroads.add(selectedDynamism);
             ltvwBroads.setItems(listBroads);
-            listNotions.remove(selectedConjunction);
-            tempListBroads.add(selectedConjunction);
+            listNotions.remove(selectedDynamism);
+            tempListBroads.add(selectedDynamism);
         }
         // if the inclusion already exist (there's one selected)
         else if (!ltvwInclusions.getSelectionModel().isEmpty()){
             Conexion conexion = appController.getConexion();
             conexion.establecerConexion();
             
-            General newGeneral = new General(selectedConjunction,
+            General newGeneral = new General(selectedDynamism,
                     ltvwInclusions.getSelectionModel().getSelectedItem());
             
             if(newGeneral.saveData(conexion.getConnection())==1){
-                listBroads.add(selectedConjunction);
-                listNotions.remove(selectedConjunction);
+                listBroads.add(selectedDynamism);
+                listNotions.remove(selectedDynamism);
                 listGenerals.add(newGeneral);
             }
             conexion.cerrarConexion();
@@ -357,19 +370,19 @@ public class InclusionController implements Initializable {
     
     @FXML
     public void removeGeneral(){
-        Conjunction selectedConjunction = ltvwBroads.getSelectionModel().getSelectedItem();
+        Dynamism selectedDynamism = ltvwBroads.getSelectionModel().getSelectedItem();
         
         // if it would remain at least 1 conjunction then proceed
         if(listBroads.size()>1){
             // If the inclusion is not created yet
             if(ltvwInclusions.getSelectionModel().isEmpty()){
-                tempListBroads.remove(selectedConjunction);
-                listBroads.remove(selectedConjunction);
-                listNotions.add(selectedConjunction);
+                tempListBroads.remove(selectedDynamism);
+                listBroads.remove(selectedDynamism);
+                listNotions.add(selectedDynamism);
             } 
             // If the inclusion exists already
             else if(!ltvwInclusions.getSelectionModel().isEmpty()){
-                General general = generalOf(selectedConjunction,
+                General general = generalOf(selectedDynamism,
                         ltvwInclusions.getSelectionModel().getSelectedItem());
                 
                 Conexion conexion = appController.getConexion();
@@ -377,8 +390,8 @@ public class InclusionController implements Initializable {
                 
                 if(general.deleteData(conexion.getConnection())==1){
                     listGenerals.remove(general);
-                    listBroads.remove(selectedConjunction);
-                    listNotions.add(selectedConjunction);
+                    listBroads.remove(selectedDynamism);
+                    listNotions.add(selectedDynamism);
                 }
                 conexion.cerrarConexion();
             }
@@ -391,9 +404,9 @@ public class InclusionController implements Initializable {
         }
     }
     
-    public General generalOf(Conjunction conjunction, Inclusion inclusion){
+    public General generalOf(Dynamism dynamism, Inclusion inclusion){
         for(General g:listGenerals){
-            if(g.getConjunction().equals(conjunction) && g.getInclusion().equals(inclusion)){
+            if(g.getDynamism().equals(dynamism) && g.getInclusion().equals(inclusion)){
                 return g;
             }
         }
@@ -402,20 +415,20 @@ public class InclusionController implements Initializable {
 
     // This method is called only at the moment of save() only
     private boolean isInclusionUnique() {
-        Conjunction particular = cobxParticular.getSelectionModel().getSelectedItem();
-        ObservableList<Conjunction> tempConjunctions;
+        Dynamism particular = cobxParticular.getSelectionModel().getSelectedItem();
+        ObservableList<Dynamism> tempListDynamisms;
 
         for(Inclusion i:listInclusions){
-            tempConjunctions = FXCollections.observableArrayList();
-            if(i.getConjunction().equals(particular)){
+            tempListDynamisms = FXCollections.observableArrayList();
+            if(i.getDynamism().equals(particular)){
                 for(General g:listGenerals){
                     if(g.getInclusion().equals(i)){
-                        tempConjunctions.add(g.getConjunction());
+                        tempListDynamisms.add(g.getDynamism());
                     }
                 }
             }
-            SortedList<Conjunction> list1 = tempListBroads.sorted();
-            SortedList<Conjunction> list2 = tempConjunctions.sorted();
+            SortedList<Dynamism> list1 = tempListBroads.sorted();
+            SortedList<Dynamism> list2 = tempListDynamisms.sorted();
 
             if(list1.equals(list2)){
                 return false;

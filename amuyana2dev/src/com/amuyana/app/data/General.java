@@ -13,20 +13,20 @@ import javafx.collections.ObservableList;
 public class General{
 
     
-    private Conjunction conjunction;
+    private Dynamism dynamism;
     private Inclusion inclusion;
 
-    public General(Conjunction conjunction, Inclusion inclusion) { 
-            this.conjunction = conjunction;
+    public General(Dynamism dynamism, Inclusion inclusion) { 
+            this.dynamism = dynamism;
             this.inclusion = inclusion;
     }
 
-    //Metodos atributo: idConjunction
-    public Conjunction getConjunction() {
-            return conjunction;
+    //Metodos atributo: idDynamism
+    public Dynamism getDynamism() {
+            return dynamism;
     }
-    public void setConjunction(Conjunction conjunction) {
-            this.conjunction = conjunction;
+    public void setDynamism(Dynamism dynamism) {
+            this.dynamism = dynamism;
     }
     //Metodos atributo: idInclusion
     public Inclusion getInclusion() {
@@ -37,11 +37,12 @@ public class General{
     }
  
     public static void loadList(Connection connection,
-        ObservableList<General> listGeneral, 
-        ObservableList<Conjunction> listConjunction,
+        ObservableList<General> listGenerals, 
+        ObservableList<Dynamism> listDynamisms,
         ObservableList<Inclusion> listInclusions) {
 
-        String sql = "SELECT id_conjunction, id_inclusion FROM amuyana.tbl_general";
+        String sql = "SELECT id_dynamism, id_inclusion "
+                + "FROM amuyana.tbl_general";
 
         try {
             Statement statement = connection.createStatement();
@@ -50,9 +51,9 @@ public class General{
             while(result.next()){
                 for(Inclusion i:listInclusions){
                     if(i.getIdInclusion()==result.getInt("id_inclusion")){
-                        for(Conjunction c:listConjunction){
-                            if(c.getIdConjunction()==result.getInt("id_conjunction")){
-                                listGeneral.add(new General(c,i));
+                        for(Dynamism c:listDynamisms){
+                            if(c.getIdDynamism()==result.getInt("id_dynamism")){
+                                listGenerals.add(new General(c,i));
                             }
                         }
                     }
@@ -66,13 +67,13 @@ public class General{
     }
 
     public int saveData(Connection connection){
-        String sql = "INSERT INTO amuyana.tbl_general (id_conjunction, id_inclusion)"
+        String sql = "INSERT INTO amuyana.tbl_general (id_dynamism, id_inclusion)"
                     + "VALUES (?,?)";
         try {            
             PreparedStatement statement = connection.prepareStatement(sql, 
                     Statement.RETURN_GENERATED_KEYS);
             
-            statement.setInt(1, this.getConjunction().getIdConjunction());
+            statement.setInt(1, this.getDynamism().getIdDynamism());
             statement.setInt(2, this.getInclusion().getIdInclusion());
             int returnInt = statement.executeUpdate();
             
@@ -93,9 +94,9 @@ public class General{
         try {
             PreparedStatement instruccion = connection.prepareStatement(
                                             "DELETE FROM amuyana.tbl_general "+
-                                            "WHERE id_conjunction = ? and id_inclusion = ?"
+                                            "WHERE id_dynamism = ? and id_inclusion = ?"
             );
-            instruccion.setInt(1, this.conjunction.getIdConjunction());
+            instruccion.setInt(1, this.dynamism.getIdDynamism());
             instruccion.setInt(2, this.inclusion.getIdInclusion());
             return instruccion.executeUpdate();
         } catch (SQLException e) {

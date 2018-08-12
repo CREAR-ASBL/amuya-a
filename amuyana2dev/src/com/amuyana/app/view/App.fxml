@@ -30,12 +30,12 @@
          <items>
             <TabPane tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
               <tabs>
+                <Tab fx:id="tbTod" text="Table of Deductions" />
                 <Tab fx:id="tbLogicSystem" text="Logic System" />
                   <Tab fx:id="tbDualities" text="Dualities" />
                   <Tab fx:id="tbInclusions" text="Inclusions" />
                   <Tab fx:id="tbClasses" text="Classes" />
                   <Tab fx:id="tbSyllogism" text="Syllogisms" />
-                <Tab fx:id="tbTod" text="Table of Deductions" />
                   <Tab fx:id="tbStc" text="Space-Time Configurations" />
                   <Tab fx:id="tbStats" text="Statistics Register" />
                   <Tab fx:id="tbDialectic" text="Dialectics" />

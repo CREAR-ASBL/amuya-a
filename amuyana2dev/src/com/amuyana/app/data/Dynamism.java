@@ -15,19 +15,19 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
 
 //revision
-public class Conjunction{
+public class Dynamism{
 
     public static int currentAutoIncrement;
 
-    private IntegerProperty idConjunction;
+    private IntegerProperty idDynamism;
     private IntegerProperty orientation;
     private StringProperty propFormulation;
     private StringProperty description;
     private Fcc fcc;
     
-    public Conjunction(int idConjunction, int orientation, String propFormulation, 
+    public Dynamism(int idDynamism, int orientation, String propFormulation, 
 String description, Fcc fcc) { 
-            this.idConjunction = new SimpleIntegerProperty(idConjunction);
+            this.idDynamism = new SimpleIntegerProperty(idDynamism);
             this.orientation = new SimpleIntegerProperty(orientation);
             this.propFormulation = new SimpleStringProperty(propFormulation);
             this.description = new SimpleStringProperty(description);
@@ -35,15 +35,15 @@ String description, Fcc fcc) {
             
     }
 
-    //Metodos atributo: idConjunction
-    public int getIdConjunction() {
-            return idConjunction.get();
+    //Metodos atributo: idDynamism
+    public int getIdDynamism() {
+            return idDynamism.get();
     }
-    public void setIdConjunction(int idConjunction) {
-            this.idConjunction = new SimpleIntegerProperty(idConjunction);
+    public void setIdDynamism(int idDynamism) {
+            this.idDynamism = new SimpleIntegerProperty(idDynamism);
     }
-    public IntegerProperty IdConjunctionProperty() {
-            return idConjunction;
+    public IntegerProperty IdDynamismProperty() {
+            return idDynamism;
     }
     //Metodos atributo: orientation
     public int getOrientation() {
@@ -84,14 +84,14 @@ String description, Fcc fcc) {
     }
     
     public static void loadData(Connection connection, 
-            ObservableList<Conjunction> listConjunctions, 
+            ObservableList<Dynamism> listDynamisms, 
             ObservableList<Fcc> listFcc) {
-        String sql = "SELECT id_conjunction, "
+        String sql = "SELECT id_dynamism, "
                             + "orientation, "
                             + "prop_formulation, "
                             + "description, "
                             + "id_fcc "
-                            + "FROM amuyana.tbl_conjunction";
+                            + "FROM amuyana.tbl_dynamism";
         try {
             Statement instruction = connection.createStatement();
             ResultSet resultado = instruction.executeQuery(sql);
@@ -99,8 +99,8 @@ String description, Fcc fcc) {
             while(resultado.next()){
                 for(Fcc f:listFcc){
                     if(f.getIdFcc()==resultado.getInt("id_fcc")){
-                        listConjunctions.add(new Conjunction(
-                            resultado.getInt("id_conjunction"),
+                        listDynamisms.add(new Dynamism(
+                            resultado.getInt("id_dynamism"),
                             resultado.getInt("orientation"), 
                             resultado.getString("prop_formulation"), 
                             resultado.getString("description"), 
@@ -110,7 +110,7 @@ String description, Fcc fcc) {
                 }
             }
         } catch (SQLException ex) {
-            Logger.getLogger(Conjunction.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Dynamism.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
         
@@ -120,14 +120,14 @@ String description, Fcc fcc) {
     }
     
     public int saveData(Connection connection){
-        String sql="INSERT INTO amuyana.tbl_conjunction (id_conjunction, orientation, prop_formulation, description, id_fcc)"
+        String sql="INSERT INTO amuyana.tbl_dynamism (id_dynamism, orientation, prop_formulation, description, id_fcc)"
                     + "VALUES (?,?,?,?,?)";
         try {
             // Cual es la instruction sql para insertar datos?
             PreparedStatement instruction = connection.prepareStatement(sql,
                     Statement.RETURN_GENERATED_KEYS);
             
-            instruction.setInt(1,this.getIdConjunction());
+            instruction.setInt(1,this.getIdDynamism());
             instruction.setInt(2,this.getOrientation());
             instruction.setString(3,this.getPropFormulation());
             instruction.setString(4,this.getDescription());
@@ -137,7 +137,7 @@ String description, Fcc fcc) {
             
             ResultSet rs = instruction.getGeneratedKeys();
             while(rs.next()){
-                Conjunction.currentAutoIncrement = rs.getInt(1);
+                Dynamism.currentAutoIncrement = rs.getInt(1);
             }
             
             return result;
@@ -150,14 +150,14 @@ String description, Fcc fcc) {
     }
     
     public int updateData(Connection connection){
-        String sql = "UPDATE amuyana.tbl_conjunction SET prop_formulation = ?,  "+
-            " description = ? WHERE id_conjunction = ?";
+        String sql = "UPDATE amuyana.tbl_dynamism SET prop_formulation = ?,  "+
+            " description = ? WHERE id_dynamism = ?";
         try {
             PreparedStatement instruccion =
                             connection.prepareStatement(sql);
             instruccion.setString(1, propFormulation.get());
             instruccion.setString(2, description.get());
-            instruccion.setInt(3, idConjunction.get());
+            instruccion.setInt(3, idDynamism.get());
             
             return instruccion.executeUpdate();
 
@@ -168,14 +168,14 @@ String description, Fcc fcc) {
     }
     
     public int deleteData(Connection connection){
-        String sql="DELETE FROM amuyana.tbl_conjunction WHERE id_conjunction = ?";
+        String sql="DELETE FROM amuyana.tbl_dynamism WHERE id_dynamism = ?";
         try {
             PreparedStatement instruccion = connection.prepareStatement(sql);
-            instruccion.setInt(1, this.idConjunction.get());
+            instruccion.setInt(1, this.idDynamism.get());
             int response = instruccion.executeUpdate();
             return response;
         } catch (SQLException ex) {
-            Logger.getLogger(Conjunction.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Dynamism.class.getName()).log(Level.SEVERE, null, ex);
             return 0;
         }
     }

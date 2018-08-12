@@ -6,14 +6,15 @@
 package com.amuyana.app.controllers;
 
 import com.amuyana.app.data.Conexion;
-import com.amuyana.app.data.Conjunction;
-//import com.amuyana.app.data.Deduction;
+import com.amuyana.app.data.Dynamism;
+
 import com.amuyana.app.data.Element;
 import com.amuyana.app.data.Fcc;
 import com.amuyana.app.data.FccHasLogicSystem;
 
 import com.amuyana.app.data.LogicSystem;
 import com.amuyana.app.data.User;
+import com.sun.javafx.property.adapter.PropertyDescriptor;
 import java.net.URL;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -27,7 +28,9 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
@@ -35,6 +38,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
 import javafx.scene.web.HTMLEditor;
 
 /**
@@ -68,14 +72,11 @@ public class DualitiesController implements Initializable {
     @FXML private Button bnRemoveLogicSystem;
     @FXML private ListView<LogicSystem> ltvwLogicSystem;
     
-//    @FXML private ComboBox cobxImplication;
-//    @FXML private Button bnAddImplication;
-//    @FXML private Button bnRemoveImplication;
-//    @FXML private ListView<Implication> ltvwImplication;
-//    @FXML private ListView<Deduction> ltvwDeduction;
-
     @FXML private TextField ttfdElementSymbol;
-    @FXML private TextField ttfdAElementSymbol;
+    private TextField ttfdAElementSymbol;
+    @FXML private HBox hxAntiElementSymbol;
+    private Label llAElementSymbol;
+    @FXML private CheckBox ckbxDefaultSymbol;
     
     @FXML private Label lblPositiveFormulation;
     @FXML private TextField ttfdPositiveFormulation;
@@ -89,11 +90,9 @@ public class DualitiesController implements Initializable {
     
     private ObservableList<Fcc> listFcc;
     private ObservableList<FccHasLogicSystem> listFccHasLogicSystem;
-//    private ObservableList<Implication> listImplication;
-//    private ObservableList<Deduction> listDeduction;
-    
+
     private ObservableList<Element> listElement;
-    private ObservableList<Conjunction> listConjunction;
+    private ObservableList<Dynamism> listDynamisms;
     private ObservableList<User> listUser;
     
     
@@ -107,7 +106,19 @@ public class DualitiesController implements Initializable {
 //        this.listImplication=FXCollections.observableArrayList();
 //        this.listDeduction=FXCollections.observableArrayList();
         this.listElement=FXCollections.observableArrayList();
-        this.listConjunction=FXCollections.observableArrayList();
+        this.listDynamisms=FXCollections.observableArrayList();
+        
+        ttfdAElementSymbol = new TextField();
+        llAElementSymbol = new Label();
+        llAElementSymbol.setPrefWidth(Control.USE_COMPUTED_SIZE);
+        llAElementSymbol.setMinWidth(Control.USE_PREF_SIZE);
+        
+        llAElementSymbol.setStyle("-fx-border-style:solid inside;"
+                + "-fx-border-width:1 0 0 0;");
+        
+        hxAntiElementSymbol.getChildren().add(llAElementSymbol);
+        ckbxDefaultSymbol.setSelected(true);
+        
         manageEvents();
     }
 
@@ -128,8 +139,8 @@ public class DualitiesController implements Initializable {
         return this.listElement;
     }
     
-    public ObservableList<Conjunction> getListConjunction(){
-        return this.listConjunction;
+    public ObservableList<Dynamism> getListDynamisms(){
+        return this.listDynamisms;
     }
     
     public void fillData() {
@@ -145,8 +156,7 @@ public class DualitiesController implements Initializable {
     
     public void manageEvents(){
         // TABLE VIEW WITH FCC
-        tevwFcc.getSelectionModel().selectedItemProperty().addListener(
-            new ChangeListener<Fcc>() {
+        tevwFcc.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Fcc>() {
                 @Override
                 public void changed(ObservableValue<? extends Fcc> observable, 
                     Fcc oldValue, Fcc newValue) {
@@ -186,14 +196,27 @@ public class DualitiesController implements Initializable {
                         Element ae= appController.elementOf(1, selectedFcc);
                         
                         ttfdElementSymbol.setText(e.getSymbol());
-                        ttfdAElementSymbol.setText(ae.getSymbol());
                         
+                        if(e.getSymbol().equals(ae.getSymbol())){
+                            
+                            hxAntiElementSymbol.getChildren().clear();
+                            llAElementSymbol.setText(null);
+                            hxAntiElementSymbol.getChildren().add(llAElementSymbol);
+                            llAElementSymbol.setText(ae.getSymbol());
+                            ckbxDefaultSymbol.setSelected(true);
+                        } else if(!e.getSymbol().equals(ae.getSymbol())){
+                            hxAntiElementSymbol.getChildren().clear();
+                            ttfdAElementSymbol.setText(null);
+                            hxAntiElementSymbol.getChildren().add(ttfdAElementSymbol);
+                            ttfdAElementSymbol.setText(ae.getSymbol());
+                            ckbxDefaultSymbol.setSelected(false);
+                        }
                         
-                        // CONJUNCTIONS section
+                        // DYNAMISMS section (previously known as CONJUNCTIONS)
                         
-                        Conjunction c0 = appController.conjunctionOf(0, selectedFcc);
-                        Conjunction c1 = appController.conjunctionOf(1, selectedFcc);
-                        Conjunction c2 = appController.conjunctionOf(2, selectedFcc);
+                        Dynamism c0 = appController.dynamismOf(0, selectedFcc);
+                        Dynamism c1 = appController.dynamismOf(1, selectedFcc);
+                        Dynamism c2 = appController.dynamismOf(2, selectedFcc);
                         
                         lblPositiveFormulation.setText(c0.toString());
                         ttfdPositiveFormulation.setText(c0.getPropFormulation());
@@ -239,6 +262,30 @@ public class DualitiesController implements Initializable {
                 }
             }
         });
+        
+        // CHECKBOX OF ANTIELEMENT DEFAULT SYMBOL
+        ckbxDefaultSymbol.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if(newValue==true){
+                    hxAntiElementSymbol.getChildren().clear();
+                    hxAntiElementSymbol.getChildren().add(llAElementSymbol);
+                } else if (newValue==false){
+                    hxAntiElementSymbol.getChildren().clear();
+                    hxAntiElementSymbol.getChildren().add(ttfdAElementSymbol);
+                    llAElementSymbol.setText(ttfdElementSymbol.getText());
+                    System.out.println(ttfdElementSymbol.getText());
+                }
+            }
+        });
+        
+        ttfdElementSymbol.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                llAElementSymbol.setText(newValue);
+                
+            }
+        });
     }
     
     @FXML
@@ -260,7 +307,13 @@ public class DualitiesController implements Initializable {
 
         // Element
         Element e0 = new Element(0, ttfdElementSymbol.getText(), 0, fcc);
-        Element e1 = new Element(0, ttfdAElementSymbol.getText(), 1, fcc);
+        Element e1 = null;
+        if(ckbxDefaultSymbol.isSelected()==true) {
+            e1 = new Element(0, llAElementSymbol.getText(), 1, fcc);
+        } else if(ckbxDefaultSymbol.isSelected()==false) {
+            e1 = new Element(0, ttfdAElementSymbol.getText(), 1, fcc);
+        }
+        
         
         int resultE0 = e0.saveData(conexion.getConnection());
         e0.setIdElement(Element.currentAutoIncrement);
@@ -271,50 +324,69 @@ public class DualitiesController implements Initializable {
             listElement.addAll(e0,e1);
         }
         
-        // Conjunction
-        Conjunction c0 = new Conjunction(0, 0, ttfdPositiveFormulation.getText(), ttaaPositiveDescription.getText(), fcc);
+        // Dynamisms
+        Dynamism c0 = new Dynamism(0, 0, ttfdPositiveFormulation.getText(), ttaaPositiveDescription.getText(), fcc);
         int resultC0 = c0.saveData(conexion.getConnection());
-        c0.setIdConjunction(Conjunction.currentAutoIncrement);
-        Conjunction c1 = new Conjunction(0, 1, ttfdNegativeFormulation.getText(), ttaaNegativeDescription.getText(), fcc);
+        c0.setIdDynamism(Dynamism.currentAutoIncrement);
+        Dynamism c1 = new Dynamism(0, 1, ttfdNegativeFormulation.getText(), ttaaNegativeDescription.getText(), fcc);
         int resultC1 = c1.saveData(conexion.getConnection());
-        c1.setIdConjunction(Conjunction.currentAutoIncrement);
-        Conjunction c2 = new Conjunction(0, 2, ttfdSymmetricFormulation.getText(), ttaaSymmetricDescription.getText(), fcc);
+        c1.setIdDynamism(Dynamism.currentAutoIncrement);
+        Dynamism c2 = new Dynamism(0, 2, ttfdSymmetricFormulation.getText(), ttaaSymmetricDescription.getText(), fcc);
         int resultC2 = c2.saveData(conexion.getConnection());
-        c2.setIdConjunction(Conjunction.currentAutoIncrement);
+        c2.setIdDynamism(Dynamism.currentAutoIncrement);
         
         if(resultC0==1 && resultC1 == 1 && resultC2 == 1){
-            listConjunction.addAll(c0,c1,c2);
+            listDynamisms.addAll(c0,c1,c2);
         }
         conexion.cerrarConexion();
         
         tevwFcc.getSelectionModel().selectLast();
+        
+        // UPDATE LIST IN INCLUSION
+        appController.refreshDataInclusionModule();
+        appController.refreshDataClassModule();
     }
     
     @FXML
     public void updateFcc(){
-        Conexion conexion = appController.getConexion();
-        conexion.establecerConexion();
+        Fcc selectedFcc = (Fcc)tevwFcc.getSelectionModel().getSelectedItem();
+        
+        
+        
         
         String newFccLabel = ttfdFccLabel.getText();
         String newFccDescription = hmerFccDescription.getHtmlText();
         
+        
+        
         String newESymbol = ttfdElementSymbol.getText();
-        String newAESymbol = ttfdAElementSymbol.getText();
+        String newAESymbol = null;
+        // Anti element "default" checkbox has to be checked
+        if(ckbxDefaultSymbol.isSelected()==true) {
+            newAESymbol = llAElementSymbol.getText();
+        } else if(ckbxDefaultSymbol.isSelected()==false) {
+            newAESymbol = ttfdAElementSymbol.getText();
+        }
         
-        String newPConjunctionProp = ttfdPositiveFormulation.getText();
-        String newNConjunctionProp = ttfdNegativeFormulation.getText();
-        String newSConjunctionProp = ttfdSymmetricFormulation.getText();
         
-        String newPConjunctionDesc = ttaaPositiveDescription.getText();
-        String newNConjunctionDesc = ttaaNegativeDescription.getText();
-        String newSConjunctionDesc = ttaaSymmetricDescription.getText();
+        String newPropDynamism0 = ttfdPositiveFormulation.getText();
+        String newPropDynamism1 = ttfdNegativeFormulation.getText();
+        String newPropDynamism2 = ttfdSymmetricFormulation.getText();
+        
+        String newDescDynamism0 = ttaaPositiveDescription.getText();
+        String newDescDynamism1 = ttaaNegativeDescription.getText();
+        String newDescDynamism2 = ttaaSymmetricDescription.getText();
         
         int result;
         
-        Fcc selectedFcc = (Fcc)tevwFcc.getSelectionModel().getSelectedItem();
         
         selectedFcc.setLabel(newFccLabel);
         selectedFcc.setDescription(newFccDescription);
+        
+        
+        
+        Conexion conexion = appController.getConexion();
+        conexion.establecerConexion();
         
         result = selectedFcc.updateData(conexion.getConnection());
         
@@ -343,40 +415,44 @@ public class DualitiesController implements Initializable {
         
         
         
-        // CONJUNCTION
-        Conjunction c0 = appController.conjunctionOf(0, selectedFcc);
-        Conjunction c1 = appController.conjunctionOf(1, selectedFcc);;
-        Conjunction c2 = appController.conjunctionOf(2, selectedFcc);;
-        int iC0=listConjunction.indexOf(c0);
-        int iC1=listConjunction.indexOf(c1);
-        int iC2=listConjunction.indexOf(c2);
+        // DYNAMISM
+        Dynamism c0 = appController.dynamismOf(0, selectedFcc);
+        Dynamism c1 = appController.dynamismOf(1, selectedFcc);;
+        Dynamism c2 = appController.dynamismOf(2, selectedFcc);;
+        int iC0=listDynamisms.indexOf(c0);
+        int iC1=listDynamisms.indexOf(c1);
+        int iC2=listDynamisms.indexOf(c2);
         
-        c0.setPropFormulation(newPConjunctionProp);
-        c0.setDescription(newPConjunctionDesc);
-        c1.setPropFormulation(newNConjunctionProp);
-        c1.setDescription(newNConjunctionDesc);
-        c2.setPropFormulation(newSConjunctionProp);
-        c2.setDescription(newSConjunctionDesc);
+        c0.setPropFormulation(newPropDynamism0);
+        c0.setDescription(newDescDynamism0);
+        c1.setPropFormulation(newPropDynamism1);
+        c1.setDescription(newDescDynamism1);
+        c2.setPropFormulation(newPropDynamism2);
+        c2.setDescription(newDescDynamism2);
         
         result = c0.updateData(conexion.getConnection());
         if (result == 1){
-            listConjunction.set(iC0, c0);
+            listDynamisms.set(iC0, c0);
         }
         
         result = c1.updateData(conexion.getConnection());
         if (result == 1){
-            listConjunction.set(iC1, c1);
+            listDynamisms.set(iC1, c1);
         }
         
         result = c2.updateData(conexion.getConnection());
         if (result == 1){
-            listConjunction.set(iC2, c2);
+            listDynamisms.set(iC2, c2);
         }
         
         
         reselectFcc();
         
         conexion.cerrarConexion();
+        
+        // UPDATE LIST IN INCLUSION
+        appController.refreshDataInclusionModule();
+        appController.refreshDataClassModule();
     }
     
     @FXML
@@ -386,21 +462,21 @@ public class DualitiesController implements Initializable {
         
         Fcc fcc = (Fcc)this.tevwFcc.getSelectionModel().getSelectedItem();
         
-        ArrayList<Conjunction> conjunctions = new ArrayList<>();
+        ArrayList<Dynamism> tempListDynamisms = new ArrayList<>();
         ArrayList<Element> elements = new ArrayList<>();
         ArrayList<FccHasLogicSystem> fhlss = new ArrayList<>();
         
-        // conjunction
-        for(Conjunction c:listConjunction){
+        // Dynamism
+        for(Dynamism c:listDynamisms){
             if(c.getFcc().equals(fcc)){
                 int response = c.deleteData(conexion.getConnection());
                 if(response==1){
-                    conjunctions.add(c);
+                    tempListDynamisms.add(c);
                 }
             }
         }
-        for(Conjunction c:conjunctions){
-            listConjunction.remove(c);
+        for(Dynamism c:tempListDynamisms){
+            listDynamisms.remove(c);
         }
         
         // element
@@ -433,7 +509,9 @@ public class DualitiesController implements Initializable {
         }
         
         conexion.cerrarConexion();
-    
+        // UPDATE LIST IN INCLUSION
+        appController.refreshDataInclusionModule();
+        appController.refreshDataClassModule();
     }
     
     @FXML
@@ -448,7 +526,7 @@ public class DualitiesController implements Initializable {
         String copy = "(Copy of FCC " + 
                 String.valueOf(selectedFcc.getIdFcc()) + ") ";
         //FCC
-        Fcc fcc = new Fcc(0, copy + ttfdFccLabel.getText(), hmerFccDescription.getHtmlText());
+        Fcc fcc = new Fcc(0, ttfdFccLabel.getText(), hmerFccDescription.getHtmlText());
         
         int resultFcc = fcc.saveData(conexion.getConnection());
         fcc.setIdFcc(Fcc.currentAutoIncrement);
@@ -470,25 +548,29 @@ public class DualitiesController implements Initializable {
             listElement.addAll(e0,e1);
         }
         
-        // Conjunction
-        Conjunction c0 = new Conjunction(0, 0, copy + ttfdPositiveFormulation.getText(), ttaaPositiveDescription.getText(), fcc);
+        // Dynamism
+        Dynamism c0 = new Dynamism(0, 0, ttfdPositiveFormulation.getText(), ttaaPositiveDescription.getText(), fcc);
         int resultC0 = c0.saveData(conexion.getConnection());
-        c0.setIdConjunction(Conjunction.currentAutoIncrement);
+        c0.setIdDynamism(Dynamism.currentAutoIncrement);
         
-        Conjunction c1 = new Conjunction(0, 1, copy + ttfdNegativeFormulation.getText(), ttaaNegativeDescription.getText(), fcc);
+        Dynamism c1 = new Dynamism(0, 1, ttfdNegativeFormulation.getText(), ttaaNegativeDescription.getText(), fcc);
         int resultC1 = c1.saveData(conexion.getConnection());
-        c1.setIdConjunction(Conjunction.currentAutoIncrement);
+        c1.setIdDynamism(Dynamism.currentAutoIncrement);
         
-        Conjunction c2 = new Conjunction(0, 2, copy + ttfdSymmetricFormulation.getText(), ttaaSymmetricDescription.getText(), fcc);
+        Dynamism c2 = new Dynamism(0, 2, ttfdSymmetricFormulation.getText(), ttaaSymmetricDescription.getText(), fcc);
         int resultC2 = c2.saveData(conexion.getConnection());
-        c2.setIdConjunction(Conjunction.currentAutoIncrement);
+        c2.setIdDynamism(Dynamism.currentAutoIncrement);
         
         if(resultC0==1 && resultC1 == 1 && resultC2 == 1){
-            listConjunction.addAll(c0,c1,c2);
+            listDynamisms.addAll(c0,c1,c2);
         }
         conexion.cerrarConexion();
         
         tevwFcc.getSelectionModel().selectLast();
+        
+        // UPDATE LIST IN INCLUSION
+        appController.refreshDataInclusionModule();
+        appController.refreshDataClassModule();
     }
     
     @FXML
@@ -524,6 +606,7 @@ public class DualitiesController implements Initializable {
         bnDeleteFcc.setDisable(true);
         bnDuplicateFcc.setDisable(true);
 
+        
     }
     
     @FXML

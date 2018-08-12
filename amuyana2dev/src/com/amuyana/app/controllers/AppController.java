@@ -4,7 +4,7 @@ import com.amuyana.app.Module;
 import com.amuyana.app.data.CClass;
 import com.amuyana.app.data.CClassHasFcc;
 import com.amuyana.app.data.Conexion;
-import com.amuyana.app.data.Conjunction;
+import com.amuyana.app.data.Dynamism;
 import com.amuyana.app.data.Element;
 import com.amuyana.app.data.Fcc;
 import com.amuyana.app.data.FccHasLogicSystem;
@@ -105,8 +105,8 @@ public class AppController {
         return dualitiesController.getListElement();
     }
     
-    public ObservableList<Conjunction> getListConjunctions(){
-        return dualitiesController.getListConjunction();
+    public ObservableList<Dynamism> getListDynamisms(){
+        return dualitiesController.getListDynamisms();
     }
     
     public ObservableList<CClassHasFcc> getListCClassHasFcc() {
@@ -239,8 +239,8 @@ public class AppController {
                             dualitiesController.getListElement(), 
                             dualitiesController.getListFcc());
                     
-                    Conjunction.loadData(this.conexion.getConnection(), 
-                            dualitiesController.getListConjunction(),
+                    Dynamism.loadData(this.conexion.getConnection(), 
+                            dualitiesController.getListDynamisms(),
                             dualitiesController.getListFcc());
                     
                     dualitiesController.fillData();
@@ -250,11 +250,11 @@ public class AppController {
                 case INCLUSIONS:{
                     Inclusion.loadList(this.conexion.getConnection(), 
                             inclusionController.getListInclusions(), 
-                            dualitiesController.getListConjunction());
+                            dualitiesController.getListDynamisms());
                     
                     General.loadList(this.conexion.getConnection(),
                             inclusionController.getListGenerals(),
-                            dualitiesController.getListConjunction(),
+                            dualitiesController.getListDynamisms(),
                             inclusionController.getListInclusions());
                     
                     inclusionController.fillData();
@@ -337,6 +337,16 @@ public class AppController {
         
     }
     
+    // called from dualityController to reload the list of dynamisms once we
+    // create or duplicate new fccs
+    public void refreshDataInclusionModule(){
+        inclusionController.refreshData();
+    }
+    
+    public void refreshDataClassModule(){
+        cClassController.refreshData();
+    }
+    
     public void initLog(){
         
         tevwLog = new TableView(listLog);
@@ -387,11 +397,11 @@ public class AppController {
         return null;
     }
     
-    public Conjunction conjunctionOf(int orientation, Fcc fcc){
-        for(Conjunction c:getListConjunctions()){
-            if(c.getFcc().equals(fcc)){
-                if(c.getOrientation()==orientation){
-                    return c;
+    public Dynamism dynamismOf(int orientation, Fcc fcc){
+        for(Dynamism d:getListDynamisms()){
+            if(d.getFcc().equals(fcc)){
+                if(d.getOrientation()==orientation){
+                    return d;
                 }
             }
         }
@@ -421,17 +431,27 @@ public class AppController {
         return list;
     }
 
-    public ArrayList<Conjunction> generalsOf(Fcc fcc) {
-        ArrayList<Conjunction> listGeneralsOf = new ArrayList<>();
+    public ArrayList<Dynamism> generalsOf(Fcc fcc) {
+        ArrayList<Dynamism> listGeneralsOf = new ArrayList<>();
         for(Inclusion i:getListInclusions()){
-            if(i.getConjunction().equals(conjunctionOf(0, fcc))||
-                    i.getConjunction().equals(conjunctionOf(1, fcc))||
-                    i.getConjunction().equals(conjunctionOf(2, fcc))){
+            if(i.getDynamism().equals(dynamismOf(0, fcc))||
+                    i.getDynamism().equals(dynamismOf(1, fcc))||
+                    i.getDynamism().equals(dynamismOf(2, fcc))){
                 for(General g:getListGenerals()){
                     if(g.getInclusion().equals(i)){
-                        listGeneralsOf.add(g.getConjunction());
+                        listGeneralsOf.add(g.getDynamism());
                     }
                 }
+            }
+        }
+        return listGeneralsOf;
+    }
+    
+    public ArrayList<Dynamism> generalsOf(Inclusion inclusion) {
+        ArrayList<Dynamism> listGeneralsOf = new ArrayList<>();
+        for(General g:this.getListGenerals()){
+            if(g.getInclusion().equals(inclusion)){
+                listGeneralsOf.add(g.getDynamism());
             }
         }
         return listGeneralsOf;
@@ -448,4 +468,21 @@ public class AppController {
         
         return listCClassOf;
     }
+    
+    public ArrayList<Dynamism> debugDynamisms(){
+        int[] idDynamisms = new int[]{36};
+        ArrayList<Dynamism> listDynamisms = new ArrayList<>();
+        
+        for(int i:idDynamisms){
+            for(Dynamism d:getListDynamisms()){
+                if(d.getIdDynamism()==i){
+                    listDynamisms.add(d);
+                }
+            }
+        }
+        
+        return listDynamisms;
+    }
+
+    
 }
