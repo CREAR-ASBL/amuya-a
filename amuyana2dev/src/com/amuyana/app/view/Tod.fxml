@@ -10,11 +10,11 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<SplitPane dividerPositions="0.3" prefHeight="500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.amuyana.app.controllers.TodController">
+<SplitPane dividerPositions="0.4" prefHeight="500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.amuyana.app.controllers.TodController">
    <items>
       <ScrollPane fitToWidth="true" maxWidth="400.0" minWidth="200.0" prefHeight="200.0" prefWidth="200.0">
          <content>
-            <Accordion>
+            <Accordion fx:id="anMenu">
               <panes>
                   <TitledPane animated="false" layoutX="10.0" layoutY="35.0" text="Tools">
                      <content>
@@ -35,44 +35,106 @@
                         </GridPane>
                      </content>
                   </TitledPane>
-                <TitledPane animated="false" text="Menu: Table of Deductions">
+                <TitledPane fx:id="tdpeTod" animated="false" text="Table of Deductions">
                      <content>
-                        <GridPane>
-                          <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                          </columnConstraints>
-                          <rowConstraints>
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                          </rowConstraints>
+                        <VBox>
                            <children>
-                              <Label text="Initial FCC" />
-                              <ComboBox fx:id="cobxFcc" GridPane.columnIndex="1" />
-                              <Label text="Algebra style" GridPane.rowIndex="1" />
-                              <ComboBox fx:id="cobxStyle" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <VBox alignment="TOP_RIGHT" layoutX="20.0" layoutY="20.0">
+                                 <children>
+                                    <Label alignment="TOP_LEFT" text="Setup" />
+                                 </children>
+                              </VBox>
+                              <GridPane>
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                 <children>
+                                    <Label text="Initial FCC" />
+                                    <ComboBox fx:id="cobxFcc" GridPane.columnIndex="1" />
+                                    <Label maxWidth="-Infinity" minWidth="0.0" text="Show with class" GridPane.rowIndex="1" />
+                                    <Label maxWidth="-Infinity" minWidth="0.0" prefWidth="150.0" text="Show with conjunction" GridPane.rowIndex="2" />
+                                    <ComboBox fx:id="cobxCClass" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <ComboBox fx:id="cobxInclusion" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                 </children>
+                              </GridPane>
+                              <VBox alignment="TOP_RIGHT">
+                                 <children>
+                                    <Label alignment="TOP_LEFT" text="Visual appearance" />
+                                 </children>
+                              </VBox>
+                              <GridPane layoutX="20.0" layoutY="20.0">
+                                 <children>
+                                    <Label text="Algebra style" />
+                                    <ComboBox fx:id="cobxStyle" GridPane.columnIndex="1" />
+                                 </children>
+                                 <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                 </columnConstraints>
+                                 <rowConstraints>
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                 </rowConstraints>
+                              </GridPane>
                            </children>
-                        </GridPane>
+                        </VBox>
                      </content>
                   </TitledPane>
-                <TitledPane animated="false" text="Properties: Fcc">
+                  <TitledPane fx:id="tdpeTod1" animated="false" layoutX="10.0" layoutY="35.0" text="FCC">
                      <content>
-                        <GridPane>
-                          <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                          </columnConstraints>
-                          <rowConstraints>
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                          </rowConstraints>
+                        <VBox>
                            <children>
-                              <Label text="Show class" />
-                              <Label maxWidth="-Infinity" minWidth="-Infinity" prefWidth="150.0" text="Show conjunction" GridPane.rowIndex="1" />
-                              <ComboBox fx:id="cobxCClass" GridPane.columnIndex="1" />
-                              <ComboBox fx:id="cobxInclusion" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <VBox alignment="TOP_RIGHT" layoutX="20.0" layoutY="20.0">
+                                 <children>
+                                    <Label alignment="TOP_LEFT" text="Navigation" />
+                                 </children>
+                              </VBox>
+                              <GridPane>
+                                 <children>
+                                    <Label text="Inclusions" />
+                                    <Label maxWidth="-Infinity" minWidth="0.0" text="Positive deductions" GridPane.rowIndex="1" />
+                                    <Label maxWidth="-Infinity" minWidth="0.0" prefWidth="150.0" text="Negative deductions" GridPane.rowIndex="2" />
+                                    <Label layoutX="10.0" layoutY="78.0" maxWidth="-Infinity" minWidth="0.0" prefWidth="150.0" text="Symmetric deductions" GridPane.rowIndex="3" />
+                                    <ToggleButton fx:id="tebnExpandInclusions" mnemonicParsing="false" text="Expand" GridPane.columnIndex="1" />
+                                    <ToggleButton fx:id="tebnExpandPositive" mnemonicParsing="false" text="Expand" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <ToggleButton fx:id="tebnExpandNegative" mnemonicParsing="false" text="Expand" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                    <ToggleButton fx:id="tebnExpandSymmetric" mnemonicParsing="false" text="Expand" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                 </children>
+                                 <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                 </columnConstraints>
+                                 <rowConstraints>
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                 </rowConstraints>
+                              </GridPane>
+                              <VBox alignment="TOP_RIGHT">
+                                 <children>
+                                    <Label alignment="TOP_LEFT" text="Visual appearance" />
+                                 </children>
+                              </VBox>
+                              <GridPane layoutX="20.0" layoutY="20.0">
+                                 <children>
+                                    <Label text="Algebra style" />
+                                 </children>
+                                 <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                 </columnConstraints>
+                                 <rowConstraints>
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                 </rowConstraints>
+                              </GridPane>
                            </children>
-                        </GridPane>
+                        </VBox>
                      </content>
                   </TitledPane>
               </panes>
@@ -87,16 +149,8 @@
                      <children>
                         <HBox fx:id="todContent" alignment="CENTER" fillHeight="false">
                            <children>
-                              <TitledPane animated="false" maxHeight="500.0" maxWidth="500.0" minHeight="500.0" minWidth="500.0" prefHeight="500.0" prefWidth="500.0" text="untitled">
-                                <content>
-                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                                </content>
-                                 <HBox.margin>
-                                    <Insets />
-                                 </HBox.margin>
-                              </TitledPane>
-                           </children>
-                        </HBox>
+                              <Button mnemonicParsing="false" onAction="#debug" text="Button" />
+                           </children></HBox>
                      </children>
                   </VBox>
                </children>

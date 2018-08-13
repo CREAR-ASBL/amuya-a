@@ -2,9 +2,7 @@
 package com.amuyana.app.controllers;
 
 import com.amuyana.app.data.CClass;
-import com.amuyana.app.data.Dynamism;
 import com.amuyana.app.data.Fcc;
-import com.amuyana.app.data.General;
 import com.amuyana.app.data.Inclusion;
 import com.amuyana.app.styles.FormulaStyles;
 import com.amuyana.app.view.containers.FccContainer;
@@ -20,8 +18,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Accordion;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TitledPane;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.HBox;
 
 
@@ -29,17 +29,30 @@ public class TodController implements Initializable {
 
     private AppController appController;
     
+    private ObservableList<FormulaStyles> listStyles;
+       
     @FXML private HBox todContent;
-    @FXML private ComboBox<Fcc> cobxFcc;
+    
+    // MENU BAR
+    @FXML private TitledPane tdpeFcc;
+    @FXML private TitledPane tdpeTod;
+    @FXML private Accordion anMenu;
+    
+    // When nothing is selected, only menu of the TOD
     @FXML private ComboBox<FormulaStyles> cobxStyle;
+    @FXML private ComboBox<Fcc> cobxFcc;
     @FXML private ComboBox<CClass> cobxCClass;
     @FXML private ComboBox<Inclusion> cobxInclusion;
     
-    @FXML private TitledPane tdpeMenu;
+    // When a FCC is selected
+    @FXML private ToggleButton tebnExpandInclusions;
+    @FXML private ToggleButton tebnExpandPositive;
+    @FXML private ToggleButton tebnExpandNegative;
+    @FXML private ToggleButton tebnExpandSymmetric;
     
-    private ObservableList<FormulaStyles> listStyles;
     public static ArrayList<Fcc> listFccsInScene;
-    public static ArrayList<MultiContainer> listMultiContainers;
+    
+    //public static ArrayList<MultiContainer> listMultiContainers;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -49,7 +62,7 @@ public class TodController implements Initializable {
         FormulaContainer.setAppController(appController);
         
         listFccsInScene = new ArrayList<>();
-        listMultiContainers = new ArrayList<>();
+        //listMultiContainers = new ArrayList<>();
         
         listStyles = FXCollections.observableArrayList();
         
@@ -71,16 +84,13 @@ public class TodController implements Initializable {
         cobxFcc.setItems(appController.getListFcc());
         for(FormulaStyles f:FormulaStyles.values()){
             listStyles.add(f);
-            
         }
         
         cobxStyle.setItems(listStyles);
         
-        
         cobxStyle.getSelectionModel().selectFirst();
         cobxFcc.getSelectionModel().selectFirst();
         
-        deploy();
     }
     
     public void manageEvents(){
@@ -102,23 +112,33 @@ public class TodController implements Initializable {
                 if(newValue!=null){
                     FormulaContainer.setStyle(newValue);
                 }
-                
             }
         });
-    }
+        
+        c
+    } 
 
     private void deploy() {
         // add zcontainer to todContent
         Fcc initialFcc = listFccsInScene.get(0);
         
-        ZContainer newZContainer = new ZContainer();
+        ZContainer firstZContainer = new ZContainer();
         
-        MultiContainer newMultiContainer = new MultiContainer(initialFcc);
-        listMultiContainers.add(newMultiContainer);
+        //firstZContainer.setFcc(initialFcc);
+        firstZContainer.setListAnalogousFccs(listFccsInScene);
         
-        newZContainer.getChildren().add(newMultiContainer);
+        todContent.getChildren().add(firstZContainer);
         
-        todContent.getChildren().add(newZContainer);
+    }
+    
+    @FXML
+    public void debug(){
+        if(anMenu.getPanes().contains(tdpeTod)){
+            anMenu.getPanes().remove(tdpeTod);
+        } else if(!anMenu.getPanes().contains(tdpeTod)){
+            anMenu.getPanes().add(tdpeTod);
+        } 
+        
     }
     
     
@@ -153,13 +173,13 @@ public class TodController implements Initializable {
         
     }
     
-    public MultiContainer multiContainerOf(Fcc fcc){
-        for(MultiContainer m:listMultiContainers){
-            if(m.getFcc().equals(fcc)){
-                return m;
-            }
-        }
-        return null;
-    }
+//    public MultiContainer multiContainerOf(Fcc fcc){
+//        for(MultiContainer m:listMultiContainers){
+//            if(m.getFcc().equals(fcc)){
+//                return m;
+//            }
+//        }
+//        return null;
+//    }
     
 }
