@@ -2,13 +2,18 @@
 package com.amuyana.app.controllers;
 
 import com.amuyana.app.data.CClass;
+import com.amuyana.app.data.Dynamism;
 import com.amuyana.app.data.Fcc;
+import com.amuyana.app.data.General;
 import com.amuyana.app.data.Inclusion;
 import com.amuyana.app.styles.FormulaStyles;
-import com.amuyana.app.view.containers.FccContainer;
-import com.amuyana.app.view.containers.FormulaContainer;
-import com.amuyana.app.view.containers.MultiContainer;
-import com.amuyana.app.view.containers.ZContainer;
+import com.amuyana.app.view.tod.Analogy;
+import com.amuyana.app.view.tod.FccContainer;
+import com.amuyana.app.view.tod.FormulaContainer;
+import com.amuyana.app.view.tod.LevelContainer;
+import com.amuyana.app.view.tod.MultiContainer;
+import com.amuyana.app.view.tod.TodContainer;
+import com.amuyana.app.view.tod.ZContainer;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -30,6 +35,8 @@ public class TodController implements Initializable {
     private AppController appController;
     
     private ObservableList<FormulaStyles> listStyles;
+    
+    private TodContainer todContainer;
        
     @FXML private HBox todContent;
     
@@ -56,6 +63,8 @@ public class TodController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        TodContainer.setAppController(appController);
+        LevelContainer.setAppController(appController);
         ZContainer.setAppController(appController);
         MultiContainer.setAppController(appController);
         FccContainer.setAppController(appController);
@@ -101,7 +110,7 @@ public class TodController implements Initializable {
                     // list of fcc's, setting the first one
                     listFccsInScene.clear();
                     listFccsInScene.add(newValue);
-                    deploy();
+                    deploy(newValue);
                 }
             }
         });
@@ -114,23 +123,19 @@ public class TodController implements Initializable {
                 }
             }
         });
-        
-        c
     } 
 
-    private void deploy() {
-        // add zcontainer to todContent
-        Fcc initialFcc = listFccsInScene.get(0);
+    private void deploy(Fcc newValue) {
+        this.todContainer = new TodContainer(newValue);
         
-        ZContainer firstZContainer = new ZContainer();
+        LevelContainer firstLevel = new LevelContainer(appController.getListAnalogyForInitial(newValue));
         
-        //firstZContainer.setFcc(initialFcc);
-        firstZContainer.setListAnalogousFccs(listFccsInScene);
+        this.todContainer.getChildren().add(firstLevel);
         
-        todContent.getChildren().add(firstZContainer);
-        
+        todContent.getChildren().add(this.todContainer);
     }
     
+
     @FXML
     public void debug(){
         if(anMenu.getPanes().contains(tdpeTod)){
@@ -140,46 +145,5 @@ public class TodController implements Initializable {
         } 
         
     }
-    
-    
-    public void deployPosition0(MultiContainer multiContainer){
-        // I add as many ZContainers as there are Fcc whose notions are 
-        // generals to at least one dynamism of the fcc of multiContainer
-        
-    }
-    
-    public void deployPosition1(MultiContainer multiContainer){
-        // I add one FccContainer only, the one that belong to the 
-        // MultiContainer . This position should be deployed automatically...
-        
-    }
-    
-    public void deployPosition2(MultiContainer multiContainer){
-        // I add as many ZContainers as there are notions that are particular 
-        // in a inclusion with respect to the POSITIVE orientation of the Fcc 
-        // of the MultiContainer 
-        
-    }
-    public void deployPosition3(MultiContainer multiContainer){
-        // I add as many ZContainers as there are notions that are particular 
-        // in a inclusion with respect to the NEGATIVE orientation of the Fcc 
-        // of the MultiContainer 
-        
-    }
-    public void deployPosition4(MultiContainer multiContainer){
-        // I add as many ZContainers as there are notions that are particular 
-        // in a inclusion with respect to the SYMETTRIC orientation of the Fcc 
-        // of the MultiContainer 
-        
-    }
-    
-//    public MultiContainer multiContainerOf(Fcc fcc){
-//        for(MultiContainer m:listMultiContainers){
-//            if(m.getFcc().equals(fcc)){
-//                return m;
-//            }
-//        }
-//        return null;
-//    }
     
 }

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.amuyana.app.view.containers;
+package com.amuyana.app.view.tod;
 
 import com.amuyana.app.controllers.AppController;
 import com.amuyana.app.data.Dynamism;

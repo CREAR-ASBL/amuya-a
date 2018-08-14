@@ -1,5 +1,5 @@
 
-package com.amuyana.app.view.containers;
+package com.amuyana.app.view.tod;
 
 import com.amuyana.app.controllers.AppController;
 import com.amuyana.app.controllers.TodController;
@@ -95,10 +95,43 @@ public class MultiContainer extends HBox {
         }
         
         
+        
         // Classify them in classes and put them in Zcontainer
         
         // one by one zContainer add it to the position0
         
+        
+    }
+    
+    
+    public void deployPosition0(MultiContainer multiContainer){
+        // I add as many ZContainers as there are Fcc whose notions are 
+        // generals to at least one dynamism of the fcc of multiContainer
+        
+    }
+    
+    public void deployPosition1(MultiContainer multiContainer){
+        // I add one FccContainer only, the one that belong to the 
+        // MultiContainer . This position should be deployed automatically...
+        
+    }
+    
+    public void deployPosition2(MultiContainer multiContainer){
+        // I add as many ZContainers as there are notions that are particular 
+        // in a inclusion with respect to the POSITIVE orientation of the Fcc 
+        // of the MultiContainer 
+        
+    }
+    public void deployPosition3(MultiContainer multiContainer){
+        // I add as many ZContainers as there are notions that are particular 
+        // in a inclusion with respect to the NEGATIVE orientation of the Fcc 
+        // of the MultiContainer 
+        
+    }
+    public void deployPosition4(MultiContainer multiContainer){
+        // I add as many ZContainers as there are notions that are particular 
+        // in a inclusion with respect to the SYMETTRIC orientation of the Fcc 
+        // of the MultiContainer 
         
     }
     

@@ -15,6 +15,7 @@ import com.amuyana.app.data.Syllogism;
 import com.amuyana.app.data.Log;
 import com.amuyana.app.data.LogicSystem;
 import com.amuyana.app.data.User;
+import com.amuyana.app.view.tod.Analogy;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -484,5 +485,58 @@ public class AppController {
         return listDynamisms;
     }
 
+    
+    // METHODS FOR TOD
+    
+    /**
+     * 
+     * @param fcc The central FCC.
+     * @return 
+     */
+    public ArrayList<Analogy> getListAnalogyForInitial(Fcc fcc){
+        
+        ArrayList<Analogy> listAnalogyInclusion = new ArrayList<>();
+        
+        ArrayList<Fcc> tempList = null;
+        
+        ArrayList<Inclusion> listInclusion = new ArrayList<>();
+        
+        // 1. Get all Inclusions it belongs as general.
+        for(Inclusion i:getListInclusions()){
+            if(generalsOf(i).contains(dynamismOf(0, fcc))||
+                    generalsOf(i).contains(dynamismOf(1, fcc))||
+                    generalsOf(i).contains(dynamismOf(2, fcc))){
+                listInclusion.add(i);
+            }
+        }
+        
+        // Transform the inclusion list into fcc list
+        
+        for(Inclusion i:listInclusion){
+            tempList = new ArrayList<>();
+            for(General g:getListGenerals()){
+                
+            }
+        }
+        
+        // 2. Get all Classes it belongs to
+        
+        // 3. Correct lists for doubles and sort them alternatively
+        
+        
+        return listAnalogyInclusion;
+    }
+    
+    public ArrayList<Analogy> getListAnalogyForInclusion(Fcc fcc){
+        ArrayList<Analogy> listAnalogyInclusion = new ArrayList<>();
+        
+        return listAnalogyInclusion;
+    }
+    
+    public ArrayList<Analogy> getListAnalogyForDeduction(Dynamism dynamism){
+        ArrayList<Analogy> listAnalogyInclusion = new ArrayList<>();
+        
+        return listAnalogyInclusion;
+    }
     
 }

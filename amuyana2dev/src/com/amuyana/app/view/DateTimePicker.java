@@ -1,7 +1,7 @@
 /*
  * package tornadofx.control; Distrubuted under Apache licence V.2
  */
-package com.amuyana.app.view.containers;
+package com.amuyana.app.view;
 
 
 import javafx.beans.property.ObjectProperty;

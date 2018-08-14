@@ -5,7 +5,7 @@
  */
 package com.amuyana.app.controllers;
 
-import com.amuyana.app.view.containers.DateTimePicker;
+import com.amuyana.app.view.DateTimePicker;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;

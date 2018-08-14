@@ -3,13 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.amuyana.app.view.containers;
+package com.amuyana.app.view.tod;
+
+import java.util.ArrayList;
 
 /**
  *
  * @author ayar
  */
-public class Fcc {
+public class Analogy extends ArrayList {
+
+    public enum AnalogyType { CCLASS, INCLUSION, MIXED, NONE};
     
+    public Analogy() {
+        
+    }
     
 }

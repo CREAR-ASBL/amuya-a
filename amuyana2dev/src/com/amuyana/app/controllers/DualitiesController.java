@@ -351,13 +351,8 @@ public class DualitiesController implements Initializable {
     public void updateFcc(){
         Fcc selectedFcc = (Fcc)tevwFcc.getSelectionModel().getSelectedItem();
         
-        
-        
-        
         String newFccLabel = ttfdFccLabel.getText();
         String newFccDescription = hmerFccDescription.getHtmlText();
-        
-        
         
         String newESymbol = ttfdElementSymbol.getText();
         String newAESymbol = null;
@@ -396,6 +391,7 @@ public class DualitiesController implements Initializable {
 
         // ELEMENT
         Element e0 = appController.elementOf(0, selectedFcc);
+        
         Element e1 = appController.elementOf(1, selectedFcc);
         
         int iE0=listElement.indexOf(e0);
@@ -537,7 +533,14 @@ public class DualitiesController implements Initializable {
 
         // Element
         Element e0 = new Element(0, ttfdElementSymbol.getText(), 0, fcc);
-        Element e1 = new Element(0, ttfdAElementSymbol.getText(), 1, fcc);
+        
+        Element e1 = null;
+        if(ckbxDefaultSymbol.isSelected()==true) {
+            e1 = new Element(0, llAElementSymbol.getText(), 1, fcc);
+        } else if(ckbxDefaultSymbol.isSelected()==false) {
+            e1 = new Element(0, ttfdAElementSymbol.getText(), 1, fcc);
+        }
+        
         
         int resultE0 = e0.saveData(conexion.getConnection());
         e0.setIdElement(Element.currentAutoIncrement);
