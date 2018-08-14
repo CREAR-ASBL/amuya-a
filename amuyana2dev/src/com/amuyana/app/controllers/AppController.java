@@ -110,6 +110,10 @@ public class AppController {
         return dualitiesController.getListDynamisms();
     }
     
+    public ObservableList<CClass> getListCClass() {
+        return cClassController.getListCClass();
+    }
+    
     public ObservableList<CClassHasFcc> getListCClassHasFcc() {
         return cClassController.getListCClassHasFcc();
     }
@@ -495,9 +499,11 @@ public class AppController {
      */
     public ArrayList<Analogy> getListAnalogyForInitial(Fcc fcc){
         
+        ArrayList<Analogy> listAnalogy = new ArrayList<>();
+        
         ArrayList<Analogy> listAnalogyInclusion = new ArrayList<>();
         
-        ArrayList<Fcc> tempList = null;
+        Analogy tempList = new Analogy();
         
         ArrayList<Inclusion> listInclusion = new ArrayList<>();
         
@@ -510,21 +516,124 @@ public class AppController {
             }
         }
         
-        // Transform the inclusion list into fcc list
         
+        // Transform the inclusion list into fcc list
+        // (we are assuming that in each general list there are not two 
+        // generals who belong to the same fcc - that you have to modify it in 
+        // the visual module when the user selects generals)
         for(Inclusion i:listInclusion){
-            tempList = new ArrayList<>();
+            //listAnalogyInclusion = new ArrayList<>();
+            tempList = new Analogy();
             for(General g:getListGenerals()){
+                if(g.getInclusion().equals(i)){
+                    tempList.add(g.getDynamism().getFcc());
+                }
+            }
+            listAnalogyInclusion.add(tempList);
+        }
+        
+        // Compare that there are not two tempLists with the same 
+        // elements (independently of the order) in listAnalogyInclusion
+        
+        ArrayList<Integer> indexes;
+        ArrayList<Analogy> tempListAnalogyInclusion = new ArrayList<>();
+        
+        for(Analogy a1:listAnalogyInclusion){
+            
+            indexes = new ArrayList<>();
+            
+            if(!indexes.contains(listAnalogyInclusion.indexOf(a1))){
                 
+                indexes.add(listAnalogyInclusion.indexOf(a1));
+            
+                for(Analogy a2:listAnalogyInclusion){
+                    if(!indexes.contains(listAnalogyInclusion.indexOf(a2))){
+                        if(a1.containsAll(a2)&&a2.containsAll(a1)){
+                            // Add it to the list because we know now that a2 is
+                            // duplicate so we will not bother to examine it
+                            indexes.add(listAnalogyInclusion.indexOf(a2));
+                            
+                            // Add it to the temp list of analogy, if its not 
+                            // there already
+                            if(!tempListAnalogyInclusion.contains(a1)){
+                                tempListAnalogyInclusion.add(a1);
+                            }
+                            // BREAK??????????????????????????????????????????????????,,
+                        }
+                    }
+                }
+                
+                // Here the program hasn't found any duplicates of analogy, so 
+                // a1 is original, so we add it of course! but check just in 
+                // case it's not already in the list (it shouldn't be!)
+                if(!tempListAnalogyInclusion.contains(a1)){
+                    tempListAnalogyInclusion.add(a1);
+                }
             }
         }
         
-        // 2. Get all Classes it belongs to
+        // This code also takes into account that there can only be one Analogy
+        // containing the unique initial FCC
         
+        // Now that the big loop is over we can reasign listAnalogyInclusion
+        
+        
+        
+        // 2. Get all Classes the initial FCC belongs in, convert each class
+        // into an Analogy containing fccs only
+        
+        ArrayList<Analogy> listAnalogyCClass = new ArrayList<>();
+        Analogy tempAnalogy = new Analogy();
+        for(CClass c:cClassOf(fcc)){
+            tempAnalogy = new Analogy();
+            tempAnalogy.addAll(fccOf(c));
+            listAnalogyCClass.add(tempAnalogy);
+        }
+        
+        // Take into account the lists which may contain the same fcc's... 
+        
+        indexes = new ArrayList<>();
+        ArrayList<Analogy> tempListAnalogyCClass = new ArrayList<>();
+        
+        for(Analogy a1:listAnalogyCClass){
+            
+            indexes = new ArrayList<>();
+            
+            if(!indexes.contains(listAnalogyCClass.indexOf(a1))){
+                
+                indexes.add(listAnalogyCClass.indexOf(a1));
+            
+                for(Analogy a2:listAnalogyCClass){
+                    if(!indexes.contains(listAnalogyCClass.indexOf(a2))){
+                        if(a1.containsAll(a2)&&a2.containsAll(a1)){
+                            // Add it to the list because we know now that a2 is
+                            // duplicate so we will not bother to examine it
+                            indexes.add(listAnalogyCClass.indexOf(a2));
+                            
+                            // Add it to the temp list of analogy, if its not 
+                            // there already
+                            if(!tempListAnalogyCClass.contains(a1)){
+                                tempListAnalogyCClass.add(a1);
+                            }
+                            // BREAK??????????????????????????????????????????????????,,
+                        }
+                    }
+                }
+                
+                // Here the program hasn't found any duplicates of analogy, so 
+                // a1 is original, so we add it of course! but check just in 
+                // case it's not already in the list (it shouldn't be!)
+                if(!tempListAnalogyCClass.contains(a1)){
+                    tempListAnalogyCClass.add(a1);
+                }
+            }
+        }
+        
+        listAnalogy = listAnalogyCClass;
         // 3. Correct lists for doubles and sort them alternatively
         
         
-        return listAnalogyInclusion;
+        return listAnalogy;
     }
     
     public ArrayList<Analogy> getListAnalogyForInclusion(Fcc fcc){

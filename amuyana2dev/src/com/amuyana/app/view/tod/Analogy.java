@@ -5,13 +5,14 @@
  */
 package com.amuyana.app.view.tod;
 
+import com.amuyana.app.data.Fcc;
 import java.util.ArrayList;
 
 /**
  *
  * @author ayar
  */
-public class Analogy extends ArrayList {
+public class Analogy extends ArrayList<Fcc> {
 
     public enum AnalogyType { CCLASS, INCLUSION, MIXED, NONE};
     

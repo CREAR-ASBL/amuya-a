@@ -110,7 +110,7 @@ public class TodController implements Initializable {
                     // list of fcc's, setting the first one
                     listFccsInScene.clear();
                     listFccsInScene.add(newValue);
-                    deploy(newValue);
+                    //deploy(newValue);
                 }
             }
         });
@@ -133,17 +133,21 @@ public class TodController implements Initializable {
         this.todContainer.getChildren().add(firstLevel);
         
         todContent.getChildren().add(this.todContainer);
+        
+        
     }
     
 
     @FXML
     public void debug(){
-        if(anMenu.getPanes().contains(tdpeTod)){
-            anMenu.getPanes().remove(tdpeTod);
-        } else if(!anMenu.getPanes().contains(tdpeTod)){
-            anMenu.getPanes().add(tdpeTod);
-        } 
+        ArrayList<Analogy> listAnalogy = appController.getListAnalogyForInitial(cobxFcc.getSelectionModel().getSelectedItem());
         
+        System.out.println("listAnalogyCClass size: " + listAnalogy.size());
+        System.out.print("listCClass Analogies: " );
+        for(Analogy a: listAnalogy){
+            System.out.print(a);
+        }
+        System.out.print("\n");
     }
     
 }
