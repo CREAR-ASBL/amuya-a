@@ -496,7 +496,6 @@ public class AppController {
      * @return 
      */
     public ArrayList<Analogy> getListAnalogyForInitial(Fcc fcc){
-        
         ArrayList<Analogy> listAnalogy = new ArrayList<>();
         
         ArrayList<Analogy> listAnalogyInclusion = new ArrayList<>();
@@ -579,7 +578,6 @@ public class AppController {
         // Now that the big loop is over we can reasign listAnalogyInclusion
         
         
-        
         // 2. Get all Classes the initial FCC belongs in, convert each class
         // into an Analogy containing fccs only
         
@@ -634,6 +632,7 @@ public class AppController {
         
         listAnalogyCClass = tempListAnalogyCClass;
         
+        
         // 3. Combine similar listInclusion and listCClass, find fcc which do 
         // not belong to neither list, and finally add them 
         // alternatively and by ascending order in the listAnalogy
@@ -648,19 +647,22 @@ public class AppController {
         
         
         for(Analogy a1:listAnalogyCClass){
-            System.out.println(a1);
+            
             for(Analogy a2:listAnalogyInclusion){
-                System.out.println(a2);
+                
                 if(a1.containsAll(a2)&&a2.containsAll(a1)){
                     tempListToRemoveInCClass.add(a1);
                     tempListToRemoveInInclusion.add(a2);
                     tempListToAddInMixed.add(a1);
-                    System.out.println("a1: " + a1 + "; a2: " + a2 );
+                    
                 }
             }
         }
         
-        System.out.println(listAnalogyInclusion);
+        System.out.println(tempListToRemoveInInclusion);
+        System.out.println(tempListToRemoveInCClass);
+        System.out.println(tempListToAddInMixed);
+        
         for(Analogy a:tempListToRemoveInInclusion){
             
             listAnalogyInclusion.remove(a);
@@ -670,21 +672,17 @@ public class AppController {
 //            }
 //            listAnalogyInclusion.remove(a);
         }
-        System.out.println(listAnalogyInclusion);
         
-        System.out.println(listAnalogyCClass);
         for(Analogy a:tempListToRemoveInCClass){
             listAnalogyCClass.remove(a);
         }
-        System.out.println(listAnalogyCClass);
         
-        //System.out.println(listAnalogyMixed);
         for(Analogy a:tempListToAddInMixed){
             listAnalogyMixed.add(a);
             a.setType(Analogy.Type.MIXED);
-            System.out.println(a);
+            
         }
-        //System.out.println(listAnalogyMixed);
+        
         // Now we sort them one by one
         
         ArrayList<Analogy> listAnalogyInclusionOrdered = new ArrayList<>();
