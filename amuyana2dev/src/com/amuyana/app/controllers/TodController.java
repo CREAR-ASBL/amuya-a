@@ -84,6 +84,10 @@ public class TodController implements Initializable {
         
     }
     
+    public static ArrayList<Fcc> getListFccsInScene() {
+        return listFccsInScene;
+    }
+    
     private void log(String debug, String message) {
         
         appController.addLog(debug, message);
@@ -142,12 +146,8 @@ public class TodController implements Initializable {
     public void debug(){
         ArrayList<Analogy> listAnalogy = appController.getListAnalogyForInitial(cobxFcc.getSelectionModel().getSelectedItem());
         
-        System.out.println("listAnalogyCClass size: " + listAnalogy.size());
-        System.out.print("listCClass Analogies: " );
-        for(Analogy a: listAnalogy){
-            System.out.print(a);
-        }
-        System.out.print("\n");
+        //System.out.println(listAnalogy);
+        
     }
     
 }

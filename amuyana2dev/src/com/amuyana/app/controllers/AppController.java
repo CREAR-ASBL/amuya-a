@@ -325,8 +325,6 @@ public class AppController {
     }
     
     @FXML public void showHideLog(){
-        System.out.println("muimShowHideLog.toString(): " + muimShowHideLog.toString());
-        System.out.println("muimShowHideLog.getText(): " + muimShowHideLog.getText());
         if("Show Log panel".equals(muimShowHideLog.getText())) {
             stpeContents.getItems().add(slpeLog);
             muimShowHideLog.setText("Hide Log panel");
@@ -505,6 +503,7 @@ public class AppController {
         
         Analogy tempList = new Analogy();
         
+        
         ArrayList<Inclusion> listInclusion = new ArrayList<>();
         
         // 1. Get all Inclusions it belongs as general.
@@ -572,6 +571,8 @@ public class AppController {
             }
         }
         
+        listAnalogyInclusion = tempListAnalogyInclusion;
+        
         // This code also takes into account that there can only be one Analogy
         // containing the unique initial FCC
         
@@ -584,6 +585,7 @@ public class AppController {
         
         ArrayList<Analogy> listAnalogyCClass = new ArrayList<>();
         Analogy tempAnalogy = new Analogy();
+        
         for(CClass c:cClassOf(fcc)){
             tempAnalogy = new Analogy();
             tempAnalogy.addAll(fccOf(c));
@@ -615,7 +617,7 @@ public class AppController {
                             if(!tempListAnalogyCClass.contains(a1)){
                                 tempListAnalogyCClass.add(a1);
                             }
-                            // BREAK??????????????????????????????????????????????????,,
+                            // BREAK????????????????????????????????????????????
                         }
                     }
                 }
@@ -629,9 +631,84 @@ public class AppController {
             }
         }
         
-        listAnalogy = listAnalogyCClass;
-        // 3. Correct lists for doubles and sort them alternatively
         
+        listAnalogyCClass = tempListAnalogyCClass;
+        
+        // 3. Combine similar listInclusion and listCClass, find fcc which do 
+        // not belong to neither list, and finally add them 
+        // alternatively and by ascending order in the listAnalogy
+        // Note: in levelInitial there's no NONE type of analogy contrary to 
+        // the levelInclusion and any levelDeduction
+        ArrayList<Analogy> listAnalogyMixed= new ArrayList<>();
+        
+        ArrayList<Analogy> tempCombinedAnalogy = new ArrayList<>();
+        ArrayList<Analogy> tempListToRemoveInInclusion = new ArrayList<>();
+        ArrayList<Analogy> tempListToRemoveInCClass = new ArrayList<>();
+        ArrayList<Analogy> tempListToAddInMixed = new ArrayList<>();
+        
+        
+        for(Analogy a1:listAnalogyCClass){
+            System.out.println(a1);
+            for(Analogy a2:listAnalogyInclusion){
+                System.out.println(a2);
+                if(a1.containsAll(a2)&&a2.containsAll(a1)){
+                    tempListToRemoveInCClass.add(a1);
+                    tempListToRemoveInInclusion.add(a2);
+                    tempListToAddInMixed.add(a1);
+                    System.out.println("a1: " + a1 + "; a2: " + a2 );
+                }
+            }
+        }
+        
+        System.out.println(listAnalogyInclusion);
+        for(Analogy a:tempListToRemoveInInclusion){
+            
+            listAnalogyInclusion.remove(a);
+//            if(a.contains(todController.getListFccsInScene().get(0))&&
+//                    a.size()==1){
+//                break;
+//            }
+//            listAnalogyInclusion.remove(a);
+        }
+        System.out.println(listAnalogyInclusion);
+        
+        System.out.println(listAnalogyCClass);
+        for(Analogy a:tempListToRemoveInCClass){
+            listAnalogyCClass.remove(a);
+        }
+        System.out.println(listAnalogyCClass);
+        
+        //System.out.println(listAnalogyMixed);
+        for(Analogy a:tempListToAddInMixed){
+            listAnalogyMixed.add(a);
+            a.setType(Analogy.Type.MIXED);
+            System.out.println(a);
+        }
+        //System.out.println(listAnalogyMixed);
+        // Now we sort them one by one
+        
+        ArrayList<Analogy> listAnalogyInclusionOrdered = new ArrayList<>();
+        ArrayList<Analogy> listAnalogyCClassOrdered = new ArrayList<>();
+        
+        
+        for(Analogy a1:listAnalogyInclusion){
+            Analogy tempSmallest = new Analogy();
+            
+            for(Analogy a2:listAnalogyInclusion){
+                
+                if(!a1.equals(a2)){
+                    // find the smallest one, add it to a toRemove list and 
+                    // add it to the final list
+                    if(a2.size()<=a1.size()){
+                        tempSmallest = a2;
+                    }
+                }
+                
+            }
+            listAnalogyInclusionOrdered.add(tempSmallest);
+        }
+        
+        listAnalogy = listAnalogyInclusionOrdered;
         
         return listAnalogy;
     }
