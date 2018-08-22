@@ -16,7 +16,7 @@
          <content>
             <Accordion fx:id="anMenu">
               <panes>
-                  <TitledPane animated="false" layoutX="10.0" layoutY="35.0" text="Tools">
+                  <TitledPane animated="false" expanded="false" layoutX="10.0" layoutY="35.0" text="Tools">
                      <content>
                         <GridPane>
                           <columnConstraints>
@@ -81,11 +81,12 @@
                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                  </rowConstraints>
                               </GridPane>
+                              <Button mnemonicParsing="false" onAction="#debug" text="Debug" />
                            </children>
                         </VBox>
                      </content>
                   </TitledPane>
-                  <TitledPane fx:id="tdpeTod1" animated="false" layoutX="10.0" layoutY="35.0" text="FCC">
+                  <TitledPane fx:id="tdpeTod1" animated="false" expanded="false" layoutX="10.0" layoutY="35.0" text="FCC">
                      <content>
                         <VBox>
                            <children>
@@ -147,10 +148,7 @@
                <children>
                   <VBox alignment="CENTER" fillWidth="false">
                      <children>
-                        <HBox fx:id="todContent" alignment="CENTER" fillHeight="false">
-                           <children>
-                              <Button mnemonicParsing="false" onAction="#debug" text="Button" />
-                           </children></HBox>
+                        <HBox fx:id="todContent" alignment="CENTER" fillHeight="false" />
                      </children>
                   </VBox>
                </children>

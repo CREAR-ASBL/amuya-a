@@ -24,6 +24,9 @@ public class MultiContainer extends HBox {
     public VBox positionBottom;
     
     
+    private static int xMove=0;
+    private static int yMove=0;
+    private static int zMove=-10000;
     
     /** This is the central container.
      * It has 3 columns. 1st is for all the
@@ -40,10 +43,7 @@ public class MultiContainer extends HBox {
     */
             
     public MultiContainer(Fcc fcc) {
-        
         this.fcc = fcc;
-        
-        //TodController.drawnFccs.add(this.mainFcc);
         
         positionLeft = new VBox();
         positionCenter = new VBox();
@@ -52,20 +52,33 @@ public class MultiContainer extends HBox {
         positionBottom=  new VBox();
         positionRight = new VBox();
         
-        //FccContainer fccContainer = new FccContainer(fcc, listDynamisms);
+        FccContainer fccContainer = new FccContainer(fcc);
+        
+        positionCenter.getChildren().add(fccContainer);
         
         positionRight.getChildren().addAll(positionTop,positionMiddle,positionBottom);
         
         super.getChildren().addAll(positionLeft,positionCenter,positionRight);
         
-        //deploy0();
-         
+        super.setTranslateX(xMove);
+        super.setTranslateY(yMove);
+        //super.setTranslateZ(zMove);
+        
+        xMove-=20;
+        yMove+=25;
+        //zMove+=10;
+        manageEvents();
     }
     
     public static void setAppController(AppController appController) {
         MultiContainer.appController = appController;
     }
-
+    
+    
+    private void manageEvents() {
+        
+    }
+    
     public Fcc getFcc() {
         return fcc;
     }
@@ -74,66 +87,36 @@ public class MultiContainer extends HBox {
         this.fcc = fcc;
     }
 
-    
-    
-    public void deploy0(){
-        // First find all Fcc that include the mainFcc,w
-        for(Inclusion i:appController.getListInclusions()){
-            if(i.getDynamism().equals(appController.dynamismOf(0, fcc))||
-            i.getDynamism().equals(appController.dynamismOf(0, fcc))||
-            i.getDynamism().equals(appController.dynamismOf(0, fcc))){
-               // now grab the general (containing one or more conjunctions) that
-               // has this inclusion (for now doesn't matter, we will not draw 
-               // them specially like class)
-               
-               
-               
-               // then record the conjunction and the fcc
-               // that will be connected later
-               
-            }
-        }
+    public void deployInclusions(){
         
-        
-        
-        // Classify them in classes and put them in Zcontainer
-        
-        // one by one zContainer add it to the position0
-        
-        
+        positionLeft.getChildren().addAll(new LevelContainer(appController.getListAnalogyForInitial(fcc)));
+        System.out.println("i try to deploy");
     }
     
+//    public void deployPositionCenter(){
+//        // I add one FccContainer only, the one that belong to the 
+//        // MultiContainer . This position should be deployed automatically...
+//        
+//    }
     
-    public void deployPosition0(MultiContainer multiContainer){
-        // I add as many ZContainers as there are Fcc whose notions are 
-        // generals to at least one dynamism of the fcc of multiContainer
-        
-    }
-    
-    public void deployPosition1(MultiContainer multiContainer){
-        // I add one FccContainer only, the one that belong to the 
-        // MultiContainer . This position should be deployed automatically...
-        
-    }
-    
-    public void deployPosition2(MultiContainer multiContainer){
+    public void deployPositiveDeductions(){
         // I add as many ZContainers as there are notions that are particular 
         // in a inclusion with respect to the POSITIVE orientation of the Fcc 
         // of the MultiContainer 
         
     }
-    public void deployPosition3(MultiContainer multiContainer){
+    public void deployNegativeDeductions(){
         // I add as many ZContainers as there are notions that are particular 
         // in a inclusion with respect to the NEGATIVE orientation of the Fcc 
         // of the MultiContainer 
         
     }
-    public void deployPosition4(MultiContainer multiContainer){
+    public void deploySymmetricDeductions(){
         // I add as many ZContainers as there are notions that are particular 
         // in a inclusion with respect to the SYMETTRIC orientation of the Fcc 
         // of the MultiContainer 
         
     }
-    
+
     
 }

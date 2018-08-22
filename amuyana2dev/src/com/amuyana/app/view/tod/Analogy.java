@@ -7,6 +7,7 @@ package com.amuyana.app.view.tod;
 
 import com.amuyana.app.data.Fcc;
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  *
@@ -21,7 +22,7 @@ public class Analogy extends ArrayList<Fcc> {
     private Type type;
     
     public Analogy() {
-        
+
     }
     
     public void setType(Type type){

@@ -13,7 +13,7 @@ import com.amuyana.app.view.tod.FormulaContainer;
 import com.amuyana.app.view.tod.LevelContainer;
 import com.amuyana.app.view.tod.MultiContainer;
 import com.amuyana.app.view.tod.TodContainer;
-import com.amuyana.app.view.tod.ZContainer;
+import com.amuyana.app.view.tod.AnalogyContainer;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -63,12 +63,7 @@ public class TodController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        TodContainer.setAppController(appController);
-        LevelContainer.setAppController(appController);
-        ZContainer.setAppController(appController);
-        MultiContainer.setAppController(appController);
-        FccContainer.setAppController(appController);
-        FormulaContainer.setAppController(appController);
+        
         
         listFccsInScene = new ArrayList<>();
         //listMultiContainers = new ArrayList<>();
@@ -81,6 +76,13 @@ public class TodController implements Initializable {
     
     public void setAppController(AppController aThis) {
         this.appController=aThis;
+        
+        TodContainer.setAppController(appController);
+        LevelContainer.setAppController(appController);
+        AnalogyContainer.setAppController(appController);
+        MultiContainer.setAppController(appController);
+        FccContainer.setAppController(appController);
+        FormulaContainer.setAppController(appController);
         
     }
     
@@ -101,8 +103,8 @@ public class TodController implements Initializable {
         
         cobxStyle.setItems(listStyles);
         
-        cobxStyle.getSelectionModel().selectFirst();
-        cobxFcc.getSelectionModel().selectFirst();
+        //cobxStyle.getSelectionModel().selectFirst();
+        //cobxFcc.getSelectionModel().selectFirst();
         
     }
     
@@ -111,10 +113,12 @@ public class TodController implements Initializable {
             @Override
             public void changed(ObservableValue<? extends Fcc> observable, Fcc oldValue, Fcc newValue) {
                 if(newValue!=null){
+                    
                     // list of fcc's, setting the first one
                     listFccsInScene.clear();
                     listFccsInScene.add(newValue);
-                    //deploy(newValue);
+                    
+                    deployInitial(newValue);
                 }
             }
         });
@@ -127,21 +131,15 @@ public class TodController implements Initializable {
                 }
             }
         });
-    } 
+    }
 
-    private void deploy(Fcc newValue) {
+    private void deployInitial(Fcc newValue) {
+        
         this.todContainer = new TodContainer(newValue);
-        
-        LevelContainer firstLevel = new LevelContainer(appController.getListAnalogyForInitial(newValue));
-        
-        this.todContainer.getChildren().add(firstLevel);
-        
+        todContent.getChildren().clear();
         todContent.getChildren().add(this.todContainer);
-        
-        
     }
     
-
     @FXML
     public void debug(){
         ArrayList<Analogy> listAnalogy = appController.getListAnalogyForInitial(cobxFcc.getSelectionModel().getSelectedItem());

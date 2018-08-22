@@ -36,7 +36,7 @@ public class FormulaContainer extends HBox {
      * @param listDynamisms 
      */
     public FormulaContainer(ArrayList<Dynamism> listDynamisms) {
-        //        signT.setStyle("-fx-padding: 10;" + 
+//                      signT.setStyle("-fx-padding: 10;" + 
 //                      "-fx-border-style: solid inside;" + 
 //                      "-fx-border-width: 2;" +
 //                      "-fx-border-insets: 5;" + 
@@ -46,11 +46,12 @@ public class FormulaContainer extends HBox {
         
         
         style = FormulaStyles.SIMPLE;
-        
+        draw(listDynamisms);
+        //System.out.println("hi");
     }
     
     public static void setAppController(AppController appController){
-        
+        FormulaContainer.appController = appController;
     }
 
     public static void setStyle(FormulaStyles formulaStyle) {
@@ -135,7 +136,6 @@ public class FormulaContainer extends HBox {
             listSymbols.add(")");
         
         }
-        System.out.println(listSymbols.size());
         
         
         for(String s:listSymbols){

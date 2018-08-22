@@ -7,7 +7,7 @@ package com.amuyana.app.view.tod;
 
 import com.amuyana.app.controllers.AppController;
 import com.amuyana.app.data.Fcc;
-import javafx.scene.control.Label;
+import java.util.ArrayList;
 import javafx.scene.layout.Pane;
 
 
@@ -22,6 +22,11 @@ public class TodContainer extends Pane {
     
     public TodContainer(Fcc initialFcc) {
         this.initialFcc = initialFcc;
+        ArrayList<Analogy> listAnalogy = appController.getListAnalogyForInitial(initialFcc);
+        
+        LevelContainer firstLevel = new LevelContainer(listAnalogy);
+        super.getChildren().clear();
+        super.getChildren().add(firstLevel);
         
     }
     

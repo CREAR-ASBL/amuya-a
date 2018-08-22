@@ -20,6 +20,34 @@ public class FccContainer extends TitledPane {
     private ArrayList<FormulaContainer> listFormulaContainers;
     private static AppController appController;
     
+    
+    public FccContainer(Fcc fcc){
+        this.fcc = fcc;
+        super.setCollapsible(false);
+        
+        VBox formulasContainer = new VBox();
+        
+        ArrayList<Dynamism> listDynamisms = new ArrayList<>();
+        
+        listDynamisms.add(appController.dynamismOf(0, fcc));
+        FormulaContainer positiveFormula = new FormulaContainer(listDynamisms);
+        
+        listDynamisms.clear();
+        listDynamisms.add(appController.dynamismOf(1, fcc));
+        FormulaContainer negativeFormula = new FormulaContainer(listDynamisms);
+        
+        listDynamisms.clear();
+        listDynamisms.add(appController.dynamismOf(2, fcc));
+        FormulaContainer symmetricFormula = new FormulaContainer(listDynamisms);
+        
+        formulasContainer.getChildren().addAll(positiveFormula,negativeFormula,symmetricFormula);
+        
+        super.setContent(formulasContainer);
+        
+        super.setText(fcc.getLabel());
+    }
+    
+    
     /**
      * 
      * @param fcc The fcc associated to this container

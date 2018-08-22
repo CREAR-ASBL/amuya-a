@@ -20,6 +20,10 @@ import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.Set;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -34,7 +38,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 public class AppController {
-    
     private Conexion conexion;
     
     @FXML private SplitPane stpeContents;
@@ -494,9 +497,6 @@ public class AppController {
         
         ArrayList<Analogy> list = new ArrayList<>();
         
-        Analogy tempList;
-        
-        
         ArrayList<Inclusion> tempListInclusion = new ArrayList<>();
         
         // 1. Get all Inclusions it belongs as general.
@@ -512,6 +512,8 @@ public class AppController {
         // (we are assuming that in each general list there are not two 
         // generals who belong to the same fcc - that you have to modify it in 
         // the visual module when the user selects generals)
+        
+        Analogy tempList;
         for(Inclusion i:tempListInclusion){
             //listAnalogyInclusion = new ArrayList<>();
             tempList = new Analogy();
@@ -522,6 +524,41 @@ public class AppController {
             }
             list.add(tempList);
         }
+        
+        // Sort the fcc's in each analogy because otherwise we can't remove 
+        // duplicates. I'll use id as criteria to sort.
+        
+        
+        
+//        ArrayList<Analogy> tempListAnalogy = new ArrayList<>();
+//        
+//        for(Analogy a:list){
+//            
+//            Analogy tempAnalogy = new Analogy();
+//            
+//            for(Fcc f1:a){
+//                for(Fcc f2:a){
+//                    if(f1.getIdFcc()<f2.getIdFcc()){
+//                        if(!tempAnalogy.contains(f1)){
+//                            tempAnalogy.add(f1);
+//                            System.out.println("i got here");
+//                        }
+//                    }
+//                }
+//            }
+//            
+//            for(Fcc f:a){
+//                if(!tempAnalogy.contains(f)){
+//                    tempAnalogy.add(f);
+//                }
+//            }
+//            
+//            tempListAnalogy.add(tempAnalogy);
+//        }
+//        
+//        list.clear();
+//        list.addAll(tempListAnalogy);
+        
         return list;
     }
     
@@ -531,7 +568,7 @@ public class AppController {
         // into an Analogy containing fccs only
         
         ArrayList<Analogy> list = new ArrayList<>();
-        ArrayList<Integer> indexes;
+        
         Analogy tempAnalogy = new Analogy();
         
         for(CClass c:cClassOf(fcc)){
@@ -543,71 +580,34 @@ public class AppController {
     }
     
     private void removeDuplicates(ArrayList<Analogy> listAnalogy){
-        
-        // Compare that there are not two tempLists with the same 
-        // elements (independently of the order) in listAnalogyInclusion
-        ArrayList<Analogy> list = new ArrayList<>();
-        ArrayList<Integer> indexes;
-        
-        for(Analogy a1:listAnalogy){
-            
-            indexes = new ArrayList<>();
-            
-            if(!indexes.contains(listAnalogy.indexOf(a1))){
-                
-                indexes.add(listAnalogy.indexOf(a1));
-            
-                for(Analogy a2:listAnalogy){
-                    if(!indexes.contains(listAnalogy.indexOf(a2))){
-                        if(a1.containsAll(a2)&&a2.containsAll(a1)){
-                            // Add it to the list because we know now that a2 is
-                            // duplicate so we will not bother to examine it
-                            indexes.add(listAnalogy.indexOf(a2));
-                            
-                            // Add it to the temp list of analogy, if its not 
-                            // there already
-                            if(!list.contains(a1)){
-                                list.add(a1);
-                            }
-                            // BREAK??????????????????????????????????????????????????,,
+        Set<Analogy> listAnalogyWithoutDuplicates = new HashSet<>(listAnalogy);
+        listAnalogy.clear();
+        listAnalogy.addAll(listAnalogyWithoutDuplicates);
+   
+        ArrayList<Analogy> tempList = new ArrayList<>();
+
+        for(Analogy a:listAnalogy){
+            for(Analogy b:listAnalogy){
+                if(a!=b){
+                    if(a.containsAll(b)&&b.containsAll(a)){
+                        if(!tempList.contains(b)){
+                            tempList.add(a);
                         }
                     }
                 }
-                
-                // Here the program hasn't found any duplicates of analogy, so 
-                // a1 is original, so we add it of course! but check just in 
-                // case it's not already in the list (it shouldn't be!)
-                if(!list.contains(a1)){
-                    list.add(a1);
-                }
             }
         }
         
-        listAnalogy.clear();
-        
-        listAnalogy.addAll(list);
-        
+        listAnalogy.removeAll(tempList);
     }
     
-    private void mixDuplicates(ArrayList<Analogy> listAnalogy){
-        // 3. Combine similar listInclusion and listCClass, find fcc which do 
-        // not belong to neither list, and finally add them 
-        // alternatively and by ascending order in the listAnalogy
-        // Note: in levelInitial there's no NONE type of analogy contrary to 
-        // the levelInclusion and any levelDeduction
-        
-        ArrayList<Analogy> tempListNotToRemove = new ArrayList<>();
-        //ArrayList<Analogy> tempListToChangeType = new ArrayList<>();
-        
-        for(Analogy a1:listAnalogy){
-            System.out.println(a1);
-            for(Fcc f:a1){
-                System.out.println(f.hashCode());
+    private void orderAnalogyList(ArrayList<Analogy> listAnalogyForInitial) {
+        Collections.sort(listAnalogyForInitial, new Comparator<ArrayList>(){
+            @Override
+            public int compare(ArrayList a1, ArrayList a2) {
+            return a1.size() - a2.size(); // assumes you want biggest to smallest
             }
-            
-        }
-        
-        
+        });
     }
     
     /**
@@ -620,261 +620,17 @@ public class AppController {
         
         ArrayList<Analogy> listAnalogyInclusion = getListAnalogyInclusionOf(fcc);
         
-        System.out.println("Original listAnalogyInclusion: "+listAnalogyInclusion);
-        
-        // This method should remove duplicates
-        removeDuplicates(listAnalogyInclusion);
-
-        System.out.println("removeDuplicates(inclusion): "+listAnalogyInclusion);
-        
         ArrayList<Analogy> listAnalogyCClass = getListAnalogyCClassOf(fcc);
-        
-        System.out.println("Original listAnalogyCClass: "+listAnalogyCClass);
-        
-        removeDuplicates(listAnalogyCClass);
-        
-        System.out.println("removeDuplicates(cClass): "+listAnalogyCClass);
         
         listAnalogyForInitial.addAll(listAnalogyInclusion);
         listAnalogyForInitial.addAll(listAnalogyCClass);
         
-        mixDuplicates(listAnalogyForInitial);
+        removeDuplicates(listAnalogyForInitial);
         
-        System.out.println("final list: "+listAnalogyForInitial);
+        orderAnalogyList(listAnalogyForInitial);
         
         return listAnalogyForInitial;
     }
-    
-//    public ArrayList<Analogy> old(Fcc fcc){
-//        ///////////////////////////////////////////////////////////////////////
-//        ///////////////////////////////////////////////////////////////////////
-//        ArrayList<Analogy> tempListAnalogyInclusion = new ArrayList<>();
-//        
-//        Analogy tempList = new Analogy();
-//        
-//        
-//        ArrayList<Inclusion> tempListInclusion = new ArrayList<>();
-//        
-//        // 1. Get all Inclusions it belongs as general.
-//        for(Inclusion i:getListInclusions()){
-//            if(generalsOf(i).contains(dynamismOf(0, fcc))||
-//                    generalsOf(i).contains(dynamismOf(1, fcc))||
-//                    generalsOf(i).contains(dynamismOf(2, fcc))){
-//                tempListInclusion.add(i);
-//            }
-//        }
-//        
-//        // Transform the inclusion list into fcc list
-//        // (we are assuming that in each general list there are not two 
-//        // generals who belong to the same fcc - that you have to modify it in 
-//        // the visual module when the user selects generals)
-//        for(Inclusion i:tempListInclusion){
-//            //listAnalogyInclusion = new ArrayList<>();
-//            tempList = new Analogy();
-//            for(General g:getListGenerals()){
-//                if(g.getInclusion().equals(i)){
-//                    tempList.add(g.getDynamism().getFcc());
-//                }
-//            }
-//            tempListAnalogyInclusion.add(tempList);
-//        }
-//        
-//        listAnalogyInclusion = tempListAnalogyInclusion;
-//        
-//        // Compare that there are not two tempLists with the same 
-//        // elements (independently of the order) in listAnalogyInclusion
-//        
-//        ArrayList<Integer> indexes;
-//        
-//        tempListAnalogyInclusion = new ArrayList<>();
-//        
-//        for(Analogy a1:listAnalogyInclusion){
-//            
-//            indexes = new ArrayList<>();
-//            
-//            if(!indexes.contains(listAnalogyInclusion.indexOf(a1))){
-//                
-//                indexes.add(listAnalogyInclusion.indexOf(a1));
-//            
-//                for(Analogy a2:listAnalogyInclusion){
-//                    if(!indexes.contains(listAnalogyInclusion.indexOf(a2))){
-//                        if(a1.containsAll(a2)&&a2.containsAll(a1)){
-//                            // Add it to the list because we know now that a2 is
-//                            // duplicate so we will not bother to examine it
-//                            indexes.add(listAnalogyInclusion.indexOf(a2));
-//                            
-//                            // Add it to the temp list of analogy, if its not 
-//                            // there already
-//                            if(!tempListAnalogyInclusion.contains(a1)){
-//                                tempListAnalogyInclusion.add(a1);
-//                            }
-//                            // BREAK??????????????????????????????????????????????????,,
-//                        }
-//                    }
-//                }
-//                
-//                // Here the program hasn't found any duplicates of analogy, so 
-//                // a1 is original, so we add it of course! but check just in 
-//                // case it's not already in the list (it shouldn't be!)
-//                if(!tempListAnalogyInclusion.contains(a1)){
-//                    tempListAnalogyInclusion.add(a1);
-//                }
-//            }
-//        }
-//        
-//        listAnalogyInclusion = tempListAnalogyInclusion;
-//        
-//        // This code also takes into account that there can only be one Analogy
-//        // containing the unique initial FCC
-//        
-//        // Now that the big loop is over we can reasign listAnalogyInclusion
-//        
-//        
-//        // 2. Get all Classes the initial FCC belongs in, convert each class
-//        // into an Analogy containing fccs only
-//        
-//        ArrayList<Analogy> listAnalogyCClass = new ArrayList<>();
-//        
-//        Analogy tempAnalogy = new Analogy();
-//        
-//        for(CClass c:cClassOf(fcc)){
-//            tempAnalogy = new Analogy();
-//            tempAnalogy.addAll(fccOf(c));
-//            listAnalogyCClass.add(tempAnalogy);
-//        }
-//        
-//        // Take into account the lists which may contain the same fcc's... 
-//        
-//        indexes = new ArrayList<>();
-//        
-//        ArrayList<Analogy> tempListAnalogyCClass = new ArrayList<>();
-//        
-//        for(Analogy a1:listAnalogyCClass){
-//            
-//            indexes = new ArrayList<>();
-//            
-//            if(!indexes.contains(listAnalogyCClass.indexOf(a1))){
-//                
-//                indexes.add(listAnalogyCClass.indexOf(a1));
-//            
-//                for(Analogy a2:listAnalogyCClass){
-//                    if(!indexes.contains(listAnalogyCClass.indexOf(a2))){
-//                        if(a1.containsAll(a2)&&a2.containsAll(a1)){
-//                            // Add it to the list because we know now that a2 is
-//                            // duplicate so we will not bother to examine it
-//                            indexes.add(listAnalogyCClass.indexOf(a2));
-//                            
-//                            // Add it to the temp list of analogy, if its not 
-//                            // there already
-//                            if(!tempListAnalogyCClass.contains(a1)){
-//                                tempListAnalogyCClass.add(a1);
-//                            }
-//                            // BREAK????????????????????????????????????????????
-//                        }
-//                    }
-//                }
-//                
-//                // Here the program hasn't found any duplicates of analogy, so 
-//                // a1 is original, so we add it of course! but check just in 
-//                // case it's not already in the list (it shouldn't be!)
-//                if(!tempListAnalogyCClass.contains(a1)){
-//                    tempListAnalogyCClass.add(a1);
-//                }
-//            }
-//        }
-//        
-//        listAnalogyCClass = tempListAnalogyCClass;
-//        
-//        // 3. Combine similar listInclusion and listCClass, find fcc which do 
-//        // not belong to neither list, and finally add them 
-//        // alternatively and by ascending order in the listAnalogy
-//        // Note: in levelInitial there's no NONE type of analogy contrary to 
-//        // the levelInclusion and any levelDeduction
-//        ArrayList<Analogy> listAnalogyMixed= new ArrayList<>();
-//        
-//        ArrayList<Analogy> tempCombinedAnalogy = new ArrayList<>();
-//        ArrayList<Analogy> tempListToRemoveInInclusion = new ArrayList<>();
-//        ArrayList<Analogy> tempListToRemoveInCClass = new ArrayList<>();
-//        ArrayList<Analogy> tempListToAddInMixed = new ArrayList<>();
-//        
-//        
-//        for(Analogy a1:listAnalogyCClass){
-//            
-//            for(Analogy a2:listAnalogyInclusion){
-//                
-//                if(a1.containsAll(a2)&&a2.containsAll(a1)){
-//                    tempListToRemoveInCClass.add(a1);
-//                    tempListToRemoveInInclusion.add(a2);
-//                    tempListToAddInMixed.add(a1);
-//                    
-//                }
-//            }
-//        }
-//        
-//        for(Analogy a:tempListToRemoveInInclusion){
-//            
-//            listAnalogyInclusion.remove(a);
-////            if(a.contains(todController.getListFccsInScene().get(0))&&
-////                    a.size()==1){
-////                break;
-////            }
-////            listAnalogyInclusion.remove(a);
-//        }
-//        
-//        for(Analogy a:tempListToRemoveInCClass){
-//            listAnalogyCClass.remove(a);
-//        }
-//        
-//        for(Analogy a:tempListToAddInMixed){
-//            listAnalogyMixed.add(a);
-//            a.setType(Analogy.Type.MIXED);
-//            
-//        }
-//        
-//        System.out.println("before sorging: "+listAnalogyInclusion);
-//        // Now we sort them one by one
-//        
-//        ArrayList<Analogy> listAnalogyInclusionOrdered = new ArrayList<>();
-//        ArrayList<Analogy> listAnalogyCClassOrdered = new ArrayList<>();
-//        
-//        for(Analogy a1:listAnalogyInclusion){
-//            Analogy tempSmallest = new Analogy();
-//            
-//            for(Analogy a2:listAnalogyInclusion){
-//                
-//                if(!a1.equals(a2)){
-//                    // find the smallest one, add it to a list and 
-//                    // add it to the final list
-//                    if(a2.size()<=a1.size()){
-//                        if(!listAnalogyInclusionOrdered.contains(a2)){
-//                            tempSmallest = a2;
-//                        }
-//                    }
-//                }
-//                
-//            }
-//            listAnalogyInclusionOrdered.add(tempSmallest);
-//        }
-//        
-//        // Because it ONLY remains the largest of Analogy then we add it manually
-//        tempAnalogy = new Analogy();
-//        for(Analogy a:listAnalogyInclusion){
-//            if(!listAnalogyInclusionOrdered.contains(a)){
-//                tempAnalogy=a;
-//            }
-//        }
-//        
-//        listAnalogyInclusionOrdered.add(tempAnalogy);
-//        
-//        
-//        listAnalogy.addAll(listAnalogyInclusionOrdered);
-//        listAnalogy.addAll(listAnalogyCClassOrdered);
-//        listAnalogy.addAll(listAnalogyMixed);
-//        
-//        System.out.println(listAnalogy);
-//        
-//        return listAnalogy;
-//    }
     
     public ArrayList<Analogy> getListAnalogyForInclusion(Fcc fcc){
         ArrayList<Analogy> listAnalogyInclusion = new ArrayList<>();
@@ -887,5 +643,4 @@ public class AppController {
         
         return listAnalogyInclusion;
     }
-    
 }
